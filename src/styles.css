@@ -94,6 +94,10 @@
   ::selection {
     background: color-mix(in oklab, var(--electric) 22%, transparent);
   }
+
+  section[id] {
+    scroll-margin-top: 7rem;
+  }
 }
 
 @utility shell {

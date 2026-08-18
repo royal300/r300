@@ -2,13 +2,13 @@ import { usePointer, useReveal } from "@/hooks/use-reveal";
 import { MagneticButton } from "./MagneticButton";
 
 const metrics = [
-  { value: "+184%", label: "Reach", pos: "left-0 top-6", depth: 26, delay: "0ms" },
-  { value: "3.2×", label: "Engagement", pos: "right-2 top-24", depth: 40, delay: "160ms" },
-  { value: "+67%", label: "Leads", pos: "left-6 bottom-24", depth: 34, delay: "320ms" },
+  { value: "+184%", label: "Reach", pos: "left-0 top-0", depth: 26, delay: "0ms" },
+  { value: "3.2×", label: "Engagement", pos: "right-0 top-20", depth: 40, delay: "160ms" },
+  { value: "+67%", label: "Leads", pos: "left-0 bottom-24", depth: 34, delay: "320ms" },
   {
     value: "42K+",
     label: "Campaign Impressions",
-    pos: "right-6 bottom-4",
+    pos: "right-2 bottom-2",
     depth: 18,
     delay: "480ms",
   },
