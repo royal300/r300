@@ -137,7 +137,7 @@ export function Projects() {
           copy="Every project starts with a business challenge. Our job is to transform that challenge into a digital experience that attracts attention, builds trust and drives action."
         />
 
-        <div className="mt-16 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
           {projects.map((p, i) => (
             <ProjectCard key={p.no} p={p} i={i} />
           ))}

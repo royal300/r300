@@ -69,7 +69,7 @@ export function Pricing() {
           className="mx-auto text-center"
         />
 
-        <div className="mt-16 grid gap-5 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {tiers.map((t, i) => (
             <div
               key={t.name}

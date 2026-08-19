@@ -53,7 +53,7 @@ export function Services() {
           copy="From brand positioning to performance campaigns, we combine creativity, technology and data to create digital systems that help businesses get noticed, trusted and chosen."
         />
 
-        <div className="mt-16 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {services.map((s, i) => (
             <article
               key={s.no}

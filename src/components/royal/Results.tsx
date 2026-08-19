@@ -37,7 +37,7 @@ export function Results() {
 
       <div className="shell">
         <SectionHeading eyebrow="RESULTS" title="THE NUMBERS BEHIND" highlight="THE WORK." />
-        <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((r) => (
             <Counter key={r.label} {...r} />
           ))}
