@@ -35,6 +35,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main className="relative">
+      <AmbientBackground />
       <CustomCursor />
       <Navbar />
       <Hero />
