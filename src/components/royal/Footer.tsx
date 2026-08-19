@@ -35,7 +35,7 @@ export function Footer() {
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
           <div>
-            <p className="font-display text-[clamp(2.4rem,7vw,4.5rem)] font-bold leading-none tracking-[-0.06em]">
+            <p className="font-display text-[clamp(2.4rem,7vw,4.5rem)] font-medium leading-none tracking-[0.06em]">
               ROYAL<span className="grad-text">300</span>
             </p>
             <p className="mt-5 max-w-xs text-sm text-muted-foreground">
