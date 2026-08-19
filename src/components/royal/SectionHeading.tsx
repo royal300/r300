@@ -32,7 +32,7 @@ export function SectionHeading({
       )}
       <h2
         data-reveal
-        className="reveal mt-4 text-[clamp(1.85rem,4vw,3.35rem)] font-bold leading-[1.02]"
+        className="reveal mt-4 text-[clamp(1.85rem,4vw,3.35rem)] font-medium leading-[1.06]"
         style={{ ["--reveal-delay" as string]: "80ms" }}
       >
         {title} {highlight && <span className="grad-text">{highlight}</span>}

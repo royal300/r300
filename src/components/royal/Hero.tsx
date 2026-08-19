@@ -46,7 +46,7 @@ export function Hero() {
 
           <h1
             data-reveal
-            className="reveal mt-7 text-[clamp(2.4rem,6.2vw,4.9rem)] font-bold leading-[0.95]"
+            className="reveal mt-7 text-[clamp(2.4rem,6.2vw,4.9rem)] font-medium leading-[1.02] tracking-[0.01em]"
             style={{ ["--reveal-delay" as string]: "80ms" }}
           >
             WE DON'T JUST MARKET BRANDS.
