@@ -29,7 +29,7 @@ export function Results() {
   const ref = useReveal<HTMLDivElement>();
 
   return (
-    <section ref={ref} className="relative overflow-hidden py-24 lg:py-36">
+    <section ref={ref} className="relative overflow-hidden py-16 lg:py-24">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="float-slow absolute left-1/3 top-10 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--electric)_12%,transparent),transparent_65%)] blur-2xl" />
         <div className="float-slow absolute -right-24 bottom-0 h-[24rem] w-[24rem] rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--violet)_12%,transparent),transparent_65%)] blur-2xl" />
@@ -37,7 +37,7 @@ export function Results() {
 
       <div className="shell">
         <SectionHeading eyebrow="RESULTS" title="THE NUMBERS BEHIND" highlight="THE WORK." />
-        <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((r) => (
             <Counter key={r.label} {...r} />
           ))}

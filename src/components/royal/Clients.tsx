@@ -16,7 +16,7 @@ export function Clients() {
   const ref = useReveal<HTMLDivElement>();
 
   return (
-    <section id="clients" ref={ref} className="relative py-24 lg:py-32">
+    <section id="clients" ref={ref} className="relative py-16 lg:py-22">
       <div className="shell">
         <SectionHeading
           eyebrow="CLIENTS"

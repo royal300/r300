@@ -6,7 +6,7 @@ export function FinalCTA() {
   const p = usePointer();
 
   return (
-    <section id="contact" ref={ref} className="relative overflow-hidden py-28 lg:py-40">
+    <section id="contact" ref={ref} className="relative overflow-hidden py-20 lg:py-28">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 grid place-items-center">
         <div
           className="relative h-[34rem] w-[34rem] rounded-full opacity-70 sm:h-[42rem] sm:w-[42rem]"

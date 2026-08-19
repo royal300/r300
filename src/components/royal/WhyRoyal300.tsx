@@ -32,11 +32,11 @@ export function WhyRoyal300() {
   const ref = useReveal<HTMLDivElement>();
 
   return (
-    <section ref={ref} className="relative py-24 lg:py-36">
+    <section ref={ref} className="relative py-16 lg:py-24">
       <div className="shell">
         <SectionHeading eyebrow="WHY US" title="WHY BUSINESSES CHOOSE" highlight="ROYAL300." />
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-[1.75rem] border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-px overflow-hidden rounded-[1.75rem] border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
           {points.map((p, i) => (
             <div
               key={p.title}

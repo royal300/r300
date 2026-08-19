@@ -58,7 +58,7 @@ export function Pricing() {
   const ref = useReveal<HTMLDivElement>();
 
   return (
-    <section id="pricing" ref={ref} className="relative py-24 lg:py-36">
+    <section id="pricing" ref={ref} className="relative py-16 lg:py-24">
       <div className="shell">
         <SectionHeading
           eyebrow="PRICING"
@@ -69,7 +69,7 @@ export function Pricing() {
           className="mx-auto text-center"
         />
 
-        <div className="mt-16 grid gap-5 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {tiers.map((t, i) => (
             <div
               key={t.name}
