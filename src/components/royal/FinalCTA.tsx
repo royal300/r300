@@ -39,7 +39,7 @@ export function FinalCTA() {
       <div className="shell text-center">
         <h2
           data-reveal
-          className="reveal text-[clamp(2rem,5.4vw,4.4rem)] font-bold leading-[0.98]"
+          className="reveal text-[clamp(2rem,5.4vw,4.4rem)] font-medium leading-[1.04] tracking-[0.01em]"
         >
           YOUR NEXT CUSTOMER IS ALREADY ONLINE.
           <br />

@@ -16,7 +16,7 @@ function Counter({ value, suffix, label }: (typeof results)[number]) {
       data-reveal
       className="reveal border-t border-border pt-6 transition-colors duration-500 hover:border-electric/50"
     >
-      <p className="font-display text-[clamp(2.6rem,6vw,5rem)] font-bold leading-none tracking-[-0.05em]">
+      <p className="font-display text-[clamp(2.6rem,6vw,5rem)] font-medium leading-none tracking-[0.01em]">
         <span ref={ref}>{Math.round(display)}</span>
         <span className="grad-text">{suffix}</span>
       </p>

@@ -38,7 +38,7 @@ export function Navbar() {
         <a
           href="#top"
           data-cursor="button"
-          className="font-display text-lg font-bold tracking-[-0.06em] sm:text-xl"
+          className="font-display text-lg font-semibold tracking-[0.18em] sm:text-xl"
         >
           ROYAL<span className="grad-text">300</span>
         </a>
@@ -83,7 +83,7 @@ export function Navbar() {
                 <a
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-2xl px-4 py-3 font-display text-lg tracking-tight transition-colors hover:bg-accent"
+                  className="block rounded-2xl px-4 py-3 font-display text-lg tracking-[0.04em] transition-colors hover:bg-accent"
                 >
                   {l.label}
                 </a>
