@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { AmbientBackground } from "@/components/royal/AmbientBackground";
 import { CustomCursor } from "@/components/royal/CustomCursor";
 import { Navbar } from "@/components/royal/Navbar";
 import { Hero } from "@/components/royal/Hero";
