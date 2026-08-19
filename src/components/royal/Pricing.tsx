@@ -94,7 +94,7 @@ export function Pricing() {
 
               <div className="my-7 hairline" />
 
-              <p className="font-display text-3xl font-bold tracking-tight">Custom Proposal</p>
+              <p className="font-display text-3xl font-medium tracking-[0.01em]">Custom Proposal</p>
               <p className="mt-2 text-xs text-muted-foreground">
                 Scoped to your goals — Discuss Your Goals →
               </p>

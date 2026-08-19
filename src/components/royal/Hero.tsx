@@ -148,7 +148,7 @@ export function Hero() {
                   transform: `translate3d(${p.x * -m.depth}px, ${p.y * -m.depth}px, ${m.depth}px)`,
                 }}
               >
-                <p className="font-display text-2xl font-bold tracking-tight">{m.value}</p>
+                <p className="font-display text-2xl font-medium tracking-[0.01em]">{m.value}</p>
                 <p className="mt-1 text-[11px] leading-tight text-muted-foreground">{m.label}</p>
               </div>
             ))}

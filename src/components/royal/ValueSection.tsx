@@ -22,7 +22,7 @@ function Stat({ value, suffix, label }: { value: number; suffix: string; label: 
   const { ref, display } = useCountUp(value);
   return (
     <div>
-      <p className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+      <p className="font-display text-3xl font-medium tracking-[0.01em] sm:text-4xl">
         <span ref={ref}>{Math.round(display)}</span>
         {suffix}
       </p>
@@ -111,7 +111,7 @@ export function ValueSection() {
 
         <p
           data-reveal
-          className="reveal mx-auto mt-16 max-w-3xl text-center font-display text-xl leading-snug tracking-tight sm:text-2xl"
+          className="reveal mx-auto mt-16 max-w-3xl text-center font-display text-xl leading-snug tracking-[0.02em] sm:text-2xl"
         >
           We measure success by the value we create for your business — not simply by how good a
           campaign looks.

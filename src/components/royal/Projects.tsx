@@ -111,14 +111,14 @@ function ProjectCard({ p, i }: { p: (typeof projects)[number]; i: number }) {
 
       <div className="p-6">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="font-display text-lg font-bold leading-tight tracking-tight">{p.name}</h3>
+          <h3 className="font-display text-lg font-medium leading-tight tracking-[0.02em]">{p.name}</h3>
           <span className="text-base text-muted-foreground transition-transform duration-500 [transition-timing-function:var(--ease-royal)] group-hover:rotate-45 group-hover:text-electric">
             →
           </span>
         </div>
         <p className="mt-2 text-[11px] font-semibold tracking-wide text-electric">{p.category}</p>
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.copy}</p>
-        <p className="mt-5 font-display text-xl font-bold tracking-tight">{p.metrics[0]}</p>
+        <p className="mt-5 font-display text-xl font-medium tracking-[0.01em]">{p.metrics[0]}</p>
       </div>
     </article>
   );
