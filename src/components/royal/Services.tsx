@@ -78,15 +78,21 @@ export function Services() {
                     "radial-gradient(120% 80% at 80% 0%, color-mix(in oklab, var(--electric) 12%, transparent), transparent 70%)",
                 }}
               />
-              <div className="flex items-baseline justify-between">
-                <span className="font-display text-sm font-bold tracking-[0.2em] text-electric">
-                  {s.no}
+              <div className="flex items-start justify-between">
+                <span
+                  className="grid h-12 w-12 place-items-center rounded-2xl border border-electric/25 bg-[linear-gradient(140deg,color-mix(in_oklab,var(--electric)_16%,transparent),transparent)] text-electric transition-transform duration-700 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-1 group-hover:rotate-[6deg]"
+                  aria-hidden
+                >
+                  <s.icon size={22} strokeWidth={1.6} />
                 </span>
                 <span className="text-lg text-muted-foreground transition-transform duration-500 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground">
                   ↗
                 </span>
               </div>
-              <h3 className="mt-7 text-2xl font-bold leading-tight">{s.title}</h3>
+              <span className="mt-6 block font-display text-xs font-bold tracking-[0.24em] text-muted-foreground">
+                {s.no}
+              </span>
+              <h3 className="mt-2 text-2xl font-bold leading-tight">{s.title}</h3>
               <p className="mt-3 font-display text-sm font-medium text-electric">{s.line}</p>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{s.copy}</p>
             </article>
