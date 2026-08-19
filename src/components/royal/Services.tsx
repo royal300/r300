@@ -1,39 +1,47 @@
+import { Bot, Gem, LineChart, MonitorSmartphone, Share2, Target } from "lucide-react";
+
 import { useReveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
 
 const services = [
   {
     no: "01",
+    icon: Gem,
     title: "Brand & Creative",
     line: "Build a brand people remember.",
     copy: "Brand identity, creative direction, social media design, campaign creatives and visual systems designed to make businesses look credible and memorable.",
   },
   {
     no: "02",
+    icon: Target,
     title: "Digital Marketing",
     line: "Reach the people who matter.",
     copy: "Strategic social media marketing, paid advertising and campaign management focused on awareness, engagement, leads and conversions.",
   },
   {
     no: "03",
+    icon: MonitorSmartphone,
     title: "Website & Digital Experience",
     line: "Turn visitors into customers.",
     copy: "High-performance websites and landing pages designed around user experience, trust and conversion.",
   },
   {
     no: "04",
+    icon: LineChart,
     title: "Growth Strategy",
     line: "Turn marketing into a measurable system.",
     copy: "Data-driven strategy, audience research, campaign optimization and performance insights that help businesses make smarter marketing decisions.",
   },
   {
     no: "05",
+    icon: Share2,
     title: "Social Media Management",
     line: "Stay relevant. Stay visible. Stay remembered.",
     copy: "Content strategy, creative production, publishing and audience engagement that maintain a consistent digital presence.",
   },
   {
     no: "06",
+    icon: Bot,
     title: "AI & Automation",
     line: "Work smarter. Scale faster.",
     copy: "AI-powered workflows, automation, intelligent customer experiences and data-driven systems that reduce repetitive work and unlock new opportunities.",
