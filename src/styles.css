@@ -177,6 +177,72 @@
   }
 }
 
+@keyframes royal-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(6vw, -4vh, 0) scale(1.12);
+  }
+  66% {
+    transform: translate3d(-5vw, 5vh, 0) scale(0.94);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes royal-beam {
+  0% {
+    transform: translateY(-30%) scaleY(0.4);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(130%) scaleY(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes royal-grid-pan {
+  to {
+    background-position: 70px 70px;
+  }
+}
+
+@keyframes royal-rise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-60vh) translateX(3vw);
+    opacity: 0;
+  }
+}
+
+@keyframes royal-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes royal-pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
