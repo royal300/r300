@@ -32,7 +32,7 @@ export function WhyRoyal300() {
   const ref = useReveal<HTMLDivElement>();
 
   return (
-    <section ref={ref} className="relative py-24 lg:py-36">
+    <section ref={ref} className="relative py-16 lg:py-24">
       <div className="shell">
         <SectionHeading eyebrow="WHY US" title="WHY BUSINESSES CHOOSE" highlight="ROYAL300." />
 

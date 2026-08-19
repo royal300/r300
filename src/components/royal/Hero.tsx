@@ -19,7 +19,7 @@ export function Hero() {
   const p = usePointer();
 
   return (
-    <section id="top" className="relative overflow-hidden pt-36 pb-16 sm:pt-44 lg:pt-52 lg:pb-28">
+    <section id="top" className="relative overflow-hidden pt-32 pb-10 sm:pt-36 lg:pt-40 lg:pb-16">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-40 left-1/4 h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--electric)_18%,transparent),transparent_62%)] blur-2xl" />
         <div className="absolute -right-32 top-40 h-[32rem] w-[32rem] rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--violet)_14%,transparent),transparent_65%)] blur-2xl" />
