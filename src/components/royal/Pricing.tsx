@@ -89,7 +89,7 @@ export function Pricing() {
               <p className="font-display text-xs font-bold tracking-[0.26em] text-muted-foreground">
                 {t.name}
               </p>
-              <h3 className="mt-5 text-2xl font-bold leading-tight">{t.line}</h3>
+              <h3 className="mt-5 text-2xl font-medium leading-tight">{t.line}</h3>
               <p className="mt-3 text-sm text-muted-foreground">{t.for}</p>
 
               <div className="my-7 hairline" />

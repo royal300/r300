@@ -92,7 +92,7 @@ export function Services() {
               <span className="mt-6 block font-display text-xs font-bold tracking-[0.24em] text-muted-foreground">
                 {s.no}
               </span>
-              <h3 className="mt-2 text-2xl font-bold leading-tight">{s.title}</h3>
+              <h3 className="mt-2 text-2xl font-medium leading-tight">{s.title}</h3>
               <p className="mt-3 font-display text-sm font-medium text-electric">{s.line}</p>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{s.copy}</p>
             </article>
