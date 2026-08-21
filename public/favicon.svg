@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="rGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="50%" stop-color="#7000ff"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07080f"/>
+      <stop offset="100%" stop-color="#121528"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Squircle -->
+  <rect width="512" height="512" rx="140" fill="url(#bgGrad)" stroke="rgba(0, 240, 255, 0.4)" stroke-width="8"/>
+
+  <!-- Outer Glow Border -->
+  <rect width="480" height="480" x="16" y="16" rx="124" fill="none" stroke="url(#rGrad)" stroke-width="4" opacity="0.6"/>
+
+  <!-- 'R' Royal Monogram -->
+  <path d="M160 112 H275 C335 112 375 145 375 200 C375 255 335 288 275 288 H225 V400 H160 V112 Z M225 164 V236 H270 C298 236 315 222 315 200 C315 178 298 164 270 164 H225 Z M285 280 L380 400 H315 L230 288 H285 Z" 
+        fill="url(#rGrad)" 
+        filter="url(#glow)"/>
+</svg>
