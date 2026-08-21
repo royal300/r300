@@ -96,16 +96,16 @@ export function ProjectDetailView({ project }: Props) {
               </h1>
             </div>
 
-            {/* Colorful Link Pill Buttons */}
+            {/* Solid Colored Link Pill Buttons */}
             <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
               {project.links.website && (
                 <a
                   href={project.links.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-xs font-semibold text-cyan-300 backdrop-blur transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500 hover:text-white hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]"
+                  className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500 px-4 py-2 text-xs font-semibold text-white shadow-lg transition-all duration-300 hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] hover:scale-105"
                 >
-                  <Globe className="h-4 w-4 text-cyan-400 group-hover:text-white" />
+                  <Globe className="h-4 w-4 text-white" />
                   Website
                 </a>
               )}
@@ -114,9 +114,9 @@ export function ProjectDetailView({ project }: Props) {
                   href={project.links.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-pink-500/30 bg-pink-500/10 px-4 py-2 text-xs font-semibold text-pink-300 backdrop-blur transition-all duration-300 hover:border-pink-400 hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-600 hover:to-amber-500 hover:text-white hover:shadow-[0_0_20px_rgba(236,72,153,0.4)]"
+                  className="inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 px-4 py-2 text-xs font-semibold text-white shadow-lg transition-all duration-300 hover:opacity-95 hover:shadow-[0_0_20px_rgba(236,72,153,0.5)] hover:scale-105"
                 >
-                  <Instagram className="h-4 w-4 text-pink-400 group-hover:text-white" />
+                  <Instagram className="h-4 w-4 text-white" />
                   Instagram
                 </a>
               )}
@@ -125,9 +125,9 @@ export function ProjectDetailView({ project }: Props) {
                   href={project.links.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold text-blue-300 backdrop-blur transition-all duration-300 hover:border-blue-400 hover:bg-blue-600 hover:text-white hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]"
+                  className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-lg transition-all duration-300 hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:scale-105"
                 >
-                  <Facebook className="h-4 w-4 text-blue-400 group-hover:text-white" />
+                  <Facebook className="h-4 w-4 text-white" />
                   Facebook
                 </a>
               )}
@@ -140,10 +140,7 @@ export function ProjectDetailView({ project }: Props) {
               <p className="text-xs font-semibold tracking-widest text-electric uppercase">
                 {project.category}
               </p>
-              <h2 className="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-                {project.copy}
-              </h2>
-              <p className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
                 {project.fullDescription}
               </p>
 
@@ -180,62 +177,42 @@ export function ProjectDetailView({ project }: Props) {
 
           {/* Visual Showcase Section */}
           <section className="mt-16 sm:mt-24">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-b border-border/60 pb-6">
+            <div className="flex flex-col items-center justify-center text-center gap-6 border-b border-border/60 pb-8">
               <div>
                 <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-electric uppercase">
-                  <Sparkles className="h-3.5 w-3.5" />
+                  <Sparkles className="h-4 w-4" />
                   VISUAL SHOWCASE
                 </div>
-                <h3 className="mt-1 font-display text-2xl font-bold sm:text-3xl">
+                <h3 className="mt-2 font-display text-3xl font-bold sm:text-4xl">
                   CREATIVES & REELS GALLERY
                 </h3>
               </div>
 
-              {/* Tabs Switcher */}
-              <div className="inline-flex rounded-full border border-border/80 bg-card/80 p-1 backdrop-blur-md">
+              {/* Centered & Enlarged Tabs Switcher */}
+              <div className="inline-flex items-center justify-center rounded-full border border-border/80 bg-card/80 p-1.5 backdrop-blur-xl shadow-xl">
                 <button
                   onClick={() => setActiveTab("creatives")}
-                  className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold transition-all duration-300 ${
+                  className={`inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-bold transition-all duration-300 ${
                     activeTab === "creatives"
-                      ? "bg-foreground text-background shadow-md"
+                      ? "bg-foreground text-background shadow-lg scale-105"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  <ImageIcon className="h-3.5 w-3.5" />
+                  <ImageIcon className="h-4 w-4" />
                   Creatives ({project.creatives.length})
                 </button>
                 <button
                   onClick={() => setActiveTab("reels")}
-                  className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold transition-all duration-300 ${
+                  className={`inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-bold transition-all duration-300 ${
                     activeTab === "reels"
-                      ? "bg-foreground text-background shadow-md"
+                      ? "bg-foreground text-background shadow-lg scale-105"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  <Film className="h-3.5 w-3.5" />
+                  <Film className="h-4 w-4" />
                   Reels ({project.reels.length})
                 </button>
               </div>
-            </div>
-
-            {/* Pill Filters Bar (Inspired by Reference Design) */}
-            <div className="mt-6 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-              {project.categories.map((cat) => {
-                const isActive = selectedCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold transition-all duration-300 ${
-                      isActive
-                        ? "border border-foreground bg-foreground text-background shadow-lg scale-105"
-                        : "border border-border/80 bg-card/40 text-muted-foreground hover:border-foreground/50 hover:text-foreground"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                );
-              })}
             </div>
 
             {/* 3D Coverflow Carousel Gallery */}
