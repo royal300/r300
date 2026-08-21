@@ -89,35 +89,35 @@ export function ProjectDetailView({ project }: Props) {
           </Link>
 
           {/* Hero Client Overview */}
-          <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start">
-            {/* Left Side: Client Description & Column of Social Buttons */}
-            <div className="lg:col-span-6 flex flex-col gap-6">
+          <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start">
+            {/* Left Side: Category, Title, Description, Social Buttons, We Provide, & Metrics */}
+            <div className="lg:col-span-7 flex flex-col gap-5">
               <div>
-                <span className="rounded-full bg-electric/15 px-3.5 py-1.5 font-display text-xs font-bold text-electric">
+                <span className="rounded-full bg-electric/15 px-3 py-1 font-display text-xs font-bold text-electric">
                   {project.category}
                 </span>
-                <h1 className="mt-4 font-display text-3xl font-bold sm:text-4xl lg:text-5xl tracking-tight text-foreground">
+                <h1 className="mt-3 font-display text-2xl font-bold sm:text-3xl lg:text-4xl tracking-tight text-foreground">
                   {project.name}
                 </h1>
-                <p className="mt-5 text-base sm:text-lg leading-relaxed text-muted-foreground">
+                <p className="mt-3 text-xs sm:text-sm leading-relaxed text-muted-foreground max-w-xl">
                   {project.fullDescription}
                 </p>
               </div>
 
               {/* 3 Icons Column by Column (Facebook, Insta, Website) */}
-              <div className="flex flex-col gap-3 max-w-sm">
+              <div className="flex flex-col gap-2.5 max-w-xs">
                 {project.links.facebook && (
                   <a
                     href={project.links.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-between rounded-xl bg-blue-600 border border-blue-500/50 px-5 py-3 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:bg-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] hover:scale-[1.02]"
+                    className="inline-flex items-center justify-between rounded-xl bg-blue-600 border border-blue-500/50 px-4 py-2.5 text-xs font-bold text-white shadow-md transition-all duration-300 hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:scale-[1.01]"
                   >
-                    <span className="inline-flex items-center gap-3">
-                      <Facebook className="h-5 w-5 fill-white text-blue-600" />
+                    <span className="inline-flex items-center gap-2.5">
+                      <Facebook className="h-4 w-4 fill-white text-blue-600" />
                       Facebook
                     </span>
-                    <span className="text-xs opacity-80">→</span>
+                    <span className="text-[10px] opacity-80">→</span>
                   </a>
                 )}
                 {project.links.instagram && (
@@ -125,13 +125,13 @@ export function ProjectDetailView({ project }: Props) {
                     href={project.links.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-between rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 border border-pink-400/30 px-5 py-3 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:opacity-95 hover:shadow-[0_0_25px_rgba(236,72,153,0.5)] hover:scale-[1.02]"
+                    className="inline-flex items-center justify-between rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 border border-pink-400/30 px-4 py-2.5 text-xs font-bold text-white shadow-md transition-all duration-300 hover:opacity-95 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:scale-[1.01]"
                   >
-                    <span className="inline-flex items-center gap-3">
-                      <Instagram className="h-5 w-5 text-white" />
+                    <span className="inline-flex items-center gap-2.5">
+                      <Instagram className="h-4 w-4 text-white" />
                       Instagram
                     </span>
-                    <span className="text-xs opacity-80">→</span>
+                    <span className="text-[10px] opacity-80">→</span>
                   </a>
                 )}
                 {project.links.website && (
@@ -139,25 +139,43 @@ export function ProjectDetailView({ project }: Props) {
                     href={project.links.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-between rounded-xl bg-cyan-600 border border-cyan-500/50 px-5 py-3 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:bg-cyan-500 hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:scale-[1.02]"
+                    className="inline-flex items-center justify-between rounded-xl bg-cyan-600 border border-cyan-500/50 px-4 py-2.5 text-xs font-bold text-white shadow-md transition-all duration-300 hover:bg-cyan-500 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:scale-[1.01]"
                   >
-                    <span className="inline-flex items-center gap-3">
-                      <Globe className="h-5 w-5 text-white" />
+                    <span className="inline-flex items-center gap-2.5">
+                      <Globe className="h-4 w-4 text-white" />
                       Website
                     </span>
-                    <span className="text-xs opacity-80">→</span>
+                    <span className="text-[10px] opacity-80">→</span>
                   </a>
                 )}
               </div>
 
+              {/* 'We Provide' Section (Clean styling, no blur bg, blue points) */}
+              <div className="pt-1">
+                <h3 className="font-display text-sm font-bold tracking-wider text-foreground uppercase flex items-center gap-2 mb-2">
+                  <Sparkles className="h-3.5 w-3.5 text-blue-500" />
+                  We Provide
+                </h3>
+                <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                  {project.servicesProvided.map((service, sIdx) => (
+                    <li key={sIdx} className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-500">
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-500/15 text-blue-500 text-[9px] font-bold">
+                        ✓
+                      </span>
+                      {service}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
               {/* Metrics Grid */}
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 pt-2">
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 pt-1">
                 {project.metrics.map((m, idx) => (
                   <div
                     key={idx}
-                    className="rounded-xl border border-border/60 bg-card/60 p-3.5 text-center backdrop-blur-md"
+                    className="rounded-xl border border-border/60 bg-card/60 p-2.5 text-center backdrop-blur-md"
                   >
-                    <p className="font-display text-sm font-bold text-foreground sm:text-base">
+                    <p className="font-display text-xs font-bold text-foreground sm:text-sm">
                       {m}
                     </p>
                   </div>
@@ -165,9 +183,8 @@ export function ProjectDetailView({ project }: Props) {
               </div>
             </div>
 
-            {/* Right Side: 500x500px Image + 'We Provide' Section */}
-            <div className="lg:col-span-6 flex flex-col gap-6 items-center lg:items-start">
-              {/* 500x500px Hero Image */}
+            {/* Right Side: 500x500px Hero Image */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end">
               <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl w-full max-w-[500px] aspect-square">
                 <img
                   src={project.heroImage}
@@ -182,24 +199,6 @@ export function ProjectDetailView({ project }: Props) {
                     {project.client}
                   </span>
                 </div>
-              </div>
-
-              {/* 'We Provide' Section with Blue Color Points */}
-              <div className="w-full max-w-[500px] rounded-2xl border border-blue-500/30 bg-blue-950/30 p-6 backdrop-blur-xl shadow-xl">
-                <h3 className="font-display text-xl font-bold tracking-tight text-white border-b border-blue-500/30 pb-3 mb-4 flex items-center gap-2.5">
-                  <Sparkles className="h-4 w-4 text-blue-400" />
-                  We Provide
-                </h3>
-                <ul className="space-y-3">
-                  {project.servicesProvided.map((service, sIdx) => (
-                    <li key={sIdx} className="flex items-center gap-3 text-base font-semibold text-blue-400">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold border border-blue-500/40">
-                        ✓
-                      </span>
-                      {service}
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           </div>
