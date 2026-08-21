@@ -88,7 +88,7 @@ export function Hero() {
 
         <div
           data-reveal
-          className="reveal relative mx-auto h-[26rem] w-full max-w-lg sm:h-[32rem] lg:h-[34rem]"
+          className="reveal hidden lg:block relative mx-auto h-[26rem] w-full max-w-lg sm:h-[32rem] lg:h-[34rem]"
           style={{ ["--reveal-delay" as string]: "260ms", perspective: "1200px" }}
         >
           <div
