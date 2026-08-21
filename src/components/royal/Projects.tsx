@@ -4,43 +4,49 @@ import { useReveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
 import { projectsData, ProjectData } from "@/data/projectsData";
 
-/* Mobile Card (2-column Grid) */
-function MobileProjectCard({ p, i }: { p: ProjectData; i: number }) {
+/* Mobile Sticky Stacking Parallax Card */
+function ParallaxMobileCard({ p, index }: { p: ProjectData; index: number }) {
+  const stickyTop = 80 + index * 16;
+
   return (
-    <Link
-      to="/projects/$slug"
-      params={{ slug: p.slug }}
-      className="block text-left no-underline h-full"
+    <div
+      className="sticky mb-6 last:mb-0 transition-all duration-500"
+      style={{ top: `${stickyTop}px` }}
     >
-      <article
-        data-reveal
-        className="reveal group relative overflow-hidden rounded-[1.25rem] border border-border/70 bg-card transition-all duration-500 hover:shadow-xl hover:border-electric/50 cursor-pointer h-full flex flex-col justify-between"
-        style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
+      <Link
+        to="/projects/$slug"
+        params={{ slug: p.slug }}
+        className="block text-left no-underline group"
       >
-        <div className="relative aspect-[4/5] overflow-hidden">
-          <img
-            src={p.heroImage}
-            alt={p.name}
-            loading="lazy"
-            width={600}
-            height={750}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
-        </div>
-
-        <div className="p-3.5 flex-1 flex flex-col justify-between gap-3">
-          <h3 className="font-display text-xs sm:text-sm font-bold leading-snug tracking-tight text-foreground group-hover:text-electric transition-colors line-clamp-2">
-            {p.name}
-          </h3>
-
-          <div className="relative overflow-hidden inline-flex items-center justify-center gap-1.5 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric)_55%,var(--violet))] px-3 py-2 text-[11px] font-bold text-white shadow-md">
-            <span>View Project</span>
-            <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">→</span>
+        <article className="relative overflow-hidden rounded-[1.5rem] border border-border/80 bg-card/95 p-4 sm:p-5 backdrop-blur-xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] transition-all duration-500 hover:border-electric/50 flex flex-col gap-3.5">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-border/60 shadow-md">
+            <img
+              src={p.heroImage}
+              alt={p.name}
+              loading="lazy"
+              width={600}
+              height={450}
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+            <span className="absolute left-3 top-3 rounded-full bg-electric/20 px-2.5 py-0.5 font-display text-[10px] font-bold text-electric backdrop-blur-md border border-electric/30">
+              PROJECT {p.no}
+            </span>
           </div>
-        </div>
-      </article>
-    </Link>
+
+          <div className="flex flex-col gap-2.5">
+            <h3 className="font-display text-base font-bold leading-snug tracking-tight text-foreground group-hover:text-electric transition-colors line-clamp-2">
+              {p.name}
+            </h3>
+
+            <div className="relative overflow-hidden inline-flex items-center justify-between rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric)_55%,var(--violet))] px-4 py-2.5 text-xs font-bold text-white shadow-md">
+              <span>View Project</span>
+              <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </div>
+          </div>
+        </article>
+      </Link>
+    </div>
   );
 }
 
@@ -160,10 +166,10 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Mobile & Tablet View: 2-Column Responsive Grid */}
-        <div className="mt-10 lg:hidden grid grid-cols-2 gap-3 sm:gap-5">
+        {/* Mobile View: Parallax Stacking Cards */}
+        <div className="mt-10 lg:hidden relative pb-12">
           {projectsData.map((p, i) => (
-            <MobileProjectCard key={p.no} p={p} i={i} />
+            <ParallaxMobileCard key={p.no} p={p} index={i} />
           ))}
         </div>
       </div>
