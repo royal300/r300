@@ -4,8 +4,7 @@ import { AmbientBackground } from "@/components/royal/AmbientBackground";
 import { CustomCursor } from "@/components/royal/CustomCursor";
 import { Navbar } from "@/components/royal/Navbar";
 import { Hero } from "@/components/royal/Hero";
-import { Services } from "@/components/royal/Services";
-import { ValueSection } from "@/components/royal/ValueSection";
+
 import { Projects } from "@/components/royal/Projects";
 import { Results } from "@/components/royal/Results";
 import { Clients } from "@/components/royal/Clients";
@@ -39,8 +38,7 @@ function Index() {
       <CustomCursor />
       <Navbar />
       <Hero />
-      <Services />
-      <ValueSection />
+
       <Projects />
       <Results />
       <Clients />
