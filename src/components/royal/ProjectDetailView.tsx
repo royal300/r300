@@ -168,19 +168,7 @@ export function ProjectDetailView({ project }: Props) {
                 </ul>
               </div>
 
-              {/* Metrics Grid */}
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 pt-1">
-                {project.metrics.map((m, idx) => (
-                  <div
-                    key={idx}
-                    className="rounded-xl border border-border/60 bg-card/60 p-2.5 text-center backdrop-blur-md"
-                  >
-                    <p className="font-display text-xs font-bold text-foreground sm:text-sm">
-                      {m}
-                    </p>
-                  </div>
-                ))}
-              </div>
+
             </div>
 
             {/* Right Side: 500x500px Hero Image */}
