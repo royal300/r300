@@ -24,7 +24,7 @@ function ProjectCard({ p, i }: { p: ProjectData; i: number }) {
     <Link
       to="/projects/$slug"
       params={{ slug: p.slug }}
-      className="block text-left no-underline"
+      className="block text-left no-underline h-full"
     >
       <article
         ref={ref}
@@ -32,7 +32,7 @@ function ProjectCard({ p, i }: { p: ProjectData; i: number }) {
         data-cursor="view"
         onPointerMove={onMove}
         onPointerLeave={reset}
-        className="reveal group relative overflow-hidden rounded-[1.75rem] border border-border/70 bg-card transition-[transform,box-shadow] duration-700 [transition-timing-function:var(--ease-royal)] hover:shadow-[0_50px_90px_-60px_color-mix(in_oklab,var(--primary)_70%,transparent)] hover:border-electric/50 cursor-pointer h-full flex flex-col justify-between"
+        className="reveal group relative overflow-hidden rounded-[1.25rem] sm:rounded-[1.75rem] border border-border/70 bg-card transition-[transform,box-shadow] duration-700 [transition-timing-function:var(--ease-royal)] hover:shadow-[0_40px_80px_-40px_color-mix(in_oklab,var(--primary)_70%,transparent)] hover:border-electric/50 cursor-pointer h-full flex flex-col justify-between"
         style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}
       >
         <div className="relative aspect-[4/5] overflow-hidden">
@@ -44,45 +44,18 @@ function ProjectCard({ p, i }: { p: ProjectData; i: number }) {
             height={1280}
             className="h-full w-full object-cover transition-transform duration-[1200ms] [transition-timing-function:var(--ease-royal)] group-hover:scale-[1.08]"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(to_top,color-mix(in_oklab,var(--primary)_78%,transparent),transparent_58%)] opacity-70 transition-opacity duration-700 group-hover:opacity-95" />
-          <span className="absolute left-4 top-4 rounded-full bg-background/80 px-3 py-1 font-display text-[10px] font-bold tracking-[0.2em] backdrop-blur">
-            {p.no}
-          </span>
-          <div className="absolute inset-x-4 bottom-4">
-            <div className="flex flex-wrap gap-1.5">
-              {p.metrics.slice(0, 3).map((m, mi) => (
-                <span
-                  key={m}
-                  className="translate-y-3 rounded-full border border-white/25 bg-white/15 px-2.5 py-1 text-[10px] font-semibold text-white opacity-0 backdrop-blur-md transition-all duration-700 [transition-timing-function:var(--ease-royal)] group-hover:translate-y-0 group-hover:opacity-100"
-                  style={{ transitionDelay: `${mi * 90}ms` }}
-                >
-                  {m}
-                </span>
-              ))}
-            </div>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-95" />
         </div>
 
-        <div className="p-6 flex-1 flex flex-col justify-between">
-          <div>
-            <div className="flex items-start justify-between gap-3">
-              <h3 className="font-display text-lg font-medium leading-tight tracking-[0.02em] group-hover:text-electric transition-colors">
-                {p.name}
-              </h3>
-              <span className="text-base text-muted-foreground transition-transform duration-500 [transition-timing-function:var(--ease-royal)] group-hover:rotate-45 group-hover:text-electric">
-                →
-              </span>
-            </div>
-            <p className="mt-2 text-[11px] font-semibold tracking-wide text-electric">
-              {p.category}
-            </p>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground line-clamp-3">
-              {p.copy}
-            </p>
+        <div className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between gap-3">
+          <h3 className="font-display text-sm sm:text-base font-bold leading-snug tracking-tight text-foreground group-hover:text-electric transition-colors line-clamp-2">
+            {p.name}
+          </h3>
+
+          <div className="inline-flex items-center justify-between rounded-full bg-electric/15 border border-electric/30 px-3.5 py-2 text-xs font-bold text-electric transition-all duration-300 group-hover:bg-electric group-hover:text-white group-hover:shadow-md">
+            <span>View Project</span>
+            <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">→</span>
           </div>
-          <p className="mt-5 font-display text-xl font-medium tracking-[0.01em]">
-            {p.metrics[0]}
-          </p>
         </div>
       </article>
     </Link>
@@ -102,7 +75,7 @@ export function Projects() {
           copy="A curated selection of projects where strategy, creativity and execution came together to deliver real, measurable results for our clients."
         />
 
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="mt-10 sm:mt-12 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
           {projectsData.map((p, i) => (
             <ProjectCard key={p.no} p={p} i={i} />
           ))}
