@@ -52,9 +52,9 @@ function ProjectCard({ p, i }: { p: ProjectData; i: number }) {
             {p.name}
           </h3>
 
-          <div className="inline-flex items-center justify-between rounded-full bg-electric/15 border border-electric/30 px-3.5 py-2 text-xs font-bold text-electric transition-all duration-300 group-hover:bg-electric group-hover:text-white group-hover:shadow-md">
+          <div className="relative overflow-hidden inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric)_55%,var(--violet))] px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-white shadow-[0_10px_25px_-10px_color-mix(in_oklab,var(--electric)_60%,transparent)] transition-all duration-300 group-hover:shadow-[0_15px_35px_-10px_color-mix(in_oklab,var(--electric)_80%,transparent)] group-hover:scale-[1.02]">
             <span>View Project</span>
-            <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">→</span>
+            <span className="text-xs sm:text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>
           </div>
         </div>
       </article>
