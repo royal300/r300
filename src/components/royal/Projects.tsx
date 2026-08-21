@@ -4,22 +4,8 @@ import { useReveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
 import { projectsData, ProjectData } from "@/data/projectsData";
 
-function ProjectCard({ p, i }: { p: ProjectData; i: number }) {
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  const onMove = (e: React.PointerEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - (r.left + r.width / 2)) / r.width;
-    const y = (e.clientY - (r.top + r.height / 2)) / r.height;
-    el.style.transform = `perspective(1000px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-10px)`;
-  };
-
-  const reset = () => {
-    if (ref.current) ref.current.style.transform = "perspective(1000px)";
-  };
-
+/* Mobile Card (2-column Grid) */
+function MobileProjectCard({ p, i }: { p: ProjectData; i: number }) {
   return (
     <Link
       to="/projects/$slug"
@@ -27,38 +13,130 @@ function ProjectCard({ p, i }: { p: ProjectData; i: number }) {
       className="block text-left no-underline h-full"
     >
       <article
-        ref={ref}
         data-reveal
-        data-cursor="view"
-        onPointerMove={onMove}
-        onPointerLeave={reset}
-        className="reveal group relative overflow-hidden rounded-[1.25rem] sm:rounded-[1.75rem] border border-border/70 bg-card transition-[transform,box-shadow] duration-700 [transition-timing-function:var(--ease-royal)] hover:shadow-[0_40px_80px_-40px_color-mix(in_oklab,var(--primary)_70%,transparent)] hover:border-electric/50 cursor-pointer h-full flex flex-col justify-between"
-        style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}
+        className="reveal group relative overflow-hidden rounded-[1.25rem] border border-border/70 bg-card transition-all duration-500 hover:shadow-xl hover:border-electric/50 cursor-pointer h-full flex flex-col justify-between"
+        style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
       >
         <div className="relative aspect-[4/5] overflow-hidden">
           <img
             src={p.heroImage}
             alt={p.name}
             loading="lazy"
-            width={1024}
-            height={1280}
-            className="h-full w-full object-cover transition-transform duration-[1200ms] [transition-timing-function:var(--ease-royal)] group-hover:scale-[1.08]"
+            width={600}
+            height={750}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-95" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
         </div>
 
-        <div className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between gap-3">
-          <h3 className="font-display text-sm sm:text-base font-bold leading-snug tracking-tight text-foreground group-hover:text-electric transition-colors line-clamp-2">
+        <div className="p-3.5 flex-1 flex flex-col justify-between gap-3">
+          <h3 className="font-display text-xs sm:text-sm font-bold leading-snug tracking-tight text-foreground group-hover:text-electric transition-colors line-clamp-2">
             {p.name}
           </h3>
 
-          <div className="relative overflow-hidden inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric)_55%,var(--violet))] px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-white shadow-[0_10px_25px_-10px_color-mix(in_oklab,var(--electric)_60%,transparent)] transition-all duration-300 group-hover:shadow-[0_15px_35px_-10px_color-mix(in_oklab,var(--electric)_80%,transparent)] group-hover:scale-[1.02]">
+          <div className="relative overflow-hidden inline-flex items-center justify-center gap-1.5 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric)_55%,var(--violet))] px-3 py-2 text-[11px] font-bold text-white shadow-md">
             <span>View Project</span>
-            <span className="text-xs sm:text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>
+            <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">→</span>
           </div>
         </div>
       </article>
     </Link>
+  );
+}
+
+/* PC Desktop Parallax Stacking Card */
+function ParallaxDesktopCard({ p, index }: { p: ProjectData; index: number }) {
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
+  // Subtle 3D tilt on mouse move
+  const onMove = (e: React.PointerEvent) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - (r.left + r.width / 2)) / r.width;
+    const y = (e.clientY - (r.top + r.height / 2)) / r.height;
+    el.style.transform = `perspective(1000px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg) translateY(-4px)`;
+  };
+
+  const reset = () => {
+    if (cardRef.current) cardRef.current.style.transform = "perspective(1000px)";
+  };
+
+  // Calculate sticky offset for stacking cards effect
+  const stickyTop = 110 + index * 24;
+
+  return (
+    <div
+      className="sticky mb-12 sm:mb-16 last:mb-0 transition-all duration-500"
+      style={{ top: `${stickyTop}px` }}
+    >
+      <Link
+        to="/projects/$slug"
+        params={{ slug: p.slug }}
+        className="block text-left no-underline group"
+      >
+        <article
+          ref={cardRef}
+          onPointerMove={onMove}
+          onPointerLeave={reset}
+          className="relative overflow-hidden rounded-[2rem] border border-border/80 bg-card/90 p-8 lg:p-10 backdrop-blur-2xl shadow-[0_30px_70px_-25px_rgba(0,0,0,0.6)] transition-all duration-700 ease-out hover:border-electric/60 hover:shadow-[0_40px_90px_-30px_color-mix(in_oklab,var(--electric)_50%,transparent)] grid grid-cols-12 gap-8 items-center"
+        >
+          {/* Left Column: Project Details */}
+          <div className="col-span-7 flex flex-col justify-between h-full gap-6">
+            <div>
+              <div className="flex items-center gap-3">
+                <span className="rounded-full bg-electric/15 px-3 py-1 font-display text-xs font-bold text-electric">
+                  PROJECT {p.no}
+                </span>
+                <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+                  {p.category.split("•")[0]}
+                </span>
+              </div>
+
+              <h3 className="mt-4 font-display text-3xl xl:text-4xl font-bold tracking-tight text-foreground group-hover:text-electric transition-colors">
+                {p.name}
+              </h3>
+
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+                {p.copy}
+              </p>
+            </div>
+
+            {/* Metrics & CTA Button */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border/40">
+              <div className="flex flex-wrap gap-2">
+                {p.metrics.slice(0, 2).map((m) => (
+                  <span
+                    key={m}
+                    className="rounded-lg border border-border/60 bg-background/60 px-3 py-1.5 text-xs font-semibold text-foreground"
+                  >
+                    {m}
+                  </span>
+                ))}
+              </div>
+
+              <div className="relative overflow-hidden inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric)_55%,var(--violet))] px-6 py-3 text-sm font-bold text-white shadow-[0_12px_30px_-10px_color-mix(in_oklab,var(--electric)_60%,transparent)] transition-all duration-300 group-hover:shadow-[0_18px_40px_-10px_color-mix(in_oklab,var(--electric)_80%,transparent)] group-hover:scale-105">
+                <span>View Project</span>
+                <span className="text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Featured Image */}
+          <div className="col-span-5 relative overflow-hidden rounded-2xl border border-border/60 aspect-[4/3] shadow-xl">
+            <img
+              src={p.heroImage}
+              alt={p.name}
+              loading="lazy"
+              width={800}
+              height={600}
+              className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          </div>
+        </article>
+      </Link>
+    </div>
   );
 }
 
@@ -75,9 +153,17 @@ export function Projects() {
           copy="A curated selection of projects where strategy, creativity and execution came together to deliver real, measurable results for our clients."
         />
 
-        <div className="mt-10 sm:mt-12 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+        {/* Desktop PC View: Parallax Stacking Cards */}
+        <div className="mt-12 hidden lg:block relative pb-20">
           {projectsData.map((p, i) => (
-            <ProjectCard key={p.no} p={p} i={i} />
+            <ParallaxDesktopCard key={p.no} p={p} index={i} />
+          ))}
+        </div>
+
+        {/* Mobile & Tablet View: 2-Column Responsive Grid */}
+        <div className="mt-10 lg:hidden grid grid-cols-2 gap-3 sm:gap-5">
+          {projectsData.map((p, i) => (
+            <MobileProjectCard key={p.no} p={p} i={i} />
           ))}
         </div>
       </div>
