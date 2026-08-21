@@ -88,70 +88,76 @@ export function ProjectDetailView({ project }: Props) {
             BACK TO ALL PROJECTS
           </Link>
 
-          {/* Top Quick Links (Website, Instagram, Facebook) */}
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card/40 p-4 sm:p-6 backdrop-blur-xl">
-            <div className="flex items-center gap-3">
-              <h1 className="font-display text-2xl font-bold sm:text-3xl tracking-tight text-foreground">
-                {project.name}
-              </h1>
-            </div>
+          {/* Hero Client Overview */}
+          <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start">
+            {/* Left Side: Client Description & Column of Social Buttons */}
+            <div className="lg:col-span-6 flex flex-col gap-6">
+              <div>
+                <span className="rounded-full bg-electric/15 px-3.5 py-1.5 font-display text-xs font-bold text-electric">
+                  {project.category}
+                </span>
+                <h1 className="mt-4 font-display text-3xl font-bold sm:text-4xl lg:text-5xl tracking-tight text-foreground">
+                  {project.name}
+                </h1>
+                <p className="mt-5 text-base sm:text-lg leading-relaxed text-muted-foreground">
+                  {project.fullDescription}
+                </p>
+              </div>
 
-            {/* Solid Colored Link Pill Buttons */}
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-              {project.links.website && (
-                <a
-                  href={project.links.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500 px-4 py-2 text-xs font-semibold text-white shadow-lg transition-all duration-300 hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] hover:scale-105"
-                >
-                  <Globe className="h-4 w-4 text-white" />
-                  Website
-                </a>
-              )}
-              {project.links.instagram && (
-                <a
-                  href={project.links.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 px-4 py-2 text-xs font-semibold text-white shadow-lg transition-all duration-300 hover:opacity-95 hover:shadow-[0_0_20px_rgba(236,72,153,0.5)] hover:scale-105"
-                >
-                  <Instagram className="h-4 w-4 text-white" />
-                  Instagram
-                </a>
-              )}
-              {project.links.facebook && (
-                <a
-                  href={project.links.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-lg transition-all duration-300 hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:scale-105"
-                >
-                  <Facebook className="h-4 w-4 text-white" />
-                  Facebook
-                </a>
-              )}
-            </div>
-          </div>
-
-          {/* Hero Overview */}
-          <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start">
-            <div className="lg:col-span-7">
-              <p className="text-xs font-semibold tracking-widest text-electric uppercase">
-                {project.category}
-              </p>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                {project.fullDescription}
-              </p>
+              {/* 3 Icons Column by Column (Facebook, Insta, Website) */}
+              <div className="flex flex-col gap-3 max-w-sm">
+                {project.links.facebook && (
+                  <a
+                    href={project.links.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-between rounded-xl bg-blue-600 border border-blue-500/50 px-5 py-3 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:bg-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] hover:scale-[1.02]"
+                  >
+                    <span className="inline-flex items-center gap-3">
+                      <Facebook className="h-5 w-5 fill-white text-blue-600" />
+                      Facebook
+                    </span>
+                    <span className="text-xs opacity-80">→</span>
+                  </a>
+                )}
+                {project.links.instagram && (
+                  <a
+                    href={project.links.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-between rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 border border-pink-400/30 px-5 py-3 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:opacity-95 hover:shadow-[0_0_25px_rgba(236,72,153,0.5)] hover:scale-[1.02]"
+                  >
+                    <span className="inline-flex items-center gap-3">
+                      <Instagram className="h-5 w-5 text-white" />
+                      Instagram
+                    </span>
+                    <span className="text-xs opacity-80">→</span>
+                  </a>
+                )}
+                {project.links.website && (
+                  <a
+                    href={project.links.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-between rounded-xl bg-cyan-600 border border-cyan-500/50 px-5 py-3 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:bg-cyan-500 hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:scale-[1.02]"
+                  >
+                    <span className="inline-flex items-center gap-3">
+                      <Globe className="h-5 w-5 text-white" />
+                      Website
+                    </span>
+                    <span className="text-xs opacity-80">→</span>
+                  </a>
+                )}
+              </div>
 
               {/* Metrics Grid */}
-              <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 pt-2">
                 {project.metrics.map((m, idx) => (
                   <div
                     key={idx}
                     className="rounded-xl border border-border/60 bg-card/60 p-3.5 text-center backdrop-blur-md"
                   >
-                    <p className="font-display text-lg font-bold text-foreground sm:text-xl">
+                    <p className="font-display text-sm font-bold text-foreground sm:text-base">
                       {m}
                     </p>
                   </div>
@@ -159,18 +165,41 @@ export function ProjectDetailView({ project }: Props) {
               </div>
             </div>
 
-            {/* Main Featured Hero Image */}
-            <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl lg:col-span-5 aspect-[4/3] lg:aspect-[4/5]">
-              <img
-                src={project.heroImage}
-                alt={project.name}
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <span className="rounded-full bg-background/80 px-3 py-1 text-[10px] font-bold tracking-widest uppercase text-electric backdrop-blur">
-                  {project.client}
-                </span>
+            {/* Right Side: 500x500px Image + 'We Provide' Section */}
+            <div className="lg:col-span-6 flex flex-col gap-6 items-center lg:items-start">
+              {/* 500x500px Hero Image */}
+              <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl w-full max-w-[500px] aspect-square">
+                <img
+                  src={project.heroImage}
+                  alt={project.name}
+                  width={500}
+                  height={500}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="rounded-full bg-background/80 px-3 py-1 text-[10px] font-bold tracking-widest uppercase text-electric backdrop-blur">
+                    {project.client}
+                  </span>
+                </div>
+              </div>
+
+              {/* 'We Provide' Section with Blue Color Points */}
+              <div className="w-full max-w-[500px] rounded-2xl border border-blue-500/30 bg-blue-950/30 p-6 backdrop-blur-xl shadow-xl">
+                <h3 className="font-display text-xl font-bold tracking-tight text-white border-b border-blue-500/30 pb-3 mb-4 flex items-center gap-2.5">
+                  <Sparkles className="h-4 w-4 text-blue-400" />
+                  We Provide
+                </h3>
+                <ul className="space-y-3">
+                  {project.servicesProvided.map((service, sIdx) => (
+                    <li key={sIdx} className="flex items-center gap-3 text-base font-semibold text-blue-400">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold border border-blue-500/40">
+                        ✓
+                      </span>
+                      {service}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>

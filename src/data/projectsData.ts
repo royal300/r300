@@ -37,6 +37,7 @@ export interface ProjectData {
     instagram?: string;
     facebook?: string;
   };
+  servicesProvided: string[];
   categories: string[];
   creatives: CreativeItem[];
   reels: ReelItem[];
@@ -58,6 +59,11 @@ export const projectsData: ProjectData[] = [
       instagram: "https://instagram.com/happyvalleypark",
       facebook: "https://facebook.com/happyvalleypark",
     },
+    servicesProvided: [
+      "Social Media Management",
+      "Web Development",
+      "Website Maintenance",
+    ],
     categories: ["All", "Social Campaign", "Ad Creatives", "Promotions", "Event Highlights"],
     creatives: [
       {
@@ -141,6 +147,11 @@ export const projectsData: ProjectData[] = [
       instagram: "https://instagram.com/royalenfield",
       facebook: "https://facebook.com/royalenfield",
     },
+    servicesProvided: [
+      "Social Media Management",
+      "Web Development",
+      "Website Maintenance",
+    ],
     categories: ["All", "Product Launch", "Rider Stories", "Test Ride Ads", "Branding"],
     creatives: [
       {
@@ -208,6 +219,11 @@ export const projectsData: ProjectData[] = [
       instagram: "https://instagram.com/spectrumcafe",
       facebook: "https://facebook.com/spectrumcafe",
     },
+    servicesProvided: [
+      "Social Media Management",
+      "Web Development",
+      "Website Maintenance",
+    ],
     categories: ["All", "Menu Creatives", "Brand Aesthetic", "Promotional Ads"],
     creatives: [
       {
@@ -268,6 +284,11 @@ export const projectsData: ProjectData[] = [
       instagram: "https://instagram.com/abanikjewellers",
       facebook: "https://facebook.com/abanikjewellers",
     },
+    servicesProvided: [
+      "Social Media Management",
+      "Web Development",
+      "Website Maintenance",
+    ],
     categories: ["All", "Bridal Heritage", "Festive Collection", "Craftsmanship"],
     creatives: [
       {
@@ -328,6 +349,11 @@ export const projectsData: ProjectData[] = [
       instagram: "https://instagram.com/fashionbrand",
       facebook: "https://facebook.com/fashionbrand",
     },
+    servicesProvided: [
+      "Social Media Management",
+      "Web Development",
+      "Website Maintenance",
+    ],
     categories: ["All", "Lookbook", "Editorial", "Streetwear", "Seasonal Drop"],
     creatives: [
       {
