@@ -131,10 +131,10 @@ export function Projects() {
     <section id="work" ref={ref} className="relative py-16 lg:py-24">
       <div className="shell">
         <SectionHeading
-          eyebrow="SELECTED WORK"
-          title="WORK THAT MOVES"
-          highlight="BUSINESS FORWARD."
-          copy="Every project starts with a business challenge. Our job is to transform that challenge into a digital experience that attracts attention, builds trust and drives action."
+          eyebrow="OUR WORK"
+          title="SOME OF OUR"
+          highlight="BEST PROJECTS."
+          copy="A curated selection of projects where strategy, creativity and execution came together to deliver real, measurable results for our clients."
         />
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
