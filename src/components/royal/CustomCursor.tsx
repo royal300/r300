@@ -17,7 +17,7 @@ export function CustomCursor() {
     const checkDesktop = () => {
       const isLargeScreen = window.innerWidth >= 768;
       const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
-      return isLargeScreen || hasFinePointer;
+      return isLargeScreen && hasFinePointer;
     };
 
     if (!checkDesktop()) {

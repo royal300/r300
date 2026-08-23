@@ -3,16 +3,20 @@ import Lenis from "lenis";
 
 export function SmoothScroll({ children }: { children?: React.ReactNode }) {
   React.useEffect(() => {
-    // Only initialize smooth scroll on desktop / fine pointer devices
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: isTouchDevice ? 0.8 : 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.0,
+      syncTouch: false,
     });
+
+    document.documentElement.classList.add("lenis");
 
     let rafId: number;
     function raf(time: number) {
@@ -23,6 +27,7 @@ export function SmoothScroll({ children }: { children?: React.ReactNode }) {
     rafId = requestAnimationFrame(raf);
 
     return () => {
+      document.documentElement.classList.remove("lenis");
       cancelAnimationFrame(rafId);
       lenis.destroy();
     };
@@ -30,3 +35,4 @@ export function SmoothScroll({ children }: { children?: React.ReactNode }) {
 
   return <>{children}</>;
 }
+

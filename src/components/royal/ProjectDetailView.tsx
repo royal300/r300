@@ -71,6 +71,38 @@ export function ProjectDetailView({ project }: Props) {
     setActiveIndex((prev) => (prev === currentListLength - 1 ? 0 : prev + 1));
   };
 
+  // Finger touch / pointer gesture handlers for sliding gallery left & right
+  const touchStartX = React.useRef<number | null>(null);
+  const touchEndX = React.useRef<number | null>(null);
+  const isDragging = React.useRef<boolean>(false);
+
+  const handleTouchStart = (clientX: number) => {
+    touchStartX.current = clientX;
+    touchEndX.current = clientX;
+    isDragging.current = true;
+  };
+
+  const handleTouchMove = (clientX: number) => {
+    if (!isDragging.current) return;
+    touchEndX.current = clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging.current || touchStartX.current === null || touchEndX.current === null) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const threshold = 35; // minimum horizontal px to trigger next/prev slide
+
+    if (distance > threshold) {
+      handleNext();
+    } else if (distance < -threshold) {
+      handlePrev();
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+    isDragging.current = false;
+  };
+
   return (
     <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-electric/20">
       <AmbientBackground />
@@ -256,7 +288,16 @@ export function ProjectDetailView({ project }: Props) {
                   </button>
 
                   {/* 3D Carousel Cards Container */}
-                  <div className="relative flex w-full max-w-5xl items-center justify-center px-4 perspective-[1200px]">
+                  <div
+                    onTouchStart={(e) => handleTouchStart(e.touches[0].clientX)}
+                    onTouchMove={(e) => handleTouchMove(e.touches[0].clientX)}
+                    onTouchEnd={handleTouchEnd}
+                    onMouseDown={(e) => handleTouchStart(e.clientX)}
+                    onMouseMove={(e) => handleTouchMove(e.clientX)}
+                    onMouseUp={handleTouchEnd}
+                    onMouseLeave={handleTouchEnd}
+                    className="relative flex w-full max-w-5xl items-center justify-center px-4 perspective-[1200px] touch-pan-y cursor-grab active:cursor-grabbing select-none"
+                  >
                     {activeTab === "creatives"
                       ? filteredCreatives.map((item, idx) => {
                           // Offset relative to activeIndex

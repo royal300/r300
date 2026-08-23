@@ -4,8 +4,7 @@ import { cn } from "@/lib/utils";
 import { MagneticButton } from "./MagneticButton";
 
 const links = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
+  { label: "Portfolio", href: "#work" },
   { label: "Clients", href: "#clients" },
   { label: "Pricing", href: "#pricing" },
   { label: "Contact", href: "#contact" },
