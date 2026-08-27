@@ -72,35 +72,32 @@ export function ProjectDetailView({ project }: Props) {
   };
 
   // Finger touch / pointer gesture handlers for sliding gallery left & right
+  // Finger touch swipe handlers for sliding gallery left & right on mobile
   const touchStartX = React.useRef<number | null>(null);
-  const touchEndX = React.useRef<number | null>(null);
-  const isDragging = React.useRef<boolean>(false);
+  const touchStartY = React.useRef<number | null>(null);
 
-  const handleTouchStart = (clientX: number) => {
-    touchStartX.current = clientX;
-    touchEndX.current = clientX;
-    isDragging.current = true;
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
   };
 
-  const handleTouchMove = (clientX: number) => {
-    if (!isDragging.current) return;
-    touchEndX.current = clientX;
-  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = touchStartX.current - endX;
+    const diffY = touchStartY.current - endY;
 
-  const handleTouchEnd = () => {
-    if (!isDragging.current || touchStartX.current === null || touchEndX.current === null) return;
-    const distance = touchStartX.current - touchEndX.current;
-    const threshold = 35; // minimum horizontal px to trigger next/prev slide
-
-    if (distance > threshold) {
-      handleNext();
-    } else if (distance < -threshold) {
-      handlePrev();
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+      if (diffX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
     }
 
     touchStartX.current = null;
-    touchEndX.current = null;
-    isDragging.current = false;
+    touchStartY.current = null;
   };
 
   return (
@@ -288,7 +285,11 @@ export function ProjectDetailView({ project }: Props) {
                   </button>
 
                   {/* 3D Carousel Cards Container */}
-                  <div className="relative flex w-full max-w-5xl items-center justify-center px-4 perspective-[1200px] select-none">
+                  <div 
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    className="relative flex w-full max-w-5xl items-center justify-center px-4 perspective-[1200px] select-none touch-pan-y"
+                  >
                     {activeTab === "creatives"
                       ? filteredCreatives.map((item, idx) => {
                           // Offset relative to activeIndex
