@@ -46,8 +46,7 @@ import paramiko, os, sys
 
 host = "93.127.206.52"
 user = "root"
-import getpass
-password = getpass.getpass("VPS password: ")
+password = "Royal300@2026"
 local_output = ".output"
 remote_base = "/var/www/royal300_portfolio"
 
