@@ -288,16 +288,7 @@ export function ProjectDetailView({ project }: Props) {
                   </button>
 
                   {/* 3D Carousel Cards Container */}
-                  <div
-                    onTouchStart={(e) => handleTouchStart(e.touches[0].clientX)}
-                    onTouchMove={(e) => handleTouchMove(e.touches[0].clientX)}
-                    onTouchEnd={handleTouchEnd}
-                    onMouseDown={(e) => handleTouchStart(e.clientX)}
-                    onMouseMove={(e) => handleTouchMove(e.clientX)}
-                    onMouseUp={handleTouchEnd}
-                    onMouseLeave={handleTouchEnd}
-                    className="relative flex w-full max-w-5xl items-center justify-center px-4 perspective-[1200px] touch-pan-y cursor-grab active:cursor-grabbing select-none"
-                  >
+                  <div className="relative flex w-full max-w-5xl items-center justify-center px-4 perspective-[1200px] select-none">
                     {activeTab === "creatives"
                       ? filteredCreatives.map((item, idx) => {
                           // Offset relative to activeIndex
@@ -339,17 +330,11 @@ export function ProjectDetailView({ project }: Props) {
                               <div className="relative h-full w-full overflow-hidden rounded-2xl">
                                 <img
                                   src={item.image}
-                                  alt={item.title}
+                                  alt=""
                                   className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
 
-                                {/* Category Badge */}
-                                <span className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold text-white backdrop-blur">
-                                  {item.category}
-                                </span>
-
-                                {/* Fullscreen Expand Button (bottom right like reference image) */}
+                                {/* Fullscreen Expand Button */}
                                 {isCenter && (
                                   <button
                                     onClick={(e) => {
@@ -362,16 +347,6 @@ export function ProjectDetailView({ project }: Props) {
                                     <Maximize2 className="h-4 w-4" />
                                   </button>
                                 )}
-
-                                {/* Card Details */}
-                                <div className="absolute bottom-3 left-3 right-12 text-left">
-                                  <h4 className="font-display text-base font-bold text-white sm:text-lg">
-                                    {item.title}
-                                  </h4>
-                                  <p className="line-clamp-2 text-xs text-white/80">
-                                    {item.description}
-                                  </p>
-                                </div>
                               </div>
                             </div>
                           );
@@ -415,10 +390,9 @@ export function ProjectDetailView({ project }: Props) {
                               <div className="relative h-full w-full overflow-hidden rounded-2xl bg-black">
                                 <img
                                   src={item.poster}
-                                  alt={item.title}
+                                  alt=""
                                   className="h-full w-full object-cover opacity-90 transition-transform duration-700 hover:scale-105"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
                                 {/* Play Button in Center */}
                                 <div className="absolute inset-0 flex items-center justify-center">
@@ -427,16 +401,6 @@ export function ProjectDetailView({ project }: Props) {
                                       <Play className="h-6 w-6 fill-current translate-x-0.5" />
                                     </div>
                                   </div>
-                                </div>
-
-                                {/* Top Badges */}
-                                <div className="absolute left-3 top-3 right-3 flex items-center justify-between">
-                                  <span className="rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur">
-                                    {item.duration}
-                                  </span>
-                                  <span className="rounded-full bg-electric/80 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur">
-                                    {item.views} Views
-                                  </span>
                                 </div>
 
                                 {/* Expand Button */}
@@ -452,13 +416,6 @@ export function ProjectDetailView({ project }: Props) {
                                     <Maximize2 className="h-4 w-4" />
                                   </button>
                                 )}
-
-                                {/* Reel Details */}
-                                <div className="absolute bottom-3 left-3 right-12 text-left">
-                                  <h4 className="font-display text-sm font-bold text-white sm:text-base">
-                                    {item.title}
-                                  </h4>
-                                </div>
                               </div>
                             </div>
                           );
@@ -494,21 +451,13 @@ export function ProjectDetailView({ project }: Props) {
               <div className="flex flex-col items-center">
                 <img
                   src={(modalItem.item as CreativeItem).image}
-                  alt={(modalItem.item as CreativeItem).title}
-                  className="max-h-[75vh] w-auto rounded-xl object-contain"
+                  alt=""
+                  className="max-h-[82vh] w-auto rounded-xl object-contain"
                 />
-                <div className="mt-4 p-2 text-center">
-                  <h3 className="font-display text-xl font-bold">
-                    {(modalItem.item as CreativeItem).title}
-                  </h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {(modalItem.item as CreativeItem).description}
-                  </p>
-                </div>
               </div>
             ) : (
               <div className="flex flex-col items-center">
-                <div className="relative aspect-[9/16] h-[75vh] max-h-[650px] w-auto overflow-hidden rounded-xl bg-black">
+                <div className="relative aspect-[9/16] h-[82vh] max-h-[700px] w-auto overflow-hidden rounded-xl bg-black">
                   <video
                     ref={videoRef}
                     src={(modalItem.item as ReelItem).videoUrl}
@@ -526,14 +475,6 @@ export function ProjectDetailView({ project }: Props) {
                   >
                     {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
                   </button>
-                </div>
-                <div className="mt-3 text-center">
-                  <h3 className="font-display text-lg font-bold">
-                    {(modalItem.item as ReelItem).title}
-                  </h3>
-                  <p className="text-xs text-electric font-semibold">
-                    {(modalItem.item as ReelItem).views} Views • {(modalItem.item as ReelItem).duration}
-                  </p>
                 </div>
               </div>
             )}

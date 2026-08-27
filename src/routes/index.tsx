@@ -40,9 +40,7 @@ function Index() {
       <Hero />
 
       <Projects />
-      <Results />
       <Clients />
-      <WhyRoyal300 />
       <Pricing />
       <FinalCTA />
       <Footer />

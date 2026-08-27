@@ -100,12 +100,6 @@
     overflow-x: hidden;
   }
 
-  @media (min-width: 1280px) {
-    body {
-      zoom: 85%;
-    }
-  }
-
   h1,
   h2,
   h3,

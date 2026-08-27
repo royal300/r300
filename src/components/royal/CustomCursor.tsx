@@ -26,7 +26,6 @@ export function CustomCursor() {
     }
 
     setIsDesktop(true);
-    document.documentElement.classList.add("cursor-none-desktop");
 
     let mouseX = -100;
     let mouseY = -100;
@@ -66,10 +65,10 @@ export function CustomCursor() {
 
     const renderLoop = () => {
       // Smooth lerp easing for ring & aura
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
-      glowX += (mouseX - glowX) * 0.08;
-      glowY += (mouseY - glowY) * 0.08;
+      ringX += (mouseX - ringX) * 0.22;
+      ringY += (mouseY - ringY) * 0.22;
+      glowX += (mouseX - glowX) * 0.12;
+      glowY += (mouseY - glowY) * 0.12;
 
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
@@ -99,7 +98,6 @@ export function CustomCursor() {
       window.removeEventListener("mouseenter", onMouseEnter);
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseup", onMouseUp);
-      document.documentElement.classList.remove("cursor-none-desktop");
     };
   }, [isVisible]);
 

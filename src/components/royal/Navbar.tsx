@@ -37,9 +37,10 @@ export function Navbar() {
         <a
           href="#top"
           data-cursor="button"
-          className="font-display text-lg font-semibold tracking-[0.18em] sm:text-xl"
+          className="font-display text-lg font-semibold tracking-[0.18em] sm:text-xl inline-flex items-center gap-2.5"
         >
-          ROYAL<span className="grad-text">300</span>
+          <img src="/logo.jpg" alt="ROYAL300 Logo" className="h-7 w-7 rounded-full object-cover border border-primary/20 shadow-sm" />
+          <span>ROYAL<span className="grad-text">300</span></span>
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">
