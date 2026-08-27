@@ -1,13 +1,14 @@
 import * as React from "react";
+import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MagneticButton } from "./MagneticButton";
 
 const links = [
-  { label: "Portfolio", href: "#work" },
-  { label: "Clients", href: "#clients" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
+  { label: "Portfolio", href: "/#work" },
+  { label: "Clients", href: "/#clients" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {
@@ -34,13 +35,13 @@ export function Navbar() {
             : "color-mix(in oklab, white 58%, transparent)",
         }}
       >
-        <a
-          href="#top"
+        <Link
+          to="/"
           data-cursor="button"
           className="inline-flex items-center"
         >
           <img src="/logo.jpg" alt="ROYAL300 Logo" className="h-9 sm:h-10 w-auto rounded-xl object-contain shadow-sm" />
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (
@@ -90,11 +91,13 @@ export function Navbar() {
             ))}
           </ul>
           <a
-            href="#contact"
+            href="https://wa.me/918617201731"
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setOpen(false)}
             className="mt-3 block rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric))] px-6 py-3.5 text-center text-sm font-semibold text-primary-foreground"
           >
-            Let's Grow →
+            Chat on WhatsApp →
           </a>
         </div>
       )}

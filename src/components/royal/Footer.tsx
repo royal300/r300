@@ -23,7 +23,6 @@ const columns = [
     links: [
       { label: "Email: royal300ad@gmail.com", href: "mailto:royal300ad@gmail.com" },
       { label: "Mobile: 8617201731", href: "tel:+918617201731" },
-      { label: "WhatsApp Chat", href: "https://wa.me/918617201731" },
       { label: "Website: royal300.com", href: "https://royal300.com" },
     ],
   },
@@ -35,13 +34,10 @@ export function Footer() {
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
           <div>
-            <div className="flex items-center gap-3.5 mb-2">
-              <img src="/logo.jpg" alt="ROYAL300 Logo" className="h-12 w-12 rounded-full object-cover border border-primary/20 shadow-md" />
-              <p className="font-display text-[clamp(2.4rem,7vw,4.5rem)] font-medium leading-none tracking-[0.06em]">
-                ROYAL<span className="grad-text">300</span>
-              </p>
-            </div>
-            <p className="mt-5 max-w-xs text-sm text-muted-foreground">
+            <a href="/" className="inline-block mb-2">
+              <img src="/logo.jpg" alt="ROYAL300 Logo" className="h-12 sm:h-14 w-auto rounded-2xl object-contain shadow-md" />
+            </a>
+            <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Digital experiences. Creative growth. Business impact.
             </p>
           </div>
