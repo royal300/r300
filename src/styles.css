@@ -100,6 +100,12 @@
     overflow-x: hidden;
   }
 
+  @media (min-width: 1280px) {
+    body {
+      zoom: 85%;
+    }
+  }
+
   h1,
   h2,
   h3,
@@ -123,11 +129,11 @@
 }
 
 @utility shell {
-  width: 92%;
-  max-width: 1500px;
+  width: 90%;
+  max-width: 1400px;
   margin-inline: auto;
   @media (min-width: 1024px) {
-    width: 85%;
+    width: 80%;
   }
 }
 
