@@ -105,12 +105,12 @@ export const projectsData: ProjectData[] = [
     reels: [
       {
         id: "hvr-1",
-        title: "Extreme Water Slide Ride-Through",
+        title: "Water Park - Official Showcase",
         category: "Reels",
-        poster: "https://images.unsplash.com/photo-1582650625119-3a31f8fa2699?auto=format&fit=crop&w=800&q=80",
-        videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-swimming-pool-in-a-sunny-day-41611-large.mp4",
+        poster: "/reels/happy_valley_park/Screenshot 2026-08-27 212259.png",
+        videoUrl: "/reels/happy_valley_park/Water Park- Final.mp4",
         views: "142K",
-        duration: "0:24",
+        duration: "0:30",
       },
       {
         id: "hvr-2",
