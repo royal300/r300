@@ -43,6 +43,7 @@ echo "📤  Uploading .output/ to VPS..."
 # Using Python paramiko (cross-platform, no sshpass needed)
 python - << 'PYEOF'
 import paramiko, os, sys
+sys.stdout.reconfigure(encoding='utf-8')
 
 host = "93.127.206.52"
 user = "root"
