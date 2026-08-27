@@ -41,7 +41,7 @@ echo ""
 echo "📤  Uploading .output/ to VPS..."
 
 # Using Python paramiko (cross-platform, no sshpass needed)
-python3 - << 'PYEOF'
+python - << 'PYEOF'
 import paramiko, os, sys
 
 host = "93.127.206.52"
