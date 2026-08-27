@@ -59,7 +59,7 @@ def upload_dir(sftp, local_dir, remote_dir):
         if os.path.isdir(lp):
             upload_dir(sftp, lp, rp)
         else:
-            print(f"  → {rp}")
+            print(f"  -> {rp}")
             sftp.put(lp, rp)
 
 client = paramiko.SSHClient()
