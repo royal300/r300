@@ -37,10 +37,9 @@ export function Navbar() {
         <a
           href="#top"
           data-cursor="button"
-          className="font-display text-lg font-semibold tracking-[0.18em] sm:text-xl inline-flex items-center gap-2.5"
+          className="inline-flex items-center"
         >
-          <img src="/logo.jpg" alt="ROYAL300 Logo" className="h-7 w-7 rounded-full object-cover border border-primary/20 shadow-sm" />
-          <span>ROYAL<span className="grad-text">300</span></span>
+          <img src="/logo.jpg" alt="ROYAL300 Logo" className="h-9 sm:h-10 w-auto rounded-xl object-contain shadow-sm" />
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">
@@ -59,11 +58,11 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <MagneticButton
-            hoverLabel="Let's Grow ↗"
+            hoverLabel="Chat on WhatsApp ↗"
             className="hidden sm:inline-flex"
-            href="#contact"
+            href="https://wa.me/918617201731"
           >
-            Let's Grow →
+            Chat on WhatsApp →
           </MagneticButton>
           <button
             aria-label="Open menu"

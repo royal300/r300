@@ -21,10 +21,10 @@ const columns = [
   {
     title: "Connect",
     links: [
-      { label: "Instagram", href: "#contact" },
-      { label: "LinkedIn", href: "#contact" },
-      { label: "WhatsApp", href: "#contact" },
-      { label: "Email", href: "#contact" },
+      { label: "Email: royal300ad@gmail.com", href: "mailto:royal300ad@gmail.com" },
+      { label: "Mobile: 8617201731", href: "tel:+918617201731" },
+      { label: "WhatsApp Chat", href: "https://wa.me/918617201731" },
+      { label: "Website: royal300.com", href: "https://royal300.com" },
     ],
   },
 ];

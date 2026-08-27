@@ -52,13 +52,51 @@ export function FinalCTA() {
         >
           Tell us where your business is today. We'll help you identify where it can go next.
         </p>
+        {/* Contact Info Cards */}
         <div
           data-reveal
-          className="reveal mt-10 flex flex-wrap justify-center gap-3"
+          className="reveal mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3 text-left"
+          style={{ ["--reveal-delay" as string]: "180ms" }}
+        >
+          <a
+            href="mailto:royal300ad@gmail.com"
+            className="flex flex-col gap-1 rounded-2xl border border-border/80 bg-card/80 p-4 backdrop-blur transition-all hover:border-electric/60 hover:scale-[1.02]"
+          >
+            <span className="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">Email</span>
+            <span className="text-xs font-bold text-foreground truncate">royal300ad@gmail.com</span>
+          </a>
+
+          <a
+            href="https://wa.me/918617201731"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col gap-1 rounded-2xl border border-border/80 bg-card/80 p-4 backdrop-blur transition-all hover:border-electric/60 hover:scale-[1.02]"
+          >
+            <span className="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">Mobile / WhatsApp</span>
+            <span className="text-xs font-bold text-foreground">8617201731</span>
+          </a>
+
+          <a
+            href="https://royal300.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col gap-1 rounded-2xl border border-border/80 bg-card/80 p-4 backdrop-blur transition-all hover:border-electric/60 hover:scale-[1.02]"
+          >
+            <span className="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">Website</span>
+            <span className="text-xs font-bold text-foreground">royal300.com</span>
+          </a>
+        </div>
+
+        <div
+          data-reveal
+          className="reveal mt-10 flex flex-wrap justify-center gap-4"
           style={{ ["--reveal-delay" as string]: "240ms" }}
         >
-          <MagneticButton hoverLabel="Start a Conversation ↗" href="#contact">
-            Start a Conversation →
+          <MagneticButton
+            hoverLabel="Chat on WhatsApp ↗"
+            href="https://wa.me/918617201731"
+          >
+            Chat on WhatsApp →
           </MagneticButton>
           <MagneticButton variant="ghost" href="#work">
             View Our Work

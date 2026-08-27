@@ -108,19 +108,8 @@ function ParallaxDesktopCard({ p, index }: { p: ProjectData; index: number }) {
               </p>
             </div>
 
-            {/* Metrics & CTA Button */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border/40">
-              <div className="flex flex-wrap gap-2">
-                {p.metrics.slice(0, 2).map((m) => (
-                  <span
-                    key={m}
-                    className="rounded-lg border border-border/60 bg-background/60 px-3 py-1.5 text-xs font-semibold text-foreground"
-                  >
-                    {m}
-                  </span>
-                ))}
-              </div>
-
+            {/* CTA Button aligned to Left */}
+            <div className="pt-4 border-t border-border/40 flex justify-start">
               <div className="relative overflow-hidden inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric)_55%,var(--violet))] px-6 py-3 text-sm font-bold text-white shadow-[0_12px_30px_-10px_color-mix(in_oklab,var(--electric)_60%,transparent)] transition-all duration-300 group-hover:shadow-[0_18px_40px_-10px_color-mix(in_oklab,var(--electric)_80%,transparent)] group-hover:scale-105">
                 <span>View Project</span>
                 <span className="text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>
