@@ -321,11 +321,11 @@ export function ProjectDetailView({ project }: Props) {
                                   : "z-10 border-border/40 bg-card/60 opacity-60 backdrop-blur-sm shadow-xl"
                               }`}
                               style={{
-                                transform: `translateX(${offset * (window.innerWidth < 640 ? 140 : 260)}px) scale(${
+                                transform: `translateX(${offset * ((typeof window !== "undefined" && window.innerWidth < 640) ? 140 : 260)}px) scale(${
                                   1 - absOffset * 0.15
                                 }) rotateY(${offset * -15}deg)`,
-                                width: window.innerWidth < 640 ? "240px" : "340px",
-                                height: window.innerWidth < 640 ? "340px" : "460px",
+                                width: (typeof window !== "undefined" && window.innerWidth < 640) ? "240px" : "340px",
+                                height: (typeof window !== "undefined" && window.innerWidth < 640) ? "340px" : "460px",
                               }}
                             >
                               <div className="relative h-full w-full overflow-hidden rounded-2xl">
@@ -381,11 +381,11 @@ export function ProjectDetailView({ project }: Props) {
                                   : "z-10 border-border/40 bg-card/60 opacity-60 backdrop-blur-sm shadow-xl"
                               }`}
                               style={{
-                                transform: `translateX(${offset * (window.innerWidth < 640 ? 140 : 250)}px) scale(${
+                                transform: `translateX(${offset * ((typeof window !== "undefined" && window.innerWidth < 640) ? 140 : 250)}px) scale(${
                                   1 - absOffset * 0.15
                                 }) rotateY(${offset * -15}deg)`,
-                                width: window.innerWidth < 640 ? "220px" : "300px",
-                                height: window.innerWidth < 640 ? "360px" : "480px",
+                                width: (typeof window !== "undefined" && window.innerWidth < 640) ? "220px" : "300px",
+                                height: (typeof window !== "undefined" && window.innerWidth < 640) ? "360px" : "480px",
                               }}
                             >
                               <div className="relative h-full w-full overflow-hidden rounded-2xl bg-black">

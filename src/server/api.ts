@@ -53,6 +53,27 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+function safeJsonStringify(val: any, fallback: any = []): string {
+  if (val === undefined || val === null) {
+    return JSON.stringify(fallback);
+  }
+  if (typeof val === 'string') {
+    if (val === '[object Object]') return JSON.stringify(fallback);
+    try {
+      JSON.parse(val);
+      return val;
+    } catch {
+      return JSON.stringify(val);
+    }
+  }
+  try {
+    return JSON.stringify(val);
+  } catch {
+    return JSON.stringify(fallback);
+  }
+}
+
+
 // Find base upload directory
 function getUploadDir(): string {
   // In production VPS, check if /var/www/royal300_portfolio/public/uploads exists or use public/uploads
@@ -369,10 +390,10 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
             copy,
             fullDesc,
             heroImage,
-            JSON.stringify(metrics),
-            JSON.stringify(links),
-            JSON.stringify(servicesProvided),
-            JSON.stringify(categories),
+            safeJsonStringify(metrics, []),
+            safeJsonStringify(links, {}),
+            safeJsonStringify(servicesProvided, []),
+            safeJsonStringify(categories, ['All']),
             nextOrder,
           ]
         )) as any[];
@@ -417,14 +438,22 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
         const fullDesc =
           body.full_description !== undefined ? body.full_description : current.full_description;
         const heroImage = body.hero_image !== undefined ? body.hero_image : current.hero_image;
-        const metrics = body.metrics !== undefined ? JSON.stringify(body.metrics) : current.metrics;
-        const links = body.links !== undefined ? JSON.stringify(body.links) : current.links;
-        const servicesProvided =
-          body.services_provided !== undefined
-            ? JSON.stringify(body.services_provided)
-            : current.services_provided;
-        const categories =
-          body.categories !== undefined ? JSON.stringify(body.categories) : current.categories;
+        const metrics = safeJsonStringify(
+          body.metrics !== undefined ? body.metrics : current.metrics,
+          []
+        );
+        const links = safeJsonStringify(
+          body.links !== undefined ? body.links : current.links,
+          {}
+        );
+        const servicesProvided = safeJsonStringify(
+          body.services_provided !== undefined ? body.services_provided : current.services_provided,
+          []
+        );
+        const categories = safeJsonStringify(
+          body.categories !== undefined ? body.categories : current.categories,
+          ['All']
+        );
         const no = body.no !== undefined ? body.no : current.no;
         const displayOrder =
           body.display_order !== undefined ? body.display_order : current.display_order;
