@@ -241,8 +241,8 @@ function AdminPage() {
 
         <div className="relative w-full max-w-md bg-[#0e131f]/90 border border-white/10 backdrop-blur-2xl rounded-3xl p-8 sm:p-10 shadow-2xl">
           <div className="flex flex-col items-center text-center">
-            <div className="h-16 w-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20 mb-6">
-              <Shield className="w-8 h-8 text-white" />
+            <div className="h-16 w-16 rounded-2xl overflow-hidden shadow-lg shadow-blue-500/20 mb-6 border border-white/20 bg-[#0e131f]">
+              <img src="/favicon.png" alt="ROYAL300 Logo" className="h-full w-full object-cover" />
             </div>
             <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white">
               ROYAL300 Admin
@@ -326,8 +326,8 @@ function AdminPage() {
       <header className="sticky top-0 z-40 bg-[#0e131f]/80 backdrop-blur-xl border-b border-white/10">
         <div className="w-[90%] mx-auto px-2 sm:px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-md shadow-blue-500/20">
-              <Shield className="w-5 h-5 text-white" />
+            <div className="h-9 w-9 rounded-xl overflow-hidden shadow-md shadow-blue-500/20 border border-white/20 bg-[#0e131f]">
+              <img src="/favicon.png" alt="ROYAL300 Logo" className="h-full w-full object-cover" />
             </div>
             <div>
               <span className="font-display font-bold text-white text-base tracking-tight">
