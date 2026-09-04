@@ -358,7 +358,7 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
 
         const [result] = (await pool.query(
           `INSERT INTO clients 
-          (slug, no, name, client_title, category, copy, full_description, hero_image, metrics, links, services_provided, categories, display_order, is_active)
+          (\`slug\`, \`no\`, \`name\`, \`client_title\`, \`category\`, \`copy\`, \`full_description\`, \`hero_image\`, \`metrics\`, \`links\`, \`services_provided\`, \`categories\`, \`display_order\`, \`is_active\`)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`,
           [
             uniqueSlug,
@@ -432,9 +432,9 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
 
         await pool.query(
           `UPDATE clients SET 
-          slug = ?, no = ?, name = ?, client_title = ?, category = ?, copy = ?, full_description = ?,
-          hero_image = ?, metrics = ?, links = ?, services_provided = ?, categories = ?, display_order = ?, is_active = ?
-          WHERE id = ?`,
+          \`slug\` = ?, \`no\` = ?, \`name\` = ?, \`client_title\` = ?, \`category\` = ?, \`copy\` = ?, \`full_description\` = ?,
+          \`hero_image\` = ?, \`metrics\` = ?, \`links\` = ?, \`services_provided\` = ?, \`categories\` = ?, \`display_order\` = ?, \`is_active\` = ?
+          WHERE \`id\` = ?`,
           [
             slug,
             no,
