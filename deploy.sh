@@ -27,8 +27,8 @@ echo ""
 echo "📦  Pushing to GitHub ($BRANCH)..."
 git add -A
 git commit -m "Deploy: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null || echo "Nothing new to commit."
-git push origin "$BRANCH"
-echo "✅  GitHub up to date."
+git push origin "$BRANCH" || echo "⚠️  Git push skipped (GitHub credentials required on terminal). Continuing VPS deployment..."
+echo "✅  Code prepared."
 
 # ── 2. Build locally with node-server preset ───────────────
 echo ""
@@ -41,7 +41,7 @@ echo ""
 echo "📤  Uploading .output/ to VPS..."
 
 # Using Python paramiko (cross-platform, no sshpass needed)
-python - << 'PYEOF'
+python3 - << 'PYEOF'
 import paramiko, os, sys
 sys.stdout.reconfigure(encoding='utf-8')
 

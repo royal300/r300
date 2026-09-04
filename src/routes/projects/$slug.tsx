@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectBySlug } from "@/data/projectsData";
 import { ProjectDetailView } from "@/components/royal/ProjectDetailView";
+import { useProject } from "@/hooks/use-projects";
 
 export const Route = createFileRoute("/projects/$slug")({
   head: ({ params }) => {
@@ -21,9 +22,18 @@ export const Route = createFileRoute("/projects/$slug")({
 
 function ProjectRouteComponent() {
   const { slug } = Route.useParams();
-  const project = getProjectBySlug(slug);
+  const { project, isLoading } = useProject(slug);
 
   if (!project) {
+    if (isLoading) {
+      return (
+        <div className="flex min-h-screen flex-col items-center justify-center p-4 text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mb-4" />
+          <p className="text-sm text-muted-foreground">Loading project details...</p>
+        </div>
+      );
+    }
+
     return (
       <div className="flex min-h-screen flex-col items-center justify-center p-4 text-center">
         <h1 className="font-display text-3xl font-bold">Project Not Found</h1>
@@ -36,3 +46,4 @@ function ProjectRouteComponent() {
 
   return <ProjectDetailView project={project} />;
 }
+

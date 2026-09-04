@@ -2,7 +2,8 @@ import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import { useReveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
-import { projectsData, ProjectData } from "@/data/projectsData";
+import { ProjectData } from "@/data/projectsData";
+import { useProjects } from "@/hooks/use-projects";
 
 /* Mobile Sticky Stacking Parallax Card */
 function ParallaxMobileCard({ p, index }: { p: ProjectData; index: number }) {
@@ -58,22 +59,24 @@ function ParallaxDesktopCard({ p, index }: { p: ProjectData; index: number }) {
   const onMove = (e: React.PointerEvent) => {
     const el = cardRef.current;
     if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - (r.left + r.width / 2)) / r.width;
-    const y = (e.clientY - (r.top + r.height / 2)) / r.height;
-    el.style.transform = `perspective(1000px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg) translateY(-4px)`;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(1000px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg) translateZ(0)`;
   };
 
-  const reset = () => {
-    if (cardRef.current) cardRef.current.style.transform = "perspective(1000px)";
+  const onLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.transform = "perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0)";
   };
 
   // Calculate sticky offset for stacking cards effect
-  const stickyTop = 110 + index * 24;
+  const stickyTop = 90 + index * 24;
 
   return (
     <div
-      className="sticky mb-12 sm:mb-16 last:mb-0 transition-all duration-500"
+      className="sticky mb-10 last:mb-0 transition-all duration-500 will-change-transform"
       style={{ top: `${stickyTop}px` }}
     >
       <Link
@@ -84,35 +87,50 @@ function ParallaxDesktopCard({ p, index }: { p: ProjectData; index: number }) {
         <article
           ref={cardRef}
           onPointerMove={onMove}
-          onPointerLeave={reset}
-          className="relative overflow-hidden rounded-[2rem] border border-border/80 bg-card/90 p-8 lg:p-10 backdrop-blur-2xl shadow-[0_30px_70px_-25px_rgba(0,0,0,0.6)] transition-all duration-700 ease-out hover:border-electric/60 hover:shadow-[0_40px_90px_-30px_color-mix(in_oklab,var(--electric)_50%,transparent)] grid grid-cols-12 gap-8 items-center"
+          onPointerLeave={onLeave}
+          className="relative overflow-hidden rounded-[2.5rem] border border-border/80 bg-card/95 p-7 lg:p-9 backdrop-blur-2xl shadow-[0_30px_70px_-25px_rgba(0,0,0,0.8)] transition-all duration-500 hover:border-electric/50 hover:shadow-[0_40px_80px_-20px_rgba(43,89,255,0.25)] grid grid-cols-12 gap-8 items-center"
         >
-          {/* Left Column: Project Details */}
-          <div className="col-span-7 flex flex-col justify-between h-full gap-6">
+          {/* Subtle glowing corner */}
+          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-electric/10 blur-3xl transition-opacity duration-700 group-hover:opacity-100 opacity-40" />
+
+          {/* Left Column: Info & Details */}
+          <div className="col-span-7 flex flex-col justify-between h-full py-1">
             <div>
               <div className="flex items-center gap-3">
-                <span className="rounded-full bg-electric/15 px-3 py-1 font-display text-xs font-bold text-electric">
+                <span className="rounded-full bg-electric/15 px-3.5 py-1 font-display text-xs font-bold text-electric border border-electric/30 backdrop-blur-md">
                   PROJECT {p.no}
                 </span>
-                <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-                  {p.category.split("•")[0]}
+                <span className="font-display text-xs uppercase tracking-wider text-muted-foreground">
+                  {p.category}
                 </span>
               </div>
 
-              <h3 className="mt-4 font-display text-3xl xl:text-4xl font-bold tracking-tight text-foreground group-hover:text-electric transition-colors">
+              <h3 className="mt-4 font-display text-2xl lg:text-3xl font-bold tracking-tight text-foreground group-hover:text-electric transition-colors">
                 {p.name}
               </h3>
 
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+              <p className="mt-3 text-sm lg:text-base text-muted-foreground leading-relaxed">
                 {p.copy}
               </p>
+
+              {/* Metrics Pills */}
+              <div className="mt-6 flex flex-wrap gap-2.5">
+                {p.metrics.map((m) => (
+                  <span
+                    key={m}
+                    className="rounded-xl border border-border bg-secondary/50 px-3.5 py-1.5 font-display text-xs font-semibold text-foreground backdrop-blur-sm"
+                  >
+                    {m}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            {/* CTA Button aligned to Left */}
-            <div className="pt-4 border-t border-border/40 flex justify-start">
-              <div className="relative overflow-hidden inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric)_55%,var(--violet))] px-6 py-3 text-sm font-bold text-white shadow-[0_12px_30px_-10px_color-mix(in_oklab,var(--electric)_60%,transparent)] transition-all duration-300 group-hover:shadow-[0_18px_40px_-10px_color-mix(in_oklab,var(--electric)_80%,transparent)] group-hover:scale-105">
-                <span>View Project</span>
-                <span className="text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>
+            {/* CTA Button */}
+            <div className="mt-8">
+              <div className="relative overflow-hidden inline-flex items-center gap-3 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric)_55%,var(--violet))] px-7 py-3.5 text-sm font-bold text-white shadow-lg transition-transform duration-300 group-hover:scale-105">
+                <span>View Full Case Study</span>
+                <span className="text-base transition-transform duration-300 group-hover:translate-x-1">→</span>
               </div>
             </div>
           </div>
@@ -137,6 +155,7 @@ function ParallaxDesktopCard({ p, index }: { p: ProjectData; index: number }) {
 
 export function Projects() {
   const ref = useReveal<HTMLDivElement>();
+  const { projects } = useProjects();
 
   return (
     <section id="work" ref={ref} className="relative py-16 lg:py-24">
@@ -150,15 +169,15 @@ export function Projects() {
 
         {/* Desktop PC View: Parallax Stacking Cards */}
         <div className="mt-12 hidden lg:block relative pb-20">
-          {projectsData.map((p, i) => (
-            <ParallaxDesktopCard key={p.no} p={p} index={i} />
+          {projects.map((p, i) => (
+            <ParallaxDesktopCard key={p.slug || p.no} p={p} index={i} />
           ))}
         </div>
 
         {/* Mobile View: Parallax Stacking Cards */}
         <div className="mt-10 lg:hidden relative pb-12">
-          {projectsData.map((p, i) => (
-            <ParallaxMobileCard key={p.no} p={p} index={i} />
+          {projects.map((p, i) => (
+            <ParallaxMobileCard key={p.slug || p.no} p={p} index={i} />
           ))}
         </div>
       </div>

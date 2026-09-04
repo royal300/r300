@@ -1,12 +1,13 @@
 import { useReveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
+import { useProjects } from "@/hooks/use-projects";
 
-const clients = [
+const defaultClients = [
   "HAPPY VALLEY PARK",
   "ROYAL ENFIELD",
   "SPECTRUM CAFE",
   "A BANIK JEWELLERS",
-  "NORTHSIDE RETAIL",
+  "FASHION / RETAIL BRAND",
   "AURUM PROPERTIES",
   "VELA HOSPITALITY",
   "URBAN THREADS",
@@ -14,6 +15,12 @@ const clients = [
 
 export function Clients() {
   const ref = useReveal<HTMLDivElement>();
+  const { projects } = useProjects();
+
+  const clientNames =
+    projects && projects.length > 0
+      ? projects.map((p) => p.name)
+      : defaultClients;
 
   return (
     <section id="clients" ref={ref} className="relative py-16 lg:py-22">
@@ -26,9 +33,9 @@ export function Clients() {
         />
 
         <div className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-[1.75rem] border border-border bg-border sm:grid-cols-3 lg:grid-cols-4">
-          {clients.map((c, i) => (
+          {clientNames.map((c, i) => (
             <div
-              key={c}
+              key={`${c}-${i}`}
               data-reveal
               className="reveal group grid min-h-28 place-items-center bg-background px-5 py-8 transition-colors duration-500 hover:bg-secondary/60"
               style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}
@@ -43,3 +50,4 @@ export function Clients() {
     </section>
   );
 }
+
