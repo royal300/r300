@@ -984,16 +984,32 @@ function ClientEditorStudio({
 
   return (
     <div className="space-y-6">
+      {/* Top Breadcrumb Navigation */}
+      <div className="flex items-center gap-2 text-xs text-gray-400">
+        <button
+          onClick={onBack}
+          className="hover:text-blue-400 transition-colors flex items-center gap-1 cursor-pointer font-medium"
+        >
+          <span>Dashboard</span>
+        </button>
+        <span>/</span>
+        <span className="text-gray-200 font-semibold">{formData.name || "Client Studio"}</span>
+      </div>
+
       {/* Studio Header Bar */}
       <div className="bg-[#0e131f]/95 border border-white/10 rounded-2xl p-5 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <button
             onClick={onBack}
-            className="p-2 bg-white/5 hover:bg-white/10 rounded-xl text-gray-300 hover:text-white transition-colors cursor-pointer"
-            title="Back to Clients"
+            className="flex items-center gap-2 px-3.5 py-2.5 bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/30 hover:border-blue-500/50 rounded-xl text-blue-300 hover:text-white text-xs font-bold transition-all cursor-pointer shadow-sm group"
+            title="Back to Main Dashboard"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            <span>Back to Dashboard</span>
           </button>
+
+          <div className="h-8 w-[1px] bg-white/10 hidden sm:block" />
+
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-blue-400">
