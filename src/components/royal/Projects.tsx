@@ -112,18 +112,6 @@ function ParallaxDesktopCard({ p, index }: { p: ProjectData; index: number }) {
               <p className="mt-3 text-sm lg:text-base text-muted-foreground leading-relaxed">
                 {p.copy}
               </p>
-
-              {/* Metrics Pills */}
-              <div className="mt-6 flex flex-wrap gap-2.5">
-                {p.metrics.map((m) => (
-                  <span
-                    key={m}
-                    className="rounded-xl border border-border bg-secondary/50 px-3.5 py-1.5 font-display text-xs font-semibold text-foreground backdrop-blur-sm"
-                  >
-                    {m}
-                  </span>
-                ))}
-              </div>
             </div>
 
             {/* CTA Button */}

@@ -12,7 +12,6 @@ import {
   Image as ImageIcon,
   Film,
   CheckCircle2,
-  AlertCircle,
   Eye,
   RefreshCw,
   Globe,
@@ -20,9 +19,7 @@ import {
   Facebook,
   ArrowLeft,
   X,
-  Play,
   Layers,
-  ChevronRight,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -42,14 +39,11 @@ interface ClientItem {
   no: string;
   name: string;
   client_title: string;
-  category: string;
   copy: string;
   full_description: string;
   hero_image: string;
-  metrics: string[];
   links: { website?: string; instagram?: string; facebook?: string };
   services_provided: string[];
-  categories: string[];
   display_order: number;
   is_active: boolean;
   media_count?: number;
@@ -69,15 +63,12 @@ function AdminPage() {
   // Currently editing client (null = list view)
   const [editingClient, setEditingClient] = React.useState<ClientItem | null>(null);
   const [activeTab, setActiveTab] = React.useState<
-    "details" | "thumbnail" | "links" | "metrics" | "creatives" | "reels"
+    "details" | "thumbnail" | "links" | "creatives" | "reels"
   >("details");
 
   // Add client modal state
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
   const [newClientName, setNewClientName] = React.useState("");
-  const [newClientCategory, setNewClientCategory] = React.useState(
-    "Digital Marketing • Social Media"
-  );
   const [addLoading, setAddLoading] = React.useState(false);
 
   // Check login state
@@ -107,7 +98,6 @@ function AdminPage() {
       const data = await res.json();
       if (data.success && Array.isArray(data.clients)) {
         setClients(data.clients);
-        // If currently editing, refresh current editing client
         if (editingClient) {
           const updated = data.clients.find((c: ClientItem) => c.id === editingClient.id);
           if (updated) setEditingClient(updated);
@@ -171,7 +161,6 @@ function AdminPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: newClientName.trim(),
-          category: newClientCategory.trim(),
         }),
       });
       const data = await res.json();
@@ -180,7 +169,6 @@ function AdminPage() {
         setIsAddModalOpen(false);
         setNewClientName("");
         await fetchClients();
-        // Immediately open editor for the new client
         const created = data.client;
         if (created) {
           const freshRes = await fetch("/api/admin/clients");
@@ -243,12 +231,11 @@ function AdminPage() {
   };
 
   // -------------------------------------------------------------
-  // RENDER LOGIN SCREEN
+  // LOGIN SCREEN
   // -------------------------------------------------------------
   if (isAuthenticated === false) {
     return (
       <div className="min-h-screen bg-[#07090e] text-white flex flex-col items-center justify-center p-4 relative overflow-hidden font-sans">
-        {/* Ambient background glow */}
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none" />
 
@@ -312,7 +299,6 @@ function AdminPage() {
     );
   }
 
-  // Loading auth check
   if (isAuthenticated === null) {
     return (
       <div className="min-h-screen bg-[#07090e] flex items-center justify-center">
@@ -322,12 +308,11 @@ function AdminPage() {
   }
 
   // -------------------------------------------------------------
-  // RENDER AUTHENTICATED ADMIN DASHBOARD
+  // AUTHENTICATED DASHBOARD
   // -------------------------------------------------------------
   const filteredClients = clients.filter(
     (c) =>
       c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
       c.slug.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -355,7 +340,6 @@ function AdminPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Database status badge */}
             <div className="hidden sm:flex items-center gap-2 text-xs text-gray-400 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>MySQL: royal300_portfolio</span>
@@ -383,9 +367,6 @@ function AdminPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         {editingClient ? (
-          /* =======================================================
-             CLIENT EDITOR STUDIO
-             ======================================================= */
           <ClientEditorStudio
             client={editingClient}
             activeTab={activeTab}
@@ -399,9 +380,6 @@ function AdminPage() {
             }}
           />
         ) : (
-          /* =======================================================
-             CLIENTS LIST & DASHBOARD OVERVIEW
-             ======================================================= */
           <div className="space-y-8">
             {/* Stat Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -426,7 +404,7 @@ function AdminPage() {
                 <div className="mt-3 font-display text-3xl font-bold text-white">
                   {totalCreatives}
                 </div>
-                <div className="mt-1 text-xs text-gray-400">Carousel image cards</div>
+                <div className="mt-1 text-xs text-gray-400">Carousel images</div>
               </div>
 
               <div className="bg-[#0e131f]/90 border border-white/10 rounded-2xl p-5 shadow-lg">
@@ -437,7 +415,7 @@ function AdminPage() {
                 <div className="mt-3 font-display text-3xl font-bold text-white">
                   {totalReels}
                 </div>
-                <div className="mt-1 text-xs text-gray-400">Vertical MP4 reels</div>
+                <div className="mt-1 text-xs text-gray-400">9:16 vertical reels</div>
               </div>
 
               <div className="bg-[#0e131f]/90 border border-white/10 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
@@ -454,7 +432,7 @@ function AdminPage() {
               </div>
             </div>
 
-            {/* Client Management Header & Search */}
+            {/* Clients List Header & Search */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
               <div>
                 <h2 className="font-display text-xl sm:text-2xl font-bold text-white tracking-tight">
@@ -573,12 +551,14 @@ function AdminPage() {
 
                       {/* Content Info */}
                       <div className="p-5">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-blue-400 line-clamp-1">
-                          {client.category || "Uncategorized"}
-                        </div>
-                        <h3 className="font-display text-lg font-bold text-white mt-1 group-hover:text-blue-400 transition-colors line-clamp-1">
+                        <h3 className="font-display text-lg font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
                           {client.name}
                         </h3>
+                        {client.client_title && (
+                          <div className="text-xs text-blue-400 mt-0.5 line-clamp-1">
+                            {client.client_title}
+                          </div>
+                        )}
                         <p className="text-xs text-gray-400 mt-2 line-clamp-2 leading-relaxed">
                           {client.copy || client.full_description || "No description set yet."}
                         </p>
@@ -604,7 +584,7 @@ function AdminPage() {
                           to="/projects/$slug"
                           params={{ slug: client.slug }}
                           target="_blank"
-                          title="View case study page"
+                          title="View public case study"
                           className="text-xs text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-xl transition-colors inline-flex items-center gap-1"
                         >
                           <Eye className="w-3.5 h-3.5" />
@@ -638,9 +618,7 @@ function AdminPage() {
         )}
       </main>
 
-      {/* =======================================================
-          MODAL: ADD NEW CLIENT
-          ======================================================= */}
+      {/* MODAL: ADD NEW CLIENT */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
           <div className="relative w-full max-w-lg bg-[#0e131f] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl">
@@ -678,19 +656,6 @@ function AdminPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-                  Category / Specialization
-                </label>
-                <input
-                  type="text"
-                  value={newClientCategory}
-                  onChange={(e) => setNewClientCategory(e.target.value)}
-                  placeholder="e.g. Digital Marketing • Campaign Creative • Social Media"
-                  className="w-full bg-[#161c2c] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-                />
-              </div>
-
               <div className="pt-4 flex items-center justify-end gap-3">
                 <button
                   type="button"
@@ -720,8 +685,8 @@ function AdminPage() {
    =============================================================== */
 interface ClientEditorStudioProps {
   client: ClientItem;
-  activeTab: "details" | "thumbnail" | "links" | "metrics" | "creatives" | "reels";
-  setActiveTab: (tab: "details" | "thumbnail" | "links" | "metrics" | "creatives" | "reels") => void;
+  activeTab: "details" | "thumbnail" | "links" | "creatives" | "reels";
+  setActiveTab: (tab: "details" | "thumbnail" | "links" | "creatives" | "reels") => void;
   onBack: () => void;
   onClientUpdated: () => Promise<void>;
 }
@@ -738,7 +703,6 @@ function ClientEditorStudio({
     client_title: client.client_title || "",
     slug: client.slug || "",
     no: client.no || "01",
-    category: client.category || "",
     copy: client.copy || "",
     full_description: client.full_description || "",
     hero_image: client.hero_image || "",
@@ -747,17 +711,13 @@ function ClientEditorStudio({
       instagram: client.links?.instagram || "",
       facebook: client.links?.facebook || "",
     },
-    metrics: Array.isArray(client.metrics) ? [...client.metrics] : [],
     services_provided: Array.isArray(client.services_provided)
       ? [...client.services_provided]
       : [],
-    categories: Array.isArray(client.categories) ? [...client.categories] : ["All"],
   });
 
   const [saving, setSaving] = React.useState(false);
-  const [newMetricInput, setNewMetricInput] = React.useState("");
   const [newServiceInput, setNewServiceInput] = React.useState("");
-  const [newCategoryInput, setNewCategoryInput] = React.useState("");
 
   // Media upload modal states
   const [creativeTitle, setCreativeTitle] = React.useState("");
@@ -772,14 +732,12 @@ function ClientEditorStudio({
   const [reelPosterUrl, setReelPosterUrl] = React.useState("");
   const [uploadingReel, setUploadingReel] = React.useState(false);
 
-  // Sync state if prop changes
   React.useEffect(() => {
     setFormData({
       name: client.name || "",
       client_title: client.client_title || "",
       slug: client.slug || "",
       no: client.no || "01",
-      category: client.category || "",
       copy: client.copy || "",
       full_description: client.full_description || "",
       hero_image: client.hero_image || "",
@@ -788,11 +746,9 @@ function ClientEditorStudio({
         instagram: client.links?.instagram || "",
         facebook: client.links?.facebook || "",
       },
-      metrics: Array.isArray(client.metrics) ? [...client.metrics] : [],
       services_provided: Array.isArray(client.services_provided)
         ? [...client.services_provided]
         : [],
-      categories: Array.isArray(client.categories) ? [...client.categories] : ["All"],
     });
   }, [client]);
 
@@ -824,7 +780,7 @@ function ClientEditorStudio({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const toastId = toast.loading("Uploading thumbnail image...");
+    const toastId = toast.loading("Uploading thumbnail image (1200x900px)...");
     try {
       const uploadForm = new FormData();
       uploadForm.append("file", file);
@@ -837,7 +793,6 @@ function ClientEditorStudio({
       const data = await res.json();
       if (data.success) {
         setFormData((prev) => ({ ...prev, hero_image: data.url }));
-        // Automatically save to database
         await fetch(`/api/admin/clients/${client.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -850,6 +805,23 @@ function ClientEditorStudio({
       }
     } catch {
       toast.error("Upload failed", { id: toastId });
+    }
+  };
+
+  // Delete/Clear Thumbnail
+  const handleRemoveThumbnail = async () => {
+    if (!confirm("Are you sure you want to remove this thumbnail?")) return;
+    try {
+      setFormData((prev) => ({ ...prev, hero_image: "" }));
+      await fetch(`/api/admin/clients/${client.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ hero_image: "" }),
+      });
+      await onClientUpdated();
+      toast.success("Thumbnail removed");
+    } catch {
+      toast.error("Error removing thumbnail");
     }
   };
 
@@ -876,7 +848,6 @@ function ClientEditorStudio({
       const uploadData = await uploadRes.json();
       if (!uploadData.success) throw new Error(uploadData.error || "Upload failed");
 
-      // Now create record in client_media
       const mediaRes = await fetch(`/api/admin/clients/${client.id}/media`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -919,7 +890,7 @@ function ClientEditorStudio({
 
     try {
       setUploadingReel(true);
-      // 1. Upload Video
+      // Upload Video
       const videoForm = new FormData();
       videoForm.append("file", videoFile);
       videoForm.append("type", "reels");
@@ -931,7 +902,7 @@ function ClientEditorStudio({
       const videoData = await videoRes.json();
       if (!videoData.success) throw new Error(videoData.error || "Video upload failed");
 
-      // 2. Upload Poster if provided
+      // Upload Poster if provided
       let finalPoster = reelPosterUrl || videoData.url;
       const posterFile = posterFileInput?.files?.[0];
       if (posterFile) {
@@ -946,7 +917,7 @@ function ClientEditorStudio({
         if (pData.success) finalPoster = pData.url;
       }
 
-      // 3. Save to client_media
+      // Save to client_media
       const mediaRes = await fetch(`/api/admin/clients/${client.id}/media`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -977,14 +948,14 @@ function ClientEditorStudio({
     }
   };
 
-  // Delete a media item
+  // Delete a media item (Creative or Reel)
   const handleDeleteMedia = async (mediaId: number, title: string) => {
-    if (!confirm(`Delete media item "${title}"?`)) return;
+    if (!confirm(`Are you sure you want to delete "${title || "this media"}"?`)) return;
     try {
       const res = await fetch(`/api/admin/media/${mediaId}`, { method: "DELETE" });
       const data = await res.json();
       if (data.success) {
-        toast.success("Media deleted");
+        toast.success("Media deleted successfully");
         await onClientUpdated();
       } else {
         toast.error(data.error || "Failed to delete");
@@ -992,23 +963,6 @@ function ClientEditorStudio({
     } catch {
       toast.error("Error deleting media");
     }
-  };
-
-  // Add/Remove Metric Chip
-  const addMetric = () => {
-    if (!newMetricInput.trim()) return;
-    setFormData((prev) => ({
-      ...prev,
-      metrics: [...prev.metrics, newMetricInput.trim()],
-    }));
-    setNewMetricInput("");
-  };
-
-  const removeMetric = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      metrics: prev.metrics.filter((_, i) => i !== index),
-    }));
   };
 
   // Add/Remove Service Chip
@@ -1025,23 +979,6 @@ function ClientEditorStudio({
     setFormData((prev) => ({
       ...prev,
       services_provided: prev.services_provided.filter((_, i) => i !== index),
-    }));
-  };
-
-  // Add/Remove Category Chip
-  const addCategory = () => {
-    if (!newCategoryInput.trim()) return;
-    setFormData((prev) => ({
-      ...prev,
-      categories: [...prev.categories, newCategoryInput.trim()],
-    }));
-    setNewCategoryInput("");
-  };
-
-  const removeCategory = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      categories: prev.categories.filter((_, i) => i !== index),
     }));
   };
 
@@ -1108,7 +1045,6 @@ function ClientEditorStudio({
           { id: "details", label: "Client Details", icon: Edit3 },
           { id: "thumbnail", label: "Thumbnail / Hero", icon: ImageIcon },
           { id: "links", label: "Services & Social Links", icon: Globe },
-          { id: "metrics", label: "Metrics Badges", icon: CheckCircle2 },
           {
             id: "creatives",
             label: `Creatives Carousel (${client.creatives?.length || 0})`,
@@ -1195,20 +1131,7 @@ function ClientEditorStudio({
 
             <div className="sm:col-span-2">
               <label className="block text-xs font-semibold text-gray-300 mb-2">
-                Category Line
-              </label>
-              <input
-                type="text"
-                value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                placeholder="e.g. Digital Marketing • Social Media • Campaign Creative"
-                className="w-full bg-[#161c2c] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-              />
-            </div>
-
-            <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-gray-300 mb-2">
-                Elevator Copy (Featured on Homepage Card)
+                Elevator Copy (Featured on Homepage Project Card)
               </label>
               <textarea
                 rows={3}
@@ -1221,10 +1144,10 @@ function ClientEditorStudio({
 
             <div className="sm:col-span-2">
               <label className="block text-xs font-semibold text-gray-300 mb-2">
-                Full Case Study Story (For Project Detail Page)
+                Full Case Study Narrative (For Project Detail Page)
               </label>
               <textarea
-                rows={5}
+                rows={6}
                 value={formData.full_description}
                 onChange={(e) => setFormData({ ...formData, full_description: e.target.value })}
                 placeholder="Detailed narrative describing the client's business challenge, our strategic creative direction, and the outcome..."
@@ -1238,27 +1161,50 @@ function ClientEditorStudio({
       {/* TAB 2: THUMBNAIL */}
       {activeTab === "thumbnail" && (
         <div className="bg-[#0e131f]/90 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6">
-          <h3 className="font-display font-bold text-white text-base">
-            Client Hero & Homepage Thumbnail
-          </h3>
-          <p className="text-xs text-gray-400">
-            This image represents the client on the homepage parallax project card and case study
-            header.
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+            <div>
+              <h3 className="font-display font-bold text-white text-base">
+                Client Hero & Homepage Thumbnail
+              </h3>
+              <p className="text-xs text-gray-400 mt-1">
+                This image represents the client on the homepage parallax card and the case study header.
+              </p>
+            </div>
+            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 text-blue-300 px-3 py-1.5 rounded-xl text-xs font-semibold">
+              <span>Ratio: 4:3</span>
+              <span className="text-gray-500">•</span>
+              <span className="font-mono text-[11px]">1200 × 900 px</span>
+            </div>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
             {/* Preview Box */}
-            <div className="relative aspect-[4/3] rounded-2xl border border-white/15 bg-[#161c2c] overflow-hidden shadow-2xl">
-              {formData.hero_image ? (
-                <img
-                  src={formData.hero_image}
-                  alt={formData.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex flex-col items-center justify-center text-gray-500">
-                  <ImageIcon className="w-12 h-12 mb-2" />
-                  <span className="text-xs">No image uploaded</span>
+            <div>
+              <div className="relative aspect-[4/3] rounded-2xl border border-white/15 bg-[#161c2c] overflow-hidden shadow-2xl">
+                {formData.hero_image ? (
+                  <img
+                    src={formData.hero_image}
+                    alt={formData.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center text-gray-500">
+                    <ImageIcon className="w-12 h-12 mb-2" />
+                    <span className="text-xs">No image uploaded</span>
+                  </div>
+                )}
+              </div>
+
+              {formData.hero_image && (
+                <div className="mt-3 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={handleRemoveThumbnail}
+                    className="text-xs text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Delete Thumbnail</span>
+                  </button>
                 </div>
               )}
             </div>
@@ -1268,13 +1214,18 @@ function ClientEditorStudio({
               <div className="border-2 border-dashed border-white/15 hover:border-blue-500/50 rounded-2xl p-6 text-center bg-white/5 transition-all">
                 <Upload className="w-8 h-8 text-blue-400 mx-auto mb-2" />
                 <span className="block text-sm font-semibold text-white">
-                  Upload New Image File
+                  Upload Thumbnail Image
                 </span>
-                <span className="block text-xs text-gray-400 mt-1">
-                  Supports JPG, PNG, WEBP, SVG (Max 10MB)
-                </span>
-                <label className="mt-4 inline-block bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer shadow-md shadow-blue-600/20 transition-all">
-                  Browse File
+                <div className="mt-2 space-y-1">
+                  <span className="block text-xs font-bold text-blue-400">
+                    Exact Size: 1200 × 900 px (4:3 Aspect Ratio)
+                  </span>
+                  <span className="block text-[11px] text-gray-400">
+                    Supports JPG, PNG, WEBP (Max 10MB)
+                  </span>
+                </div>
+                <label className="mt-5 inline-block bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-5 py-2.5 rounded-xl cursor-pointer shadow-md shadow-blue-600/20 transition-all">
+                  Select File (1200x900px)
                   <input
                     type="file"
                     accept="image/*"
@@ -1286,7 +1237,7 @@ function ClientEditorStudio({
 
               <div>
                 <label className="block text-xs font-semibold text-gray-400 mb-1.5">
-                  Or manual Image URL / Path:
+                  Or manual image path:
                 </label>
                 <input
                   type="text"
@@ -1307,10 +1258,10 @@ function ClientEditorStudio({
           {/* Social & Web Links */}
           <div>
             <h3 className="font-display font-bold text-white text-base mb-1">
-              Client External Links
+              Client Social & Website Links
             </h3>
             <p className="text-xs text-gray-400 mb-4">
-              Displayed as direct link buttons on the case study page.
+              Displayed as direct external buttons on the case study page.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -1375,9 +1326,11 @@ function ClientEditorStudio({
 
           {/* Services Provided */}
           <div className="pt-6 border-t border-white/10">
-            <h3 className="font-display font-bold text-white text-base mb-1">Services Provided</h3>
+            <h3 className="font-display font-bold text-white text-base mb-1">
+              "We Provide" Services
+            </h3>
             <p className="text-xs text-gray-400 mb-3">
-              Dropdown/tag pills shown under "What We Provided" on the case study page.
+              Services provided tag pills shown under "We Provide" on the case study page.
             </p>
 
             <div className="flex flex-wrap gap-2 mb-3">
@@ -1415,200 +1368,110 @@ function ClientEditorStudio({
               </button>
             </div>
           </div>
-
-          {/* Gallery Filter Categories */}
-          <div className="pt-6 border-t border-white/10">
-            <h3 className="font-display font-bold text-white text-base mb-1">
-              Gallery Filter Tabs
-            </h3>
-            <p className="text-xs text-gray-400 mb-3">
-              Filter tabs shown above the creative/reel gallery (e.g. All, Social Campaign, Ad
-              Creatives).
-            </p>
-
-            <div className="flex flex-wrap gap-2 mb-3">
-              {formData.categories.map((c, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center gap-1.5 bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs px-3 py-1.5 rounded-xl font-medium"
-                >
-                  <span>{c}</span>
-                  {c !== "All" && (
-                    <button
-                      onClick={() => removeCategory(i)}
-                      className="text-purple-400 hover:text-white"
-                    >
-                      <X className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-                </span>
-              ))}
-            </div>
-
-            <div className="flex gap-2 max-w-md">
-              <input
-                type="text"
-                value={newCategoryInput}
-                onChange={(e) => setNewCategoryInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addCategory())}
-                placeholder="e.g. Lookbook, Promotions"
-                className="flex-1 bg-[#161c2c] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-              />
-              <button
-                type="button"
-                onClick={addCategory}
-                className="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-xl"
-              >
-                Add Tab
-              </button>
-            </div>
-          </div>
         </div>
       )}
 
-      {/* TAB 4: METRICS */}
-      {activeTab === "metrics" && (
-        <div className="bg-[#0e131f]/90 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6">
-          <h3 className="font-display font-bold text-white text-base">Key Performance Metrics</h3>
-          <p className="text-xs text-gray-400">
-            Metric pills displayed on both the homepage card and case study hero banner (e.g. +58%
-            Reach, 2.4× Campaign Interaction).
-          </p>
-
-          <div className="flex flex-wrap gap-3">
-            {formData.metrics.map((m, idx) => (
-              <div
-                key={idx}
-                className="bg-[#161c2c] border border-white/15 px-4 py-2.5 rounded-xl flex items-center gap-3 text-sm font-semibold text-white shadow-md"
-              >
-                <span>{m}</span>
-                <button
-                  type="button"
-                  onClick={() => removeMetric(idx)}
-                  className="text-gray-400 hover:text-red-400"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex gap-3 max-w-md pt-2">
-            <input
-              type="text"
-              value={newMetricInput}
-              onChange={(e) => setNewMetricInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addMetric())}
-              placeholder="e.g. +45% Engagement or 12K+ Leads"
-              className="flex-1 bg-[#161c2c] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-            />
-            <button
-              type="button"
-              onClick={addMetric}
-              className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer"
-            >
-              Add Metric
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 5: CREATIVES CAROUSEL */}
+      {/* TAB 4: CREATIVES CAROUSEL */}
       {activeTab === "creatives" && (
         <div className="space-y-6">
           {/* Add New Creative Card */}
           <div className="bg-[#0e131f]/90 border border-white/10 rounded-2xl p-6 shadow-xl">
-            <h3 className="font-display font-bold text-white text-base mb-1 flex items-center gap-2">
-              <Plus className="w-4 h-4 text-blue-400" />
-              <span>Upload New Campaign Creative</span>
-            </h3>
-            <p className="text-xs text-gray-400 mb-6">
-              Upload high-resolution promotional artwork or graphics for this client's carousel.
-            </p>
-
-            <form
-              onSubmit={handleAddCreative}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end"
-            >
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 border-b border-white/10 pb-3">
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-                  Select Image File *
-                </label>
-                <input
-                  id="creative-file-input"
-                  type="file"
-                  accept="image/*"
-                  required
-                  className="w-full bg-[#161c2c] border border-white/10 rounded-xl p-2 text-xs text-gray-300 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500"
-                />
+                <h3 className="font-display font-bold text-white text-base flex items-center gap-2">
+                  <Plus className="w-4 h-4 text-blue-400" />
+                  <span>Upload Campaign Creative</span>
+                </h3>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  High-resolution promotional images displayed in the interactive carousel.
+                </p>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-                  Creative Title
-                </label>
-                <input
-                  type="text"
-                  value={creativeTitle}
-                  onChange={(e) => setCreativeTitle(e.target.value)}
-                  placeholder="e.g. Summer Festival Banner"
-                  className="w-full bg-[#161c2c] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-                />
+              <div className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 text-purple-300 px-3 py-1.5 rounded-xl text-xs font-semibold">
+                <span>Square: 1080 × 1080 px (1:1)</span>
+                <span className="text-gray-500">•</span>
+                <span>Portrait: 1080 × 1350 px (4:5)</span>
               </div>
+            </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-                  Category Tag
-                </label>
-                <select
-                  value={creativeCategory}
-                  onChange={(e) => setCreativeCategory(e.target.value)}
-                  className="w-full bg-[#161c2c] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
-                >
-                  {formData.categories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <form onSubmit={handleAddCreative} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 mb-1.5">
+                    Select Image File * (1080x1080px or 1080x1350px)
+                  </label>
+                  <input
+                    id="creative-file-input"
+                    type="file"
+                    accept="image/*"
+                    required
+                    className="w-full bg-[#161c2c] border border-white/10 rounded-xl p-2 text-xs text-gray-300 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500"
+                  />
+                </div>
 
-              <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-                  Caption / Short Description
-                </label>
-                <input
-                  type="text"
-                  value={creativeDesc}
-                  onChange={(e) => setCreativeDesc(e.target.value)}
-                  placeholder="e.g. High-impact seasonal promotional banner for Instagram & Facebook."
-                  className="w-full bg-[#161c2c] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-                />
-              </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 mb-1.5">
+                    Creative Title
+                  </label>
+                  <input
+                    type="text"
+                    value={creativeTitle}
+                    onChange={(e) => setCreativeTitle(e.target.value)}
+                    placeholder="e.g. Summer Festival Banner"
+                    className="w-full bg-[#161c2c] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
 
-              <div>
-                <button
-                  type="submit"
-                  disabled={uploadingCreative}
-                  className="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-md shadow-blue-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                >
-                  {uploadingCreative ? (
-                    <>
-                      <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Uploading...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="w-3.5 h-3.5" />
-                      <span>Upload & Add to Carousel</span>
-                    </>
-                  )}
-                </button>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 mb-1.5">
+                    Category Tag
+                  </label>
+                  <input
+                    type="text"
+                    value={creativeCategory}
+                    onChange={(e) => setCreativeCategory(e.target.value)}
+                    placeholder="e.g. Social Campaign, Ad Creatives"
+                    className="w-full bg-[#161c2c] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-semibold text-gray-300 mb-1.5">
+                    Caption / Short Description
+                  </label>
+                  <input
+                    type="text"
+                    value={creativeDesc}
+                    onChange={(e) => setCreativeDesc(e.target.value)}
+                    placeholder="e.g. High-impact seasonal promotional banner."
+                    className="w-full bg-[#161c2c] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                <div className="flex items-end">
+                  <button
+                    type="submit"
+                    disabled={uploadingCreative}
+                    className="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-md shadow-blue-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  >
+                    {uploadingCreative ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Uploading...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>Upload Creative</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </form>
           </div>
 
-          {/* Existing Creatives Grid */}
+          {/* Existing Creatives Grid with Prominent Delete Option */}
           <div className="bg-[#0e131f]/90 border border-white/10 rounded-2xl p-6">
             <h4 className="font-display font-bold text-white text-sm mb-4">
               Current Campaign Creatives ({client.creatives?.length || 0})
@@ -1619,35 +1482,41 @@ function ClientEditorStudio({
                 No creatives added yet. Use the upload box above to add your first creative image.
               </p>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 {client.creatives.map((c: any) => (
                   <div
                     key={c.id}
-                    className="group relative bg-[#161c2c] border border-white/10 rounded-xl overflow-hidden flex flex-col justify-between"
+                    className="bg-[#161c2c] border border-white/10 hover:border-white/20 rounded-xl overflow-hidden flex flex-col justify-between shadow-lg"
                   >
                     <div className="relative aspect-square w-full overflow-hidden bg-black">
                       <img
                         src={c.file_url || c.image}
                         alt={c.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        className="w-full h-full object-cover"
                       />
-                      <span className="absolute top-2 left-2 bg-black/70 text-white text-[9px] font-bold px-2 py-0.5 rounded backdrop-blur-md">
+                      <span className="absolute top-2 left-2 bg-black/75 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-md">
                         {c.category}
                       </span>
-                      <button
-                        onClick={() => handleDeleteMedia(c.id, c.title)}
-                        className="absolute top-2 right-2 bg-red-600/80 hover:bg-red-600 text-white p-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
-                        title="Delete creative"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </button>
                     </div>
 
-                    <div className="p-3">
+                    <div className="p-3.5">
                       <h5 className="font-semibold text-xs text-white line-clamp-1">{c.title}</h5>
                       <p className="text-[11px] text-gray-400 mt-1 line-clamp-2">
-                        {c.description || "No description"}
+                        {c.description || "No description provided"}
                       </p>
+                    </div>
+
+                    {/* Prominent Always-Visible Delete Button */}
+                    <div className="p-3 pt-0 border-t border-white/5 flex items-center justify-between">
+                      <span className="text-[10px] text-gray-500 font-mono">ID: {c.id}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteMedia(c.id, c.title)}
+                        className="text-xs text-red-400 hover:text-white bg-red-500/10 hover:bg-red-600 border border-red-500/30 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer font-semibold"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Delete</span>
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -1657,25 +1526,34 @@ function ClientEditorStudio({
         </div>
       )}
 
-      {/* TAB 6: REELS CAROUSEL */}
+      {/* TAB 5: REELS CAROUSEL */}
       {activeTab === "reels" && (
         <div className="space-y-6">
           {/* Add New Reel Card */}
           <div className="bg-[#0e131f]/90 border border-white/10 rounded-2xl p-6 shadow-xl">
-            <h3 className="font-display font-bold text-white text-base mb-1 flex items-center gap-2">
-              <Plus className="w-4 h-4 text-indigo-400" />
-              <span>Upload Video Reel</span>
-            </h3>
-            <p className="text-xs text-gray-400 mb-6">
-              Upload 9:16 vertical video reel (MP4) to be displayed in the interactive video player
-              carousel.
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 border-b border-white/10 pb-3">
+              <div>
+                <h3 className="font-display font-bold text-white text-base flex items-center gap-2">
+                  <Plus className="w-4 h-4 text-indigo-400" />
+                  <span>Upload Video Reel (MP4)</span>
+                </h3>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  Upload vertical video reel for the interactive player carousel.
+                </p>
+              </div>
+
+              <div className="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 px-3 py-1.5 rounded-xl text-xs font-semibold">
+                <span>Ratio: 9:16 Vertical</span>
+                <span className="text-gray-500">•</span>
+                <span className="font-mono text-[11px]">1080 × 1920 px</span>
+              </div>
+            </div>
 
             <form onSubmit={handleAddReel} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-                    Select MP4 Video File *
+                    Select MP4 Video File * (1080 × 1920 px, 9:16)
                   </label>
                   <input
                     id="reel-video-input"
@@ -1684,11 +1562,14 @@ function ClientEditorStudio({
                     required
                     className="w-full bg-[#161c2c] border border-white/10 rounded-xl p-2 text-xs text-gray-300 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500"
                   />
+                  <span className="block text-[10px] text-gray-500 mt-1">
+                    Recommended: 1080 × 1920 px • MP4 format • Max 100MB
+                  </span>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-                    Poster Thumbnail (Optional)
+                    Poster Thumbnail (1080 × 1920 px, Optional)
                   </label>
                   <input
                     id="reel-poster-input"
@@ -1696,11 +1577,14 @@ function ClientEditorStudio({
                     accept="image/*"
                     className="w-full bg-[#161c2c] border border-white/10 rounded-xl p-2 text-xs text-gray-300 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-white/10 file:text-white"
                   />
+                  <span className="block text-[10px] text-gray-500 mt-1">
+                    Recommended: 1080 × 1920 px (9:16 ratio) • JPG or PNG
+                  </span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                <div className="sm:col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
                   <label className="block text-xs font-semibold text-gray-300 mb-1.5">
                     Reel Title
                   </label>
@@ -1715,7 +1599,7 @@ function ClientEditorStudio({
 
                 <div>
                   <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-                    Views Badge
+                    Views Counter
                   </label>
                   <input
                     type="text"
@@ -1754,7 +1638,7 @@ function ClientEditorStudio({
                   ) : (
                     <>
                       <Film className="w-3.5 h-3.5" />
-                      <span>Upload & Add to Reels Carousel</span>
+                      <span>Upload Reel (1080x1920px)</span>
                     </>
                   )}
                 </button>
@@ -1762,7 +1646,7 @@ function ClientEditorStudio({
             </form>
           </div>
 
-          {/* Existing Reels Grid with In-Browser Video Player */}
+          {/* Existing Reels Grid with Prominent Delete Option */}
           <div className="bg-[#0e131f]/90 border border-white/10 rounded-2xl p-6">
             <h4 className="font-display font-bold text-white text-sm mb-4">
               Current Video Reels ({client.reels?.length || 0})
@@ -1770,14 +1654,14 @@ function ClientEditorStudio({
 
             {(!client.reels || client.reels.length === 0) ? (
               <p className="text-xs text-gray-500 py-6 text-center">
-                No reels uploaded yet. Use the upload box above to upload vertical video reels.
+                No reels uploaded yet. Use the upload box above to upload 9:16 vertical video reels.
               </p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {client.reels.map((r: any) => (
                   <div
                     key={r.id}
-                    className="group bg-[#161c2c] border border-white/10 rounded-2xl overflow-hidden shadow-lg flex flex-col justify-between"
+                    className="bg-[#161c2c] border border-white/10 hover:border-white/20 rounded-2xl overflow-hidden shadow-lg flex flex-col justify-between"
                   >
                     <div className="relative aspect-[9/16] w-full bg-black overflow-hidden">
                       <video
@@ -1788,13 +1672,6 @@ function ClientEditorStudio({
                         preload="metadata"
                         className="w-full h-full object-cover"
                       />
-                      <button
-                        onClick={() => handleDeleteMedia(r.id, r.title)}
-                        className="absolute top-3 right-3 z-10 bg-red-600/80 hover:bg-red-600 text-white p-1.5 rounded-lg shadow-md cursor-pointer transition-colors"
-                        title="Delete reel"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
                     </div>
 
                     <div className="p-4">
@@ -1803,6 +1680,19 @@ function ClientEditorStudio({
                         <span>{r.duration}</span>
                       </div>
                       <h5 className="font-semibold text-xs text-white line-clamp-1">{r.title}</h5>
+
+                      {/* Prominent Always-Visible Delete Button */}
+                      <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between">
+                        <span className="text-[10px] text-gray-500 font-mono">ID: {r.id}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteMedia(r.id, r.title)}
+                          className="text-xs text-red-400 hover:text-white bg-red-500/10 hover:bg-red-600 border border-red-500/30 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer font-semibold"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                          <span>Delete Reel</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
