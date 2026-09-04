@@ -31,18 +31,18 @@ export function Clients() {
           copy="We work with businesses across retail, hospitality, lifestyle, real estate, automotive and local commerce — helping them compete more effectively in an increasingly digital marketplace."
         />
 
-        <div className="mt-14 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 overflow-hidden">
+        <div className="mt-14 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 overflow-hidden">
           {clientLogos.map((logoPath, i) => (
             <div
               key={i}
               data-reveal
-              className="reveal group flex items-center justify-center bg-[#0e131f]/80 border border-white/10 rounded-2xl p-6 min-h-[140px] transition-all duration-500 hover:bg-white/10 hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/10"
+              className="reveal group flex items-center justify-center bg-white/10 border border-white/15 backdrop-blur-md rounded-2xl p-6 min-h-[160px] transition-all duration-500 hover:bg-white/15 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20"
               style={{ ["--reveal-delay" as string]: `${i * 50}ms` }}
             >
               <img
                 src={logoPath}
                 alt={`Client Partner ${i + 1}`}
-                className="max-h-24 w-auto max-w-[85%] object-contain opacity-85 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105 drop-shadow-md"
+                className="max-h-28 sm:max-h-32 w-auto max-w-[90%] object-contain opacity-90 transition-all duration-500 group-hover:opacity-100 group-hover:-translate-y-2.5 group-hover:rotate-[-3deg] group-hover:scale-110 drop-shadow-xl"
               />
             </div>
           ))}
