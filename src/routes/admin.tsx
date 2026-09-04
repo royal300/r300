@@ -324,7 +324,7 @@ function AdminPage() {
     <div className="min-h-screen bg-[#07090e] text-gray-100 font-sans pb-24">
       {/* Top Navigation Bar */}
       <header className="sticky top-0 z-40 bg-[#0e131f]/80 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="w-[90%] mx-auto px-2 sm:px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-md shadow-blue-500/20">
               <Shield className="w-5 h-5 text-white" />
@@ -365,7 +365,7 @@ function AdminPage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <main className="w-[90%] mx-auto px-2 sm:px-4 pt-8">
         {editingClient ? (
           <ClientEditorStudio
             client={editingClient}
