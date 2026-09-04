@@ -90,7 +90,7 @@ function AdminPage() {
   }, [checkAuth]);
 
   // Fetch all clients
-  const fetchClients = async () => {
+  const fetchClients = async (keepEditingState: boolean = false) => {
     try {
       setLoadingClients(true);
       const res = await fetch("/api/admin/clients");
@@ -98,7 +98,7 @@ function AdminPage() {
       const data = await res.json();
       if (data.success && Array.isArray(data.clients)) {
         setClients(data.clients);
-        if (editingClient) {
+        if (keepEditingState && editingClient) {
           const updated = data.clients.find((c: ClientItem) => c.id === editingClient.id);
           if (updated) setEditingClient(updated);
         }
@@ -373,10 +373,11 @@ function AdminPage() {
             setActiveTab={setActiveTab}
             onBack={() => {
               setEditingClient(null);
-              fetchClients();
+              fetchClients(false);
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
             onClientUpdated={async () => {
-              await fetchClients();
+              await fetchClients(true);
             }}
           />
         ) : (
@@ -987,7 +988,12 @@ function ClientEditorStudio({
       {/* Top Breadcrumb Navigation */}
       <div className="flex items-center gap-2 text-xs text-gray-400">
         <button
-          onClick={onBack}
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onBack();
+          }}
           className="hover:text-blue-400 transition-colors flex items-center gap-1 cursor-pointer font-medium"
         >
           <span>Dashboard</span>
@@ -1000,7 +1006,12 @@ function ClientEditorStudio({
       <div className="bg-[#0e131f]/95 border border-white/10 rounded-2xl p-5 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <button
-            onClick={onBack}
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onBack();
+            }}
             className="flex items-center gap-2 px-3.5 py-2.5 bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/30 hover:border-blue-500/50 rounded-xl text-blue-300 hover:text-white text-xs font-bold transition-all cursor-pointer shadow-sm group"
             title="Back to Main Dashboard"
           >
