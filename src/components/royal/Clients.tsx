@@ -21,7 +21,7 @@ const clientLogos = [
 /* ─── Mobile: 5 column grid ──────────────────────────────────────────────────────── */
 function MobileGrid() {
   return (
-    <div className="mt-14 grid grid-cols-5 gap-2">
+    <div className="grid grid-cols-5 gap-2">
       {clientLogos.map((logoPath, i) => (
         <div
           key={i}
@@ -30,7 +30,7 @@ function MobileGrid() {
           <img
             src={logoPath}
             alt={`Client Partner ${i + 1}`}
-            className="max-h-16 w-auto max-w-[80%] object-contain opacity-90"
+            className="max-h-20 w-auto max-w-[70%] object-contain opacity-90"
           />
         </div>
       ))}
@@ -41,18 +41,18 @@ function MobileGrid() {
 /* ─── Desktop: grid ──────────────────────────────────────────────────────── */
 function DesktopGrid() {
   return (
-    <div className="mt-14 hidden md:grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 overflow-hidden">
+    <div className="hidden md:grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 overflow-hidden">
       {clientLogos.map((logoPath, i) => (
         <div
           key={i}
           data-reveal
-          className="reveal group flex items-center justify-center bg-white/10 border border-white/15 backdrop-blur-md rounded-2xl p-6 min-h-[160px] transition-all duration-500 hover:bg-white/15 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20"
+          className="reveal group flex items-center justify-center bg-white/10 border border-white/15 backdrop-blur-md rounded-2xl p-4 transition-all duration-500 hover:bg-white/15 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20"
           style={{ ["--reveal-delay" as string]: `${i * 50}ms` }}
         >
           <img
             src={logoPath}
             alt={`Client Partner ${i + 1}`}
-            className="max-h-28 sm:max-h-32 w-auto max-w-[90%] object-contain opacity-90 transition-all duration-500 group-hover:opacity-100 group-hover:-translate-y-2.5 group-hover:rotate-[-3deg] group-hover:scale-110 drop-shadow-xl"
+            className="max-h-24 sm:max-h-32 w-auto max-w-[90%] object-contain opacity-90 transition-all duration-500 group-hover:opacity-100 group-hover:-translate-y-2.5 group-hover:rotate-[-3deg] group-hover:scale-110 drop-shadow-xl"
           />
         </div>
       ))}
