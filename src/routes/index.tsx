@@ -6,7 +6,7 @@ import { Navbar } from "@/components/royal/Navbar";
 import { Hero } from "@/components/royal/Hero";
 
 import { Projects } from "@/components/royal/Projects";
-import { Results } from "@/components/royal/Results";
+import { OurServices } from "@/components/royal/OurServices";
 import { Clients } from "@/components/royal/Clients";
 import { WhyRoyal300 } from "@/components/royal/WhyRoyal300";
 import { Pricing } from "@/components/royal/Pricing";
@@ -40,6 +40,7 @@ function Index() {
       <Hero />
 
       <Projects />
+      <OurServices />
       <Clients />
       <Pricing />
       <FinalCTA />
