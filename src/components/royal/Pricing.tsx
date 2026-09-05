@@ -121,7 +121,7 @@ function Toggle({
 }) {
   return (
     <div
-      className="relative mx-auto mt-10 flex w-fit rounded-full border border-transparent bg-[var(--accent)] p-1"
+      className="relative mx-auto mt-10 flex w-fit rounded-full border border-transparent bg-white/20 p-1"
       role="tablist"
     >
       {/* sliding pill */}
@@ -138,7 +138,7 @@ function Toggle({
         aria-selected={value === "dm"}
         onClick={() => onChange("dm")}
         className="relative z-10 min-w-[160px] rounded-full px-6 py-2.5 text-sm font-semibold tracking-wide transition-colors duration-300"
-        style={{ color: value === "dm" ? "#fff" : "rgba(255,255,255,0.45)" }}
+        style={{ color: value === "dm" ? "#fff" : "#1e293b" }}
       >
         Digital Marketing
       </button>
@@ -147,7 +147,7 @@ function Toggle({
         aria-selected={value === "web"}
         onClick={() => onChange("web")}
         className="relative z-10 min-w-[160px] rounded-full px-6 py-2.5 text-sm font-semibold tracking-wide transition-colors duration-300"
-        style={{ color: value === "web" ? "#fff" : "rgba(255,255,255,0.45)" }}
+        style={{ color: value === "web" ? "#fff" : "#1e293b" }}
       >
         Web Development
       </button>

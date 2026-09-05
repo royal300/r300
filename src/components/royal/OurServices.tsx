@@ -85,9 +85,9 @@ export function OurServices() {
               key={s.no}
               data-reveal
               data-cursor="button"
-              className="reveal group relative overflow-hidden rounded-lg border border-transparent bg-[var(--accent)] p-4 transition-all duration-700 [transition-timing-function:var(--ease-royal)] hover:-translate-y-1 hover:border-accent hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.3)]"
+              className="reveal group relative overflow-hidden rounded-lg border bg-white/20 p-4 transition-all duration-700 [transition-timing-function:var(--ease-royal)] hover:-translate-y-1 hover:border-blue-500/50 hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.2)]"
               style={{
-                background: `${s.accent}`,
+                background: `rgba(255, 255, 255, 0.8)`,
                 ["--reveal-delay" as string]: `${i * 60}ms`,
               }}
             >
@@ -95,7 +95,7 @@ export function OurServices() {
                 aria-hidden
                 className="absolute inset-0 -z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-70 rounded-lg"
                 style={{
-                  background: `radial-gradient(100% 60% at 50% 0%, ${s.accent}20, transparent 60%)`,
+                  background: `radial-gradient(100% 60% at 50% 0%, #e879f920, transparent 60%)`,
                 }}
               />
 
@@ -103,25 +103,25 @@ export function OurServices() {
                 <span
                   className="grid h-10 w-10 place-items-center rounded-xl border transition-transform duration-500 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-0.5 group-hover:rotate-[3deg]"
                   style={{
-                    borderColor: `${s.accent}`,
-                    background: `${s.accent}`,
-                    color: `#fff`,
+                    borderColor: "#e879f9",
+                    background: "#e879f9",
+                    color: "#1e293b",
                   }}
                 >
                   <s.icon size={18} strokeWidth={1.4} />
                 </span>
 
                 <span
-                  className="hidden sm:block text-white transition-all duration-300"
+                  className="hidden sm:block text-black transition-all duration-300"
                 >
                   ↗
                 </span>
               </div>
 
-              <span className="mt-2 block font-display text-xs font-bold tracking-[0.2em] text-white">
+              <span className="mt-2 block font-display text-xs font-bold tracking-[0.2em] text-black">
                 {s.no}
               </span>
-              <h3 className="mt-1 text-lg font-semibold leading-none text-white">
+              <h3 className="mt-1 text-lg font-semibold leading-none text-black">
                 {s.title}
               </h3>
             </article>

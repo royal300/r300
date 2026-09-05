@@ -31,7 +31,7 @@ function MobileCarousel() {
 
     let animId: number;
     let x = 0;
-    const speed = 0.6; // px per frame
+    const speed = 1.2; // px per frame - increased for faster scroll
     const halfWidth = track.scrollWidth / 2;
 
     function step() {
