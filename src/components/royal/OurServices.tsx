@@ -85,8 +85,9 @@ export function OurServices() {
               key={s.no}
               data-reveal
               data-cursor="button"
-              className="reveal group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/5 backdrop-blur-sm p-7 transition-all duration-700 [transition-timing-function:var(--ease-royal)] hover:-translate-y-2 hover:border-white/20 hover:shadow-[0_40px_80px_-50px_rgba(0,0,0,0.5)]"
+              className="reveal group relative overflow-hidden rounded-[1.75rem] border border-transparent p-7 transition-all duration-700 [transition-timing-function:var(--ease-royal)] hover:-translate-y-2 hover:border-opacity-100 hover:shadow-[0_40px_80px_-50px_rgba(0,0,0,0.5)]"
               style={{
+                background: `${s.accent}`,
                 ["--reveal-delay" as string]: `${i * 90}ms`,
               }}
             >
@@ -95,7 +96,7 @@ export function OurServices() {
                 aria-hidden
                 className="absolute inset-0 -z-10 opacity-0 transition-opacity duration-700 group-hover:opacity-100 rounded-[1.75rem]"
                 style={{
-                  background: `radial-gradient(130% 80% at 80% 0%, ${s.accent}22, transparent 70%)`,
+                  background: `radial-gradient(130% 80% at 80% 0%, ${s.accent}30, transparent 70%)`,
                 }}
               />
 
@@ -110,9 +111,9 @@ export function OurServices() {
                 <span
                   className="grid h-12 w-12 place-items-center rounded-2xl border transition-transform duration-700 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-1 group-hover:rotate-[6deg]"
                   style={{
-                    borderColor: `${s.accent}40`,
-                    background: `linear-gradient(140deg, ${s.accent}22, transparent)`,
-                    color: s.accent,
+                    borderColor: `${s.accent}`,
+                    background: `${s.accent}`,
+                    color: `#fff`,
                   }}
                   aria-hidden
                 >
@@ -120,20 +121,20 @@ export function OurServices() {
                 </span>
 
                 <span
-                  className="text-lg text-white/30 transition-all duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white/80"
+                  className="text-lg text-white transition-all duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
                 >
                   ↗
                 </span>
               </div>
 
-              <span className="mt-6 block font-display text-xs font-bold tracking-[0.24em] text-white/30">
+              <span className="mt-6 block font-display text-xs font-bold tracking-[0.24em] text-white">
                 {s.no}
               </span>
               <h3 className="mt-2 text-xl font-semibold leading-tight text-white">
                 {s.title}
               </h3>
               <p
-                className="mt-3 font-display text-sm font-medium"
+                className="mt-3 font-display text-sm font-medium text-white"
                 style={{ color: s.accent }}
               >
                 {s.line}
