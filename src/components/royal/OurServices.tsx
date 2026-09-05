@@ -95,7 +95,7 @@ export function OurServices() {
                 aria-hidden
                 className="absolute inset-0 -z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-70 rounded-lg"
                 style={{
-                  background: `radial-gradient(100% 60% at 50% 0%, #e879f920, transparent 60%)`,
+                  background: `radial-gradient(100% 60% at 50% 0%, #a78bfa20, transparent 60%)`,
                 }}
               />
 
@@ -103,8 +103,8 @@ export function OurServices() {
                 <span
                   className="grid h-10 w-10 place-items-center rounded-xl border transition-transform duration-500 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-0.5 group-hover:rotate-[3deg]"
                   style={{
-                    borderColor: "#e879f9",
-                    background: "#e879f9",
+                    borderColor: "#a78bf9",
+                    background: "linear-gradient(135deg, #a78bf9, #eab308)",
                     color: "#1e293b",
                   }}
                 >

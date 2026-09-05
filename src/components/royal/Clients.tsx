@@ -18,57 +18,22 @@ const clientLogos = [
   "/client_logos/13.png",
 ];
 
-/* ─── Mobile: infinite auto-scroll carousel ─────────────────────────────── */
-function MobileCarousel() {
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  // Duplicate logos so the scroll loops seamlessly
-  const doubled = [...clientLogos, ...clientLogos];
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    let animId: number;
-    let x = 0;
-    const speed = 1.2; // px per frame - increased for faster scroll
-    const halfWidth = track.scrollWidth / 2;
-
-    function step() {
-      x -= speed;
-      if (Math.abs(x) >= halfWidth) x = 0;
-      if (track) track.style.transform = `translateX(${x}px)`;
-      animId = requestAnimationFrame(step);
-    }
-
-    animId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animId);
-  }, []);
-
+/* ─── Mobile: 5 column grid ──────────────────────────────────────────────────────── */
+function MobileGrid() {
   return (
-    <div className="relative mt-10 overflow-hidden md:hidden">
-      {/* fade edges */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent" />
-
-      <div
-        ref={trackRef}
-        className="flex gap-4 will-change-transform"
-        style={{ width: "max-content" }}
-      >
-        {doubled.map((logoPath, i) => (
-          <div
-            key={i}
-            className="flex shrink-0 items-center justify-center bg-white/10 border border-white/15 backdrop-blur-md rounded-2xl p-4 w-[180px] h-[180px]"
-          >
-            <img
-              src={logoPath}
-              alt={`Client Partner ${(i % clientLogos.length) + 1}`}
-              className="max-h-40 w-auto max-w-[90%] object-contain opacity-90"
-            />
-          </div>
-        ))}
-      </div>
+    <div className="mt-14 grid grid-cols-5 gap-2">
+      {clientLogos.map((logoPath, i) => (
+        <div
+          key={i}
+          className="reveal flex items-center justify-center bg-white/10 border border-white/15 backdrop-blur-md rounded-2xl p-2"
+        >
+          <img
+            src={logoPath}
+            alt={`Client Partner ${i + 1}`}
+            className="max-h-16 w-auto max-w-[80%] object-contain opacity-90"
+          />
+        </div>
+      ))}
     </div>
   );
 }
@@ -109,8 +74,8 @@ export function Clients() {
           copy="We work with businesses across retail, hospitality, lifestyle, real estate, automotive and local commerce — helping them compete more effectively in an increasingly digital marketplace."
         />
 
-        {/* Mobile carousel (auto-scroll, mobile only) */}
-        <MobileCarousel />
+        {/* Mobile: 5 column grid */}
+        <MobileGrid />
 
         {/* Desktop grid */}
         <DesktopGrid />
