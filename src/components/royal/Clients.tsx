@@ -30,7 +30,7 @@ function MobileGrid() {
           <img
             src={logoPath}
             alt={`Client Partner ${i + 1}`}
-            className="max-h-20 w-auto max-w-[70%] object-contain opacity-90"
+            className="max-h-32 w-auto max-w-[60%] object-contain opacity-90"
           />
         </div>
       ))}
