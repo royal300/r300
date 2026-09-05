@@ -121,7 +121,7 @@ function Toggle({
 }) {
   return (
     <div
-      className="relative mx-auto mt-10 flex w-fit rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur-sm"
+      className="relative mx-auto mt-10 flex w-fit rounded-full border border-transparent bg-[var(--accent)] p-1"
       role="tablist"
     >
       {/* sliding pill */}

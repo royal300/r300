@@ -79,69 +79,51 @@ export function OurServices() {
           copy="From social media to server infrastructure — we cover every digital touchpoint your business needs to grow, compete and win online."
         />
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-12 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {services.map((s, i) => (
             <article
               key={s.no}
               data-reveal
               data-cursor="button"
-              className="reveal group relative overflow-hidden rounded-[1.75rem] border border-transparent p-7 transition-all duration-700 [transition-timing-function:var(--ease-royal)] hover:-translate-y-2 hover:border-opacity-100 hover:shadow-[0_40px_80px_-50px_rgba(0,0,0,0.5)]"
+              className="reveal group relative overflow-hidden rounded-lg border border-transparent bg-[var(--accent)] p-4 transition-all duration-700 [transition-timing-function:var(--ease-royal)] hover:-translate-y-1 hover:border-accent hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.3)]"
               style={{
                 background: `${s.accent}`,
-                ["--reveal-delay" as string]: `${i * 90}ms`,
+                ["--reveal-delay" as string]: `${i * 60}ms`,
               }}
             >
-              {/* Hover radial glow using service accent colour */}
               <span
                 aria-hidden
-                className="absolute inset-0 -z-10 opacity-0 transition-opacity duration-700 group-hover:opacity-100 rounded-[1.75rem]"
+                className="absolute inset-0 -z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-70 rounded-lg"
                 style={{
-                  background: `radial-gradient(130% 80% at 80% 0%, ${s.accent}30, transparent 70%)`,
+                  background: `radial-gradient(100% 60% at 50% 0%, ${s.accent}20, transparent 60%)`,
                 }}
               />
 
-              {/* Card top gradient strip */}
-              <span
-                aria-hidden
-                className={`absolute inset-x-0 top-0 h-[2px] rounded-t-[1.75rem] bg-gradient-to-r ${s.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-500`}
-              />
-
-              <div className="flex items-start justify-between">
-                {/* Icon box */}
+              <div className="flex items-center justify-between">
                 <span
-                  className="grid h-12 w-12 place-items-center rounded-2xl border transition-transform duration-700 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-1 group-hover:rotate-[6deg]"
+                  className="grid h-10 w-10 place-items-center rounded-xl border transition-transform duration-500 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-0.5 group-hover:rotate-[3deg]"
                   style={{
                     borderColor: `${s.accent}`,
                     background: `${s.accent}`,
                     color: `#fff`,
                   }}
-                  aria-hidden
                 >
-                  <s.icon size={22} strokeWidth={1.6} />
+                  <s.icon size={18} strokeWidth={1.4} />
                 </span>
 
                 <span
-                  className="text-lg text-white transition-all duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+                  className="hidden sm:block text-white transition-all duration-300"
                 >
                   ↗
                 </span>
               </div>
 
-              <span className="mt-6 block font-display text-xs font-bold tracking-[0.24em] text-white">
+              <span className="mt-2 block font-display text-xs font-bold tracking-[0.2em] text-white">
                 {s.no}
               </span>
-              <h3 className="mt-2 text-xl font-semibold leading-tight text-white">
+              <h3 className="mt-1 text-lg font-semibold leading-none text-white">
                 {s.title}
               </h3>
-              <p
-                className="mt-3 font-display text-sm font-medium text-white"
-                style={{ color: s.accent }}
-              >
-                {s.line}
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-white/50">
-                {s.copy}
-              </p>
             </article>
           ))}
         </div>

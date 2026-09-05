@@ -59,12 +59,12 @@ function MobileCarousel() {
         {doubled.map((logoPath, i) => (
           <div
             key={i}
-            className="flex shrink-0 items-center justify-center bg-white/10 border border-white/15 backdrop-blur-md rounded-2xl p-4 w-[130px] h-[130px]"
+            className="flex shrink-0 items-center justify-center bg-white/10 border border-white/15 backdrop-blur-md rounded-2xl p-4 w-[180px] h-[180px]"
           >
             <img
               src={logoPath}
               alt={`Client Partner ${(i % clientLogos.length) + 1}`}
-              className="max-h-20 w-auto max-w-[90%] object-contain opacity-90"
+              className="max-h-40 w-auto max-w-[90%] object-contain opacity-90"
             />
           </div>
         ))}
