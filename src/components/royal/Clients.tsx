@@ -64,6 +64,8 @@ function MobileCarousel() {
             <img
               src={logoPath}
               alt={`Client Partner ${(i % clientLogos.length) + 1}`}
+              loading="lazy"
+              decoding="async"
               className="max-h-20 w-auto max-w-[90%] object-contain opacity-90"
             />
           </div>
@@ -87,6 +89,8 @@ function DesktopGrid() {
           <img
             src={logoPath}
             alt={`Client Partner ${i + 1}`}
+            loading="lazy"
+            decoding="async"
             className="max-h-28 sm:max-h-32 w-auto max-w-[90%] object-contain opacity-90 transition-all duration-500 group-hover:opacity-100 group-hover:-translate-y-2.5 group-hover:rotate-[-3deg] group-hover:scale-110 drop-shadow-xl"
           />
         </div>

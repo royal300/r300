@@ -20,6 +20,15 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Local secrets
+.env
+.env.local
+
+# Unreviewed asset, excluded from this deploy at user's request — not a
+# ROYAL300 project asset (see conversation for context). Remove this line
+# once it's decided what to do with it.
+public/logo1.png
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

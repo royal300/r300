@@ -4,6 +4,7 @@ import { useReveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
 import { ProjectData } from "@/data/projectsData";
 import { useProjects } from "@/hooks/use-projects";
+import { cldImage } from "@/lib/cloudinary";
 
 /* Mobile Sticky Stacking Parallax Card */
 function ParallaxMobileCard({ p, index }: { p: ProjectData; index: number }) {
@@ -22,9 +23,10 @@ function ParallaxMobileCard({ p, index }: { p: ProjectData; index: number }) {
         <article className="relative overflow-hidden rounded-[1.5rem] border border-border/80 bg-card/95 p-4 sm:p-5 backdrop-blur-xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] transition-all duration-500 hover:border-electric/50 flex flex-col gap-3.5">
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-border/60 shadow-md">
             <img
-              src={p.heroImage}
+              src={cldImage(p.heroImage, { width: 600, height: 450, crop: "fill" })}
               alt={p.name}
               loading="lazy"
+              decoding="async"
               width={600}
               height={450}
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -126,9 +128,10 @@ function ParallaxDesktopCard({ p, index }: { p: ProjectData; index: number }) {
           {/* Right Column: Featured Image */}
           <div className="col-span-5 relative overflow-hidden rounded-2xl border border-border/60 aspect-[4/3] shadow-xl">
             <img
-              src={p.heroImage}
+              src={cldImage(p.heroImage, { width: 800, height: 600, crop: "fill" })}
               alt={p.name}
               loading="lazy"
+              decoding="async"
               width={800}
               height={600}
               className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"

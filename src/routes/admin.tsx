@@ -22,6 +22,7 @@ import {
   Layers,
 } from "lucide-react";
 import { toast } from "sonner";
+import { cldImage, cldVideo } from "@/lib/cloudinary";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -511,8 +512,10 @@ function AdminPage() {
                       <div className="relative aspect-[16/9] w-full bg-[#161c2c] overflow-hidden">
                         {client.hero_image ? (
                           <img
-                            src={client.hero_image}
+                            src={cldImage(client.hero_image, { width: 500, height: 280, crop: "fill" })}
                             alt={client.name}
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         ) : (
@@ -903,8 +906,10 @@ function ClientEditorStudio({
       const videoData = await videoRes.json();
       if (!videoData.success) throw new Error(videoData.error || "Video upload failed");
 
-      // Upload Poster if provided
-      let finalPoster = reelPosterUrl || videoData.url;
+      // Upload Poster if provided, else fall back to the frame Cloudinary
+      // auto-extracted from the video itself (never the raw video URL — that
+      // isn't a valid image src).
+      let finalPoster = reelPosterUrl || videoData.posterUrl || "";
       const posterFile = posterFileInput?.files?.[0];
       if (posterFile) {
         const posterForm = new FormData();
@@ -1210,8 +1215,9 @@ function ClientEditorStudio({
               <div className="relative aspect-[4/3] rounded-2xl border border-white/15 bg-[#161c2c] overflow-hidden shadow-2xl">
                 {formData.hero_image ? (
                   <img
-                    src={formData.hero_image}
+                    src={cldImage(formData.hero_image, { width: 700, height: 525, crop: "fill" })}
                     alt={formData.name}
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -1517,8 +1523,10 @@ function ClientEditorStudio({
                   >
                     <div className="relative aspect-square w-full overflow-hidden bg-black">
                       <img
-                        src={c.file_url || c.image}
+                        src={cldImage(c.file_url || c.image, { width: 400, height: 400, crop: "fill" })}
                         alt={c.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                       <span className="absolute top-2 left-2 bg-black/75 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-md">
@@ -1692,8 +1700,8 @@ function ClientEditorStudio({
                   >
                     <div className="relative aspect-[9/16] w-full bg-black overflow-hidden">
                       <video
-                        src={r.file_url || r.videoUrl}
-                        poster={r.poster_url || r.poster}
+                        src={cldVideo(r.file_url || r.videoUrl, { width: 480 })}
+                        poster={cldImage(r.poster_url || r.poster, { width: 480 })}
                         controls
                         playsInline
                         preload="metadata"

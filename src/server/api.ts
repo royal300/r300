@@ -2,6 +2,7 @@ import { pool } from './db.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { uploadToCloudinary, isCloudinaryConfigured } from './cloudinary.ts';
 
 const AUTH_SECRET = process.env.ADMIN_SECRET || 'royal300_admin_secret_key_2026';
 
@@ -495,37 +496,65 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
       }
 
       // POST /api/admin/upload - file upload (supports image & video)
+      // Stored + optimized on Cloudinary: images get auto format/quality/responsive
+      // sizing at delivery time (see src/lib/cloudinary.ts), video gets an
+      // auto-generated poster frame and auto format/quality on delivery too.
       if (pathname === '/api/admin/upload' && method === 'POST') {
+        const ALLOWED_FOLDERS = new Set(['thumbnails', 'creatives', 'reels', 'general']);
         const formData = await request.formData();
         const file = formData.get('file') as File | null;
-        const folderType = (formData.get('type') as string) || 'general'; // thumbnails, creatives, reels, general
+        const requestedFolder = (formData.get('type') as string) || 'general';
+        const folderType = ALLOWED_FOLDERS.has(requestedFolder) ? requestedFolder : 'general';
 
         if (!file || typeof file.arrayBuffer !== 'function') {
           return jsonResponse({ success: false, error: 'No valid file provided' }, 400);
         }
 
-        const uploadBaseDir = getUploadDir();
-        const targetSubdir = path.join(uploadBaseDir, folderType);
-        fs.mkdirSync(targetSubdir, { recursive: true });
+        if (!isCloudinaryConfigured) {
+          return jsonResponse(
+            {
+              success: false,
+              error:
+                'Media storage is not configured. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET on the server.',
+            },
+            500,
+          );
+        }
 
-        // Clean filename
-        const originalName = file.name || 'file.bin';
-        const ext = path.extname(originalName).toLowerCase();
-        const baseName = path.basename(originalName, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
-        const uniqueFilename = `${Date.now()}_${baseName}${ext}`;
-        const targetFilePath = path.join(targetSubdir, uniqueFilename);
-
+        // Prefer the browser-supplied MIME type, but fall back to the file
+        // extension — a video misclassified as an image gets uploaded with
+        // resource_type 'image' and silently hits Cloudinary's much smaller
+        // image/raw size cap instead of the video cap.
+        const VIDEO_EXTENSIONS = new Set(['.mp4', '.mov', '.webm', '.mkv', '.avi', '.m4v']);
+        const ext = path.extname(file.name || '').toLowerCase();
+        const isVideo = file.type.startsWith('video/') || VIDEO_EXTENSIONS.has(ext);
         const arrayBuffer = await file.arrayBuffer();
-        fs.writeFileSync(targetFilePath, Buffer.from(arrayBuffer));
 
-        const publicUrl = `/uploads/${folderType}/${uniqueFilename}`;
-        return jsonResponse({
-          success: true,
-          url: publicUrl,
-          filename: uniqueFilename,
-          size: file.size,
-          type: file.type,
-        });
+        try {
+          const result = await uploadToCloudinary(Buffer.from(arrayBuffer), {
+            folder: folderType,
+            resourceType: isVideo ? 'video' : 'image',
+            filenameHint: path.basename(file.name || 'file', path.extname(file.name || '')).replace(
+              /[^a-zA-Z0-9_-]/g,
+              '_',
+            ),
+          });
+
+          return jsonResponse({
+            success: true,
+            url: result.url,
+            posterUrl: result.posterUrl,
+            publicId: result.publicId,
+            width: result.width,
+            height: result.height,
+            duration: result.duration,
+            size: result.bytes,
+            type: file.type,
+          });
+        } catch (err: any) {
+          console.error('Cloudinary upload failed:', err);
+          return jsonResponse({ success: false, error: err.message || 'Upload failed' }, 502);
+        }
       }
 
       // POST /api/admin/clients/:id/media - add creative / reel
@@ -717,7 +746,7 @@ function serveUploadedFile(pathname: string, request: Request): Response {
       'Content-Type': contentType,
       'Content-Length': String(fileSize),
       'Accept-Ranges': 'bytes',
-      'Cache-Control': 'public, max-age=86400',
+      'Cache-Control': 'public, max-age=31536000, immutable',
     },
   });
 }

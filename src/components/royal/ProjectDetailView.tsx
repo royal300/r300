@@ -21,6 +21,7 @@ import { AmbientBackground } from "./AmbientBackground";
 import { CustomCursor } from "./CustomCursor";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+import { cldImage, cldVideo } from "@/lib/cloudinary";
 
 interface Props {
   project: ProjectData;
@@ -204,8 +205,9 @@ export function ProjectDetailView({ project }: Props) {
             <div className="lg:col-span-5 flex justify-center lg:justify-end">
               <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl w-full max-w-[500px] aspect-square">
                 <img
-                  src={project.heroImage}
+                  src={cldImage(project.heroImage, { width: 500, height: 500, crop: "fill" })}
                   alt={project.name}
+                  decoding="async"
                   width={500}
                   height={500}
                   className="h-full w-full object-cover"
@@ -330,8 +332,10 @@ export function ProjectDetailView({ project }: Props) {
                             >
                               <div className="relative h-full w-full overflow-hidden rounded-2xl">
                                 <img
-                                  src={item.image}
+                                  src={cldImage(item.image, { width: 340, height: 460, crop: "fill" })}
                                   alt=""
+                                  loading={isCenter ? undefined : "lazy"}
+                                  decoding="async"
                                   className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                                 />
 
@@ -390,8 +394,10 @@ export function ProjectDetailView({ project }: Props) {
                             >
                               <div className="relative h-full w-full overflow-hidden rounded-2xl bg-black">
                                 <img
-                                  src={item.poster}
+                                  src={cldImage(item.poster, { width: 300, height: 480, crop: "fill" })}
                                   alt=""
+                                  loading={isCenter ? undefined : "lazy"}
+                                  decoding="async"
                                   className="h-full w-full object-cover opacity-90 transition-transform duration-700 hover:scale-105"
                                 />
 
@@ -451,8 +457,9 @@ export function ProjectDetailView({ project }: Props) {
             {modalItem.type === "creative" ? (
               <div className="flex flex-col items-center">
                 <img
-                  src={(modalItem.item as CreativeItem).image}
+                  src={cldImage((modalItem.item as CreativeItem).image, { width: 1400 })}
                   alt=""
+                  decoding="async"
                   className="max-h-[82vh] w-auto rounded-xl object-contain"
                 />
               </div>
@@ -461,12 +468,13 @@ export function ProjectDetailView({ project }: Props) {
                 <div className="relative aspect-[9/16] h-[82vh] max-h-[700px] w-auto overflow-hidden rounded-xl bg-black">
                   <video
                     ref={videoRef}
-                    src={(modalItem.item as ReelItem).videoUrl}
-                    poster={(modalItem.item as ReelItem).poster}
+                    src={cldVideo((modalItem.item as ReelItem).videoUrl, { width: 720 })}
+                    poster={cldImage((modalItem.item as ReelItem).poster, { width: 480 })}
                     controls
                     autoPlay
                     loop
                     muted={isMuted}
+                    preload="metadata"
                     className="h-full w-full object-cover"
                   />
                   {/* Mute Toggle Overlay */}
