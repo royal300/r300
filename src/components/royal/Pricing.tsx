@@ -112,13 +112,7 @@ const webTiers = [
 /* ── Toggle ──────────────────────────────────────────────────────────────── */
 type Category = "dm" | "web";
 
-function Toggle({
-  value,
-  onChange,
-}: {
-  value: Category;
-  onChange: (v: Category) => void;
-}) {
+function Toggle({ value, onChange }: { value: Category; onChange: (v: Category) => void }) {
   return (
     <div
       className="relative mx-auto mt-10 flex w-fit rounded-full border border-transparent bg-white/20 p-1"
@@ -167,7 +161,7 @@ export function Pricing() {
       <div className="shell">
         <SectionHeading
           eyebrow="PRICING"
-          title="CHOOSE THE LEVEL OF"
+          title={"CHOOSE THE LEVEL OF "}
           highlight="GROWTH YOU NEED."
           copy="Flexible solutions designed around your current stage, marketing goals and growth ambitions."
           align="center"
@@ -200,16 +194,12 @@ export function Pricing() {
               <p className="font-display text-xs font-bold tracking-[0.26em] text-muted-foreground">
                 {t.name}
               </p>
-              <h3 className="mt-5 text-2xl font-medium leading-tight">
-                {t.line}
-              </h3>
+              <h3 className="mt-5 text-2xl font-medium leading-tight">{t.line}</h3>
               <p className="mt-3 text-sm text-muted-foreground">{t.for}</p>
 
               <div className="my-7 hairline" />
 
-              <p className="font-display text-3xl font-medium tracking-[0.01em]">
-                Custom Proposal
-              </p>
+              <p className="font-display text-3xl font-medium tracking-[0.01em]">Custom Proposal</p>
               <p className="mt-2 text-xs text-muted-foreground">
                 Scoped to your goals — Discuss Your Goals →
               </p>

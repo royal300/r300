@@ -38,12 +38,15 @@ export function Footer() {
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
           <div>
-            <a href="/" className="inline-block mb-2">
+            <a href="/" className="inline-flex items-center gap-3">
               <img
                 src={logoUrl}
                 alt="ROYAL300 Logo"
                 className="h-12 sm:h-14 w-auto object-contain shadow-md"
               />
+              <span className="font-display text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+                Grow Your Business
+              </span>
             </a>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Digital experiences. Creative growth. Business impact.
