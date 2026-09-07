@@ -17,10 +17,7 @@ export function SectionHeading({
 }) {
   return (
     <div
-      className={cn(
-        align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl",
-        className,
-      )}
+      className={cn(align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl", className)}
     >
       {eyebrow && (
         <p
@@ -32,7 +29,7 @@ export function SectionHeading({
       )}
       <h2
         data-reveal
-        className="reveal mt-4 text-[clamp(1.85rem,4vw,3.35rem)] font-medium leading-[1.06]"
+        className="reveal mt-4 text-[clamp(1.85rem,4vw,3.35rem)] font-medium leading-[1.06] [word-spacing:0.28em]"
         style={{ ["--reveal-delay" as string]: "80ms" }}
       >
         {title} {highlight && <span className="grad-text">{highlight}</span>}

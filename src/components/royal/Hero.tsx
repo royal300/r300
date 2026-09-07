@@ -46,12 +46,15 @@ export function Hero() {
 
           <h1
             data-reveal
-            className="reveal mt-7 text-[clamp(2.4rem,6.2vw,4.9rem)] font-medium leading-[1.02] tracking-[0.01em]"
+            className="reveal mt-7 font-hero leading-[1.05] tracking-[0.01em]"
             style={{ ["--reveal-delay" as string]: "80ms" }}
           >
-            WE DON'T JUST MARKET BRANDS.
-            <br />
-            <span className="grad-text">WE BUILD THEIR GROWTH.</span>
+            <span className="block text-[clamp(1.6rem,4vw,2.9rem)] font-medium">
+              WE DON'T JUST MARKET BRANDS.
+            </span>
+            <span className="grad-text block text-[clamp(2.6rem,7.2vw,5.6rem)] font-semibold">
+              WE BUILD THEIR GROWTH.
+            </span>
           </h1>
 
           <p
