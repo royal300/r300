@@ -40,7 +40,7 @@ export function Navbar() {
           data-cursor="button"
           className="inline-flex items-center"
         >
-          <img src="/logo.jpg" alt="ROYAL300 Logo" className="h-9 sm:h-10 w-auto rounded-xl object-contain shadow-sm" />
+          <img src="/logo.png" alt="ROYAL300 Logo" className="h-9 sm:h-10 w-auto rounded-xl object-contain shadow-sm" />
         </Link>
 
         <ul className="hidden items-center gap-8 lg:flex">
