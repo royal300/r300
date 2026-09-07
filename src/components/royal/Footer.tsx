@@ -1,3 +1,5 @@
+import { useSiteSettings } from "@/hooks/use-site-settings";
+
 const columns = [
   {
     title: "Explore",
@@ -29,6 +31,8 @@ const columns = [
 ];
 
 export function Footer() {
+  const { logoUrl } = useSiteSettings();
+
   return (
     <footer className="border-t border-border py-12 lg:py-14">
       <div className="shell">
@@ -36,7 +40,7 @@ export function Footer() {
           <div>
             <a href="/" className="inline-block mb-2">
               <img
-                src="/logo1.png"
+                src={logoUrl}
                 alt="ROYAL300 Logo"
                 className="h-12 sm:h-14 w-auto object-contain shadow-md"
               />

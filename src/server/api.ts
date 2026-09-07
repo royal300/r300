@@ -238,6 +238,15 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
       return jsonResponse({ success: true, client });
     }
 
+    // 3. GET /api/settings - public site settings (currently: logo)
+    if (pathname === '/api/settings' && method === 'GET') {
+      const [rows] = (await pool.query(
+        'SELECT value_text FROM admin_settings WHERE key_name = "site_logo" LIMIT 1'
+      )) as any[];
+      const logoUrl = rows.length > 0 && rows[0].value_text ? rows[0].value_text : '/logo1.png';
+      return jsonResponse({ success: true, logoUrl });
+    }
+
     // -------------------------------------------------------------
     // AUTH APIS
     // -------------------------------------------------------------
@@ -650,6 +659,18 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
         const mediaId = parseInt(deleteMediaMatch[1], 10);
         await pool.query('DELETE FROM client_media WHERE id = ?', [mediaId]);
         return jsonResponse({ success: true, message: 'Media deleted' });
+      }
+
+      // PUT /api/admin/settings - update global site settings (currently: logo)
+      if (pathname === '/api/admin/settings' && method === 'PUT') {
+        const body = await request.json().catch(() => ({}));
+        if (typeof body.logo_url === 'string' && body.logo_url.trim()) {
+          await pool.query(
+            'INSERT INTO admin_settings (key_name, value_text) VALUES ("site_logo", ?) ON DUPLICATE KEY UPDATE value_text = ?',
+            [body.logo_url, body.logo_url]
+          );
+        }
+        return jsonResponse({ success: true, message: 'Settings updated' });
       }
 
       // POST /api/admin/clients/reorder - reorder client display

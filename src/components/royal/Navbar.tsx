@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSiteSettings } from "@/hooks/use-site-settings";
 import { MagneticButton } from "./MagneticButton";
 
 const links = [
@@ -14,6 +15,7 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const { logoUrl } = useSiteSettings();
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -37,7 +39,7 @@ export function Navbar() {
       >
         <Link to="/" data-cursor="button" className="inline-flex items-center">
           <img
-            src="/logo1.png"
+            src={logoUrl}
             alt="ROYAL300 Logo"
             className="h-9 sm:h-10 w-auto object-contain shadow-sm"
           />

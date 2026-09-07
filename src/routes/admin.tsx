@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { cldImage, cldVideo } from "@/lib/cloudinary";
+import { useSiteSettings } from "@/hooks/use-site-settings";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -71,6 +72,8 @@ function AdminPage() {
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
   const [newClientName, setNewClientName] = React.useState("");
   const [addLoading, setAddLoading] = React.useState(false);
+
+  const { logoUrl, refetch: refetchSiteSettings } = useSiteSettings();
 
   // Check login state
   const checkAuth = React.useCallback(async () => {
@@ -192,7 +195,9 @@ function AdminPage() {
 
   // Delete Client
   const handleDeleteClient = async (id: number, name: string) => {
-    if (!confirm(`Are you sure you want to delete "${name}"? All related media will also be deleted.`)) {
+    if (
+      !confirm(`Are you sure you want to delete "${name}"? All related media will also be deleted.`)
+    ) {
       return;
     }
     try {
@@ -221,9 +226,7 @@ function AdminPage() {
       });
       const data = await res.json();
       if (data.success) {
-        toast.success(
-          `"${client.name}" is now ${updatedStatus ? "LIVE on Homepage" : "Hidden"}`
-        );
+        toast.success(`"${client.name}" is now ${updatedStatus ? "LIVE on Homepage" : "Hidden"}`);
         fetchClients();
       }
     } catch {
@@ -314,7 +317,7 @@ function AdminPage() {
   const filteredClients = clients.filter(
     (c) =>
       c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.slug.toLowerCase().includes(searchQuery.toLowerCase())
+      c.slug.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const totalCreatives = clients.reduce((acc, c) => acc + (c.creatives?.length || 0), 0);
@@ -327,9 +330,7 @@ function AdminPage() {
       <header className="sticky top-0 z-40 bg-[#0e131f]/80 backdrop-blur-xl border-b border-white/10">
         <div className="w-[90%] mx-auto px-2 sm:px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl overflow-hidden shadow-md shadow-blue-500/20 border border-white/20 bg-[#0e131f]">
-              <img src="/favicon.png" alt="ROYAL300 Logo" className="h-full w-full object-cover" />
-            </div>
+            <img src={logoUrl} alt="ROYAL300 Logo" className="h-8 sm:h-9 w-auto object-contain" />
             <div>
               <span className="font-display font-bold text-white text-base tracking-tight">
                 ROYAL300
@@ -414,9 +415,7 @@ function AdminPage() {
                   <span>Video Reels</span>
                   <Film className="w-4 h-4 text-indigo-400" />
                 </div>
-                <div className="mt-3 font-display text-3xl font-bold text-white">
-                  {totalReels}
-                </div>
+                <div className="mt-3 font-display text-3xl font-bold text-white">{totalReels}</div>
                 <div className="mt-1 text-xs text-gray-400">9:16 vertical reels</div>
               </div>
 
@@ -433,6 +432,9 @@ function AdminPage() {
                 </button>
               </div>
             </div>
+
+            {/* Site Logo */}
+            <SiteLogoPanel logoUrl={logoUrl} onLogoUpdated={refetchSiteSettings} />
 
             {/* Clients List Header & Search */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
@@ -512,7 +514,11 @@ function AdminPage() {
                       <div className="relative aspect-[16/9] w-full bg-[#161c2c] overflow-hidden">
                         {client.hero_image ? (
                           <img
-                            src={cldImage(client.hero_image, { width: 500, height: 280, crop: "fill" })}
+                            src={cldImage(client.hero_image, {
+                              width: 500,
+                              height: 280,
+                              crop: "fill",
+                            })}
                             alt={client.name}
                             loading="lazy"
                             decoding="async"
@@ -685,6 +691,119 @@ function AdminPage() {
 }
 
 /* ===============================================================
+   SITE LOGO PANEL — shown on the main dashboard, updates the logo
+   used site-wide (public navbar, footer, and this admin header).
+   =============================================================== */
+interface SiteLogoPanelProps {
+  logoUrl: string;
+  onLogoUpdated: () => Promise<void>;
+}
+
+function SiteLogoPanel({ logoUrl, onLogoUpdated }: SiteLogoPanelProps) {
+  const [dims, setDims] = React.useState<{ w: number; h: number } | null>(null);
+  const [uploading, setUploading] = React.useState(false);
+
+  // Re-measure whenever the logo itself changes (e.g. after a successful upload).
+  React.useEffect(() => {
+    setDims(null);
+  }, [logoUrl]);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const toastId = toast.loading("Uploading new logo...");
+    try {
+      setUploading(true);
+      const uploadForm = new FormData();
+      uploadForm.append("file", file);
+      uploadForm.append("type", "general");
+
+      const uploadRes = await fetch("/api/admin/upload", { method: "POST", body: uploadForm });
+      const uploadData = await uploadRes.json();
+      if (!uploadData.success) throw new Error(uploadData.error || "Upload failed");
+
+      const saveRes = await fetch("/api/admin/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ logo_url: uploadData.url }),
+      });
+      const saveData = await saveRes.json();
+      if (!saveData.success) throw new Error(saveData.error || "Failed to save logo");
+
+      toast.success("Logo updated — now live in the navbar, footer, and here.", { id: toastId });
+      await onLogoUpdated();
+    } catch (err: any) {
+      toast.error(err.message || "Error updating logo", { id: toastId });
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
+  };
+
+  return (
+    <div className="bg-[#0e131f]/90 border border-white/10 rounded-2xl p-5 sm:p-6 shadow-lg">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h3 className="font-display font-bold text-white text-sm flex items-center gap-2">
+            <ImageIcon className="w-4 h-4 text-blue-400" />
+            <span>Site Logo</span>
+          </h3>
+          <p className="text-xs text-gray-400 mt-1">
+            Shown in the public navbar, the footer, and this admin panel's header.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="h-14 min-w-14 px-3 rounded-xl border border-white/10 bg-[#161c2c] flex items-center justify-center overflow-hidden shrink-0">
+            <img
+              src={logoUrl}
+              alt="Current site logo"
+              className="max-h-10 w-auto object-contain"
+              onLoad={(e) =>
+                setDims({ w: e.currentTarget.naturalWidth, h: e.currentTarget.naturalHeight })
+              }
+            />
+          </div>
+
+          <label className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl cursor-pointer shadow-md shadow-blue-600/20 transition-all shrink-0 disabled:opacity-50">
+            {uploading ? (
+              <>
+                <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span>Uploading...</span>
+              </>
+            ) : (
+              <>
+                <Upload className="w-3.5 h-3.5" />
+                <span>Change Logo</span>
+              </>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleUpload}
+              disabled={uploading}
+              className="hidden"
+            />
+          </label>
+        </div>
+      </div>
+
+      {dims && (
+        <p className="mt-3 text-[11px] text-gray-500">
+          Current logo is{" "}
+          <span className="text-gray-300 font-mono">
+            {dims.w} × {dims.h}px
+          </span>{" "}
+          (~{(dims.w / dims.h).toFixed(2)}:1 aspect ratio). For the sharpest result with no
+          cropping, upload a replacement close to that same size and ratio.
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* ===============================================================
    CLIENT EDITOR STUDIO COMPONENT
    =============================================================== */
 interface ClientEditorStudioProps {
@@ -715,9 +834,7 @@ function ClientEditorStudio({
       instagram: client.links?.instagram || "",
       facebook: client.links?.facebook || "",
     },
-    services_provided: Array.isArray(client.services_provided)
-      ? [...client.services_provided]
-      : [],
+    services_provided: Array.isArray(client.services_provided) ? [...client.services_provided] : [],
   });
 
   const [saving, setSaving] = React.useState(false);
@@ -1199,7 +1316,8 @@ function ClientEditorStudio({
                 Client Hero & Homepage Thumbnail
               </h3>
               <p className="text-xs text-gray-400 mt-1">
-                This image represents the client on the homepage parallax card and the case study header.
+                This image represents the client on the homepage parallax card and the case study
+                header.
               </p>
             </div>
             <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 text-blue-300 px-3 py-1.5 rounded-xl text-xs font-semibold">
@@ -1510,7 +1628,7 @@ function ClientEditorStudio({
               Current Campaign Creatives ({client.creatives?.length || 0})
             </h4>
 
-            {(!client.creatives || client.creatives.length === 0) ? (
+            {!client.creatives || client.creatives.length === 0 ? (
               <p className="text-xs text-gray-500 py-6 text-center">
                 No creatives added yet. Use the upload box above to add your first creative image.
               </p>
@@ -1523,7 +1641,11 @@ function ClientEditorStudio({
                   >
                     <div className="relative aspect-square w-full overflow-hidden bg-black">
                       <img
-                        src={cldImage(c.file_url || c.image, { width: 400, height: 400, crop: "fill" })}
+                        src={cldImage(c.file_url || c.image, {
+                          width: 400,
+                          height: 400,
+                          crop: "fill",
+                        })}
                         alt={c.title}
                         loading="lazy"
                         decoding="async"
@@ -1687,7 +1809,7 @@ function ClientEditorStudio({
               Current Video Reels ({client.reels?.length || 0})
             </h4>
 
-            {(!client.reels || client.reels.length === 0) ? (
+            {!client.reels || client.reels.length === 0 ? (
               <p className="text-xs text-gray-500 py-6 text-center">
                 No reels uploaded yet. Use the upload box above to upload 9:16 vertical video reels.
               </p>
