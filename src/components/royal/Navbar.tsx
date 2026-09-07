@@ -41,7 +41,7 @@ export function Navbar() {
           <img
             src={logoUrl}
             alt="ROYAL300 Logo"
-            className="h-9 sm:h-10 w-auto rounded-[2px] object-contain shadow-sm"
+            className="h-9 sm:h-10 w-auto rounded-[9px] object-contain shadow-sm"
           />
         </Link>
 
