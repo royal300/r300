@@ -35,7 +35,11 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
           <div>
             <a href="/" className="inline-block mb-2">
-              <img src="/logo.png" alt="ROYAL300 Logo" className="h-12 sm:h-14 w-auto rounded-2xl object-contain shadow-md" />
+              <img
+                src="/logo1.png"
+                alt="ROYAL300 Logo"
+                className="h-12 sm:h-14 w-auto object-contain shadow-md"
+              />
             </a>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Digital experiences. Creative growth. Business impact.
