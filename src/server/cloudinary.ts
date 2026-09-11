@@ -70,9 +70,18 @@ export function uploadToCloudinary(
   }
 
   return new Promise((resolve, reject) => {
-    const onDone = (error: unknown, result: any) => {
+    const onDone = (error: any, result: any) => {
       if (error || !result) {
-        reject(error || new Error("Cloudinary upload returned no result"));
+        const errMsg = error?.message || String(error || "Cloudinary upload failed");
+        if (errMsg.includes("File size too large") || errMsg.includes("Maximum is")) {
+          reject(
+            new Error(
+              "File size exceeds Cloudinary's 10 MB per-file plan limit. Please compress your video (e.g. using Handbrake or Clideo) below 10 MB.",
+            ),
+          );
+        } else {
+          reject(error || new Error("Cloudinary upload returned no result"));
+        }
         return;
       }
 
@@ -99,16 +108,6 @@ export function uploadToCloudinary(
       });
     };
 
-    // Cloudinary's regular upload endpoint caps a single request at 10MB on
-    // this account's plan — every video needs a chunked upload instead.
-    //
-    // NOTE: this package also exports `upload_large_stream`, which its .d.ts
-    // documents with the same (options, callback) signature as upload_stream
-    // — but the v2 API surface never actually adapts it (see
-    // node_modules/cloudinary/lib/v2/uploader.js's v1_adapters() call), so at
-    // runtime it's `undefined` on `cloudinary.uploader`. `upload_chunked_stream`
-    // is the underlying chunking engine and the one that's actually properly
-    // exposed on v2, so use that instead. Verified against cloudinary@2.11.0.
     const stream =
       opts.resourceType === "video"
         ? cloudinary.uploader.upload_chunked_stream(uploadOptions, onDone)
