@@ -733,16 +733,14 @@ function SiteLogoPanel({ logoUrl, onLogoUpdated }: SiteLogoPanelProps) {
       uploadForm.append("file", file);
       uploadForm.append("type", "general");
 
-      const uploadRes = await fetch("/api/admin/upload", { method: "POST", body: uploadForm });
-      const uploadData = await uploadRes.json();
+      const uploadData = await safeFetchJson("/api/admin/upload", { method: "POST", body: uploadForm });
       if (!uploadData.success) throw new Error(uploadData.error || "Upload failed");
 
-      const saveRes = await fetch("/api/admin/settings", {
+      const saveData = await safeFetchJson("/api/admin/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ logo_url: uploadData.url }),
       });
-      const saveData = await saveRes.json();
       if (!saveData.success) throw new Error(saveData.error || "Failed to save logo");
 
       toast.success("Logo updated — now live in the navbar, footer, and here.", { id: toastId });
@@ -921,14 +919,13 @@ function ClientEditorStudio({
       uploadForm.append("file", file);
       uploadForm.append("type", "thumbnails");
 
-      const res = await fetch("/api/admin/upload", {
+      const data = await safeFetchJson("/api/admin/upload", {
         method: "POST",
         body: uploadForm,
       });
-      const data = await res.json();
       if (data.success) {
         setFormData((prev) => ({ ...prev, hero_image: data.url }));
-        await fetch(`/api/admin/clients/${client.id}`, {
+        await safeFetchJson(`/api/admin/clients/${client.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ hero_image: data.url }),
@@ -976,14 +973,13 @@ function ClientEditorStudio({
       uploadForm.append("file", file);
       uploadForm.append("type", "creatives");
 
-      const uploadRes = await fetch("/api/admin/upload", {
+      const uploadData = await safeFetchJson("/api/admin/upload", {
         method: "POST",
         body: uploadForm,
       });
-      const uploadData = await uploadRes.json();
       if (!uploadData.success) throw new Error(uploadData.error || "Upload failed");
 
-      const mediaRes = await fetch(`/api/admin/clients/${client.id}/media`, {
+      const mediaData = await safeFetchJson(`/api/admin/clients/${client.id}/media`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -994,7 +990,6 @@ function ClientEditorStudio({
           description: creativeDesc,
         }),
       });
-      const mediaData = await mediaRes.json();
       if (mediaData.success) {
         toast.success("Creative image uploaded & added to client carousel!");
         setCreativeTitle("");

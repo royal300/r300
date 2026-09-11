@@ -87,12 +87,7 @@ export function uploadToCloudinary(
 
       const posterUrl =
         opts.resourceType === "video"
-          ? cloudinary.url(result.public_id, {
-              resource_type: "video",
-              format: "jpg",
-              transformation: [{ start_offset: "0", width: 800, crop: "limit", quality: "auto" }],
-              secure: true,
-            })
+          ? `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/so_0,w_800,c_limit,q_auto/${result.public_id}.jpg`
           : undefined;
 
       resolve({
