@@ -1012,18 +1012,12 @@ function ClientEditorStudio({
     const sizeMbNum = videoFile.size / (1024 * 1024);
     const sizeMb = sizeMbNum.toFixed(1);
 
-    // Cloudinary Free/Standard plan has a hard 10.4MB single file limit
-    if (sizeMbNum > 10.4) {
-      toast.error(
-        `File is ${sizeMb} MB. Your Cloudinary account has a 10 MB per-file video upload limit. Please compress your video (e.g. using Handbrake or Clideo) to under 10 MB before uploading.`,
-        { duration: 8000 },
-      );
-      return;
-    }
+    const storageMsg =
+      sizeMbNum > 10.4
+        ? `Uploading full quality video reel (${sizeMb} MB) to VPS storage... Please wait.`
+        : `Uploading video reel (${sizeMb} MB)... Please keep this page open.`;
 
-    const toastId = toast.loading(
-      `Uploading video reel (${sizeMb} MB) to Cloudinary... Please keep this page open.`,
-    );
+    const toastId = toast.loading(storageMsg);
 
     try {
       setUploadingReel(true);

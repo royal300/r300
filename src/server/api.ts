@@ -538,9 +538,42 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
         const ext = path.extname(file.name || '').toLowerCase();
         const isVideo = file.type.startsWith('video/') || VIDEO_EXTENSIONS.has(ext);
         const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        // Helper to save directly to VPS local disk storage (preserves 100% full original video quality)
+        const saveLocal = async () => {
+          const cleanName = `${Date.now()}_${path.basename(file.name || 'file', path.extname(file.name || '')).replace(/[^a-zA-Z0-9_-]/g, '_')}${ext || '.mp4'}`;
+          const uploadDir = path.join(process.cwd(), 'public', 'uploads', folderType);
+          await fs.mkdir(uploadDir, { recursive: true });
+          const filePath = path.join(uploadDir, cleanName);
+          await fs.writeFile(filePath, buffer);
+
+          // If out/public directory exists (built server preset), sync there as well
+          const outPublicDir = path.join(process.cwd(), '.output', 'public', 'uploads', folderType);
+          try {
+            await fs.mkdir(outPublicDir, { recursive: true });
+            await fs.writeFile(path.join(outPublicDir, cleanName), buffer);
+          } catch {}
+
+          const localUrl = `/uploads/${folderType}/${cleanName}`;
+          return jsonResponse({
+            success: true,
+            url: localUrl,
+            posterUrl: isVideo ? localUrl : undefined,
+            publicId: cleanName,
+            size: buffer.length,
+            type: file.type,
+            storage: 'vps_local',
+          });
+        };
+
+        // If file > 10MB, save directly to VPS disk to preserve 100% original quality
+        if (isVideo && buffer.length > 10.4 * 1024 * 1024) {
+          return await saveLocal();
+        }
 
         try {
-          const result = await uploadToCloudinary(Buffer.from(arrayBuffer), {
+          const result = await uploadToCloudinary(buffer, {
             folder: folderType,
             resourceType: isVideo ? 'video' : 'image',
             filenameHint: path.basename(file.name || 'file', path.extname(file.name || '')).replace(
@@ -559,10 +592,11 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
             duration: result.duration,
             size: result.bytes,
             type: file.type,
+            storage: 'cloudinary',
           });
         } catch (err: any) {
-          console.error('Cloudinary upload failed:', err);
-          return jsonResponse({ success: false, error: err.message || 'Upload failed' }, 502);
+          console.warn('Cloudinary upload failed/exceeded size limit. Falling back to VPS local storage:', err.message);
+          return await saveLocal();
         }
       }
 
