@@ -1,50 +1,49 @@
-import { Bot, Gem, LineChart, MonitorSmartphone, Share2, Target } from "lucide-react";
-
+import { Camera, Globe, MessageSquare, SearchCheck, Server, Share2 } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
 
 const services = [
   {
     no: "01",
-    icon: Gem,
-    title: "Brand & Creative",
-    line: "Build a brand people remember.",
-    copy: "Brand identity, creative direction, social media design, campaign creatives and visual systems designed to make businesses look credible and memorable.",
-  },
-  {
-    no: "02",
-    icon: Target,
-    title: "Digital Marketing",
+    icon: Share2,
+    title: "Social Media Marketing",
     line: "Reach the people who matter.",
     copy: "Strategic social media marketing, paid advertising and campaign management focused on awareness, engagement, leads and conversions.",
   },
   {
-    no: "03",
-    icon: MonitorSmartphone,
-    title: "Website & Digital Experience",
+    no: "02",
+    icon: Globe,
+    title: "Web Development",
     line: "Turn visitors into customers.",
     copy: "High-performance websites and landing pages designed around user experience, trust and conversion.",
   },
   {
+    no: "03",
+    icon: SearchCheck,
+    title: "SEO & GMB",
+    line: "Dominate search results & local maps.",
+    copy: "Search engine optimization and Google My Business profile management to drive organic high-intent traffic.",
+  },
+  {
     no: "04",
-    icon: LineChart,
-    title: "Growth Strategy",
-    line: "Turn marketing into a measurable system.",
-    copy: "Data-driven strategy, audience research, campaign optimization and performance insights that help businesses make smarter marketing decisions.",
+    icon: MessageSquare,
+    title: "WhatsApp Automation",
+    line: "Automate leads & customer chats.",
+    copy: "AI-powered WhatsApp workflows, auto-responders, broadcast campaigns, and automated lead nurturing.",
   },
   {
     no: "05",
-    icon: Share2,
-    title: "Social Media Management",
-    line: "Stay relevant. Stay visible. Stay remembered.",
-    copy: "Content strategy, creative production, publishing and audience engagement that maintain a consistent digital presence.",
+    icon: Server,
+    title: "Server & Hosting",
+    line: "Secure, lightning-fast infrastructure.",
+    copy: "Reliable cloud server setup, SSL encryption, database management, and 99.9% uptime hosting support.",
   },
   {
     no: "06",
-    icon: Bot,
-    title: "AI & Automation",
-    line: "Work smarter. Scale faster.",
-    copy: "AI-powered workflows, automation, intelligent customer experiences and data-driven systems that reduce repetitive work and unlock new opportunities.",
+    icon: Camera,
+    title: "Professional Shooting",
+    line: "High-quality visual content production.",
+    copy: "Professional video shoots, product photography, reel production, and brand ad filmmaking.",
   },
 ];
 
@@ -55,10 +54,10 @@ export function Services() {
     <section id="services" ref={ref} className="relative py-16 lg:py-24">
       <div className="shell">
         <SectionHeading
-          eyebrow="SERVICES"
-          title="WE TURN DIGITAL PRESENCE INTO"
-          highlight="BUSINESS VALUE."
-          copy="From brand positioning to performance campaigns, we combine creativity, technology and data to create digital systems that help businesses get noticed, trusted and chosen."
+          eyebrow="WHAT WE DO"
+          title="OUR "
+          highlight="SERVICES."
+          copy="From social media to server infrastructure — we cover every digital touchpoint your business needs to grow, compete and win online."
         />
 
         <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -67,34 +66,26 @@ export function Services() {
               key={s.no}
               data-reveal
               data-cursor="button"
-              className="reveal group glass relative overflow-hidden rounded-[1.75rem] p-7 transition-[transform,box-shadow] duration-700 [transition-timing-function:var(--ease-royal)] hover:-translate-y-2 hover:shadow-[0_40px_80px_-50px_color-mix(in_oklab,var(--electric)_60%,transparent)]"
+              className="reveal group glass relative overflow-hidden rounded-3xl p-7 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_-20px_rgba(168,85,247,0.3)] border border-white/15 bg-card/80"
               style={{ ["--reveal-delay" as string]: `${i * 90}ms` }}
             >
-              <span
-                aria-hidden
-                className="absolute inset-0 -z-10 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-                style={{
-                  background:
-                    "radial-gradient(120% 80% at 80% 0%, color-mix(in oklab, var(--electric) 12%, transparent), transparent 70%)",
-                }}
-              />
               <div className="flex items-start justify-between">
+                {/* Circular warm purple-amber gradient icon badge as shown in screenshot */}
                 <span
-                  className="grid h-12 w-12 place-items-center rounded-2xl border border-purple-300/60 bg-[linear-gradient(135deg,#ffffff_0%,#9333ea_100%)] text-purple-950 shadow-md shadow-purple-500/20 transition-transform duration-700 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-1 group-hover:rotate-[6deg]"
+                  className="grid h-11 w-11 place-items-center rounded-full bg-[linear-gradient(135deg,#818cf8_0%,#c084fc_45%,#fbbf24_100%)] text-slate-950 shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[6deg]"
                   aria-hidden
                 >
-                  <s.icon size={22} strokeWidth={1.8} className="text-purple-950" />
+                  <s.icon size={20} strokeWidth={1.75} className="text-slate-900" />
                 </span>
-                <span className="text-lg text-muted-foreground transition-transform duration-500 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-400">
+                <span className="text-base text-muted-foreground transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-400">
                   ↗
                 </span>
               </div>
-              <span className="mt-6 block font-display text-xs font-bold tracking-[0.24em] text-muted-foreground">
+              <span className="mt-5 block font-display text-xs font-extrabold tracking-[0.2em] text-muted-foreground">
                 {s.no}
               </span>
-              <h3 className="mt-2 text-2xl font-medium leading-tight">{s.title}</h3>
-              <p className="mt-3 font-display text-sm font-medium text-electric">{s.line}</p>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{s.copy}</p>
+              <h3 className="mt-2 text-xl sm:text-2xl font-bold leading-tight text-foreground">{s.title}</h3>
+              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted-foreground">{s.copy}</p>
             </article>
           ))}
         </div>
