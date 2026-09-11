@@ -1009,6 +1009,11 @@ function ClientEditorStudio({
       return;
     }
 
+    const sizeMb = (videoFile.size / (1024 * 1024)).toFixed(1);
+    const toastId = toast.loading(
+      `Uploading video reel (${sizeMb} MB) to Cloudinary... Please keep this page open.`,
+    );
+
     try {
       setUploadingReel(true);
       // Upload Video
@@ -1024,11 +1029,11 @@ function ClientEditorStudio({
       if (!videoData.success) throw new Error(videoData.error || "Video upload failed");
 
       // Upload Poster if provided, else fall back to the frame Cloudinary
-      // auto-extracted from the video itself (never the raw video URL — that
-      // isn't a valid image src).
+      // auto-extracted from the video itself.
       let finalPoster = reelPosterUrl || videoData.posterUrl || "";
       const posterFile = posterFileInput?.files?.[0];
       if (posterFile) {
+        toast.loading("Uploading reel poster frame...", { id: toastId });
         const posterForm = new FormData();
         posterForm.append("file", posterFile);
         posterForm.append("type", "thumbnails");
@@ -1039,6 +1044,8 @@ function ClientEditorStudio({
         const pData = await posterRes.json();
         if (pData.success) finalPoster = pData.url;
       }
+
+      toast.loading("Saving video reel to portfolio...", { id: toastId });
 
       // Save to client_media
       const mediaRes = await fetch(`/api/admin/clients/${client.id}/media`, {
@@ -1056,16 +1063,16 @@ function ClientEditorStudio({
       });
       const mediaData = await mediaRes.json();
       if (mediaData.success) {
-        toast.success("Reel uploaded & added to client carousel!");
+        toast.success("Reel uploaded & added to client carousel!", { id: toastId });
         setReelTitle("");
         videoFileInput.value = "";
         if (posterFileInput) posterFileInput.value = "";
         await onClientUpdated();
       } else {
-        toast.error(mediaData.error || "Failed to add reel");
+        toast.error(mediaData.error || "Failed to add reel", { id: toastId });
       }
     } catch (err: any) {
-      toast.error(err.message || "Error adding reel");
+      toast.error(err.message || "Error adding reel", { id: toastId });
     } finally {
       setUploadingReel(false);
     }

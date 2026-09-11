@@ -59,6 +59,11 @@ export function uploadToCloudinary(
     timeout: opts.resourceType === "video" ? 600_000 : 60_000,
   };
 
+  if (opts.resourceType === "video") {
+    // 6MB chunking threshold for faster streaming delivery to Cloudinary
+    uploadOptions["chunk_size"] = 6_000_000;
+  }
+
   if (opts.resourceType === "image") {
     // Store at a sensible upper bound; per-placement sizing happens on delivery.
     uploadOptions["transformation"] = [{ width: 2400, height: 2400, crop: "limit" }];
