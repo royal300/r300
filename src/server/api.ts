@@ -567,11 +567,7 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
           });
         };
 
-        // If file > 10MB, save directly to VPS disk to preserve 100% original quality
-        if (isVideo && buffer.length > 10.4 * 1024 * 1024) {
-          return await saveLocal();
-        }
-
+        // Try Cloudinary first for all uploads (up to 100MB for videos)
         try {
           const result = await uploadToCloudinary(buffer, {
             folder: folderType,
@@ -595,7 +591,7 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
             storage: 'cloudinary',
           });
         } catch (err: any) {
-          console.warn('Cloudinary upload failed/exceeded size limit. Falling back to VPS local storage:', err.message);
+          console.warn('Cloudinary upload failed/fallback to local:', err.message);
           return await saveLocal();
         }
       }
