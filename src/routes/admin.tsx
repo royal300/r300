@@ -25,6 +25,20 @@ import { toast } from "sonner";
 import { cldImage, cldVideo } from "@/lib/cloudinary";
 import { useSiteSettings } from "@/hooks/use-site-settings";
 
+async function safeFetchJson(url: string, init?: RequestInit) {
+  const res = await fetch(url, init);
+  const text = await res.text();
+  let data: any;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    if (res.status === 413) throw new Error("Upload payload exceeds server limit (413)");
+    if (res.status === 504 || res.status === 502) throw new Error("Server upload timeout (504/502)");
+    throw new Error(`Server returned non-JSON response (${res.status})`);
+  }
+  return data;
+}
+
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
@@ -1026,11 +1040,10 @@ function ClientEditorStudio({
       videoForm.append("file", videoFile);
       videoForm.append("type", "reels");
 
-      const videoRes = await fetch("/api/admin/upload", {
+      const videoData = await safeFetchJson("/api/admin/upload", {
         method: "POST",
         body: videoForm,
       });
-      const videoData = await videoRes.json();
       if (!videoData.success) throw new Error(videoData.error || "Video upload failed");
 
       // Upload Poster if provided, else fall back to the frame Cloudinary
@@ -1042,11 +1055,10 @@ function ClientEditorStudio({
         const posterForm = new FormData();
         posterForm.append("file", posterFile);
         posterForm.append("type", "thumbnails");
-        const posterRes = await fetch("/api/admin/upload", {
+        const pData = await safeFetchJson("/api/admin/upload", {
           method: "POST",
           body: posterForm,
         });
-        const pData = await posterRes.json();
         if (pData.success) finalPoster = pData.url;
       }
 
