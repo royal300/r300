@@ -246,7 +246,7 @@ function AdminPage() {
         <div className="relative w-full max-w-md bg-[#0e131f]/90 border border-white/10 backdrop-blur-2xl rounded-3xl p-8 sm:p-10 shadow-2xl">
           <div className="flex flex-col items-center text-center">
             <div className="h-16 w-16 rounded-2xl overflow-hidden shadow-lg shadow-blue-500/20 mb-6 border border-white/20 bg-[#0e131f]">
-              <img src="/favicon.png" alt="ROYAL300 Logo" className="h-full w-full object-cover" />
+              <img src="/royal300_logo.jpg" alt="ROYAL300 Logo" className="h-full w-full object-cover" />
             </div>
             <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white">
               ROYAL300 Admin

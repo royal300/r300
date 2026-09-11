@@ -1,226 +1,272 @@
 import { useState } from "react";
 import { useReveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
-import { MagneticButton } from "./MagneticButton";
-
-/* ── Digital Marketing tiers ─────────────────────────────────────────────── */
-const dmTiers = [
-  {
-    name: "STARTER",
-    line: "Build Your Presence",
-    for: "For businesses establishing their digital foundation.",
-    items: [
-      "Social media strategy",
-      "Creative content design",
-      "Basic campaign management",
-      "Monthly performance report",
-      "Brand consultation",
-    ],
-    cta: "Start Strong →",
-    ctaHover: "Start Strong ↗",
-    featured: false,
-  },
-  {
-    name: "GROWTH",
-    line: "Accelerate Your Business",
-    for: "For businesses ready to generate consistent attention and leads.",
-    items: [
-      "Complete social media management",
-      "Paid advertising (Meta / Google)",
-      "Campaign strategy & creatives",
-      "Premium visual content",
-      "Website optimisation",
-      "Monthly analytics report",
-      "Growth consultation",
-    ],
-    cta: "Accelerate Growth →",
-    ctaHover: "Accelerate Growth ↗",
-    featured: true,
-  },
-  {
-    name: "SCALE",
-    line: "Build a Growth Engine",
-    for: "For businesses looking for an integrated digital growth partner.",
-    items: [
-      "Full digital marketing suite",
-      "Performance campaigns (ROI-focused)",
-      "Advanced analytics & reporting",
-      "Website & landing pages",
-      "AI & WhatsApp automation",
-      "Conversion optimisation",
-      "Strategic consulting",
-    ],
-    cta: "Let's Build →",
-    ctaHover: "Let's Build ↗",
-    featured: false,
-  },
-];
 
 /* ── Web Development tiers ───────────────────────────────────────────────── */
 const webTiers = [
   {
-    name: "ESSENTIAL",
-    line: "Your Business Online",
-    for: "For startups and small businesses needing a solid web presence.",
+    num: "01",
+    name: "Basic",
+    line: "Simple Website with Good UI",
+    price: "₹ 29,999",
+    period: "",
     items: [
-      "Up to 5-page website",
-      "Mobile-responsive design",
-      "Contact form & Google Maps",
-      "Basic SEO setup",
-      "1-month post-launch support",
+      "Custom Domain",
+      "Free Domain For 1 Year",
+      "Free SSL Certificate",
+      "Unlimited Bandwidth",
+      "10 GB Storage Space",
+      "24/7 Customer Care",
     ],
-    cta: "Get Online →",
-    ctaHover: "Get Online ↗",
     featured: false,
   },
   {
-    name: "PROFESSIONAL",
-    line: "A Site That Converts",
-    for: "For growing businesses that need more features and performance.",
+    num: "02",
+    name: "Standard",
+    line: "Creative Design, Dynamic Website",
+    price: "₹ 69,999",
+    period: "",
     items: [
-      "Up to 15-page custom website",
-      "Custom UI/UX design",
-      "CMS integration",
-      "Advanced SEO & speed optimisation",
-      "WhatsApp / chat integration",
-      "Google Analytics setup",
-      "3-month post-launch support",
+      "Basic E-Commerce Website",
+      "Custom Domain For 1 Year",
+      "Free Hosting For 1 Year",
+      "Unlimited Bandwidth",
+      "50 GB Storage Space",
+      "250 Product Listing",
+      "Secure Online Payments",
+      "Customer Accounts",
+      "Customized Reports",
+      "24/7 Customer Care",
     ],
-    cta: "Build My Site →",
-    ctaHover: "Build My Site ↗",
     featured: true,
   },
   {
-    name: "ENTERPRISE",
-    line: "Full-Scale Web Platform",
-    for: "For businesses needing a powerful, custom-built digital platform.",
+    num: "03",
+    name: "Premium",
+    line: "Dynamic Ecommerce Website",
+    price: "₹ 1,14,999",
+    period: "",
     items: [
-      "Unlimited pages & custom features",
-      "E-commerce / booking systems",
-      "API & third-party integrations",
-      "Server setup & managed hosting",
-      "Performance & security audits",
-      "Priority support & maintenance",
-      "Dedicated project manager",
+      "Advance E-Commerce Website",
+      "Android App With Playstore Publish",
+      "Secure Online Payments",
+      "Customer Accounts",
+      "Free Domain For 1 Year",
+      "Unlimited Bandwidth",
+      "Unlimited Storage Space",
+      "Customized Reports",
+      "Priority Customer Care",
+      "Unlimited Product Listing",
+      "Multiple Currencies",
+      "Sell On Social Channels",
+      "Product Review",
+      "24/7 Customer Care",
+      "Extra Charges For Additional Requirements",
     ],
-    cta: "Let's Build →",
-    ctaHover: "Let's Build ↗",
     featured: false,
   },
 ];
 
-/* ── Toggle ──────────────────────────────────────────────────────────────── */
-type Category = "dm" | "web";
+/* ── Social Media Marketing tiers ─────────────────────────────────────────── */
+const smmTiers = [
+  {
+    num: "01",
+    name: "Basic",
+    line: "Essential Social Media Management",
+    price: "₹ 14,499",
+    period: "/ Month",
+    items: [
+      "Facebook & Instagram Management",
+      "4-5 Post / Week",
+      "3-4 Short Video / Week",
+      "2 Long Video / Month",
+      "Social Media Engagement",
+      "Relevant Hashtag",
+      "Paid Ad Additional",
+    ],
+    featured: false,
+  },
+  {
+    num: "02",
+    name: "Standard",
+    line: "Growth Social Media & Video Strategy",
+    price: "₹ 19,499",
+    period: "/ Month",
+    items: [
+      "Facebook, Instagram, Youtube Management",
+      "5-8 Post / Week",
+      "4-6 Short Video / Week",
+      "3 (5 To 10 Minutes) Long Video / Month",
+      "Social Media Engagement",
+      "Relevant Hashtag",
+      "Social Site Optimization",
+      "Free Creative",
+      "Paid Ad Additional",
+    ],
+    featured: true,
+  },
+  {
+    num: "03",
+    name: "Premium",
+    line: "Full Scale Multi-Channel Dominance",
+    price: "₹ 25,499",
+    period: "/ Month",
+    items: [
+      "Facebook, Instagram, Youtube Management",
+      "50 Post / Week",
+      "70 Short Video / Week",
+      "6 Long Video / Month",
+      "Social Media Engagement",
+      "Relevant Hashtag",
+      "Social Site Optimization",
+      "Youtube Content Writing",
+      "Follow Campaign Build",
+      "Free Creative",
+      "Paid Ad Additional",
+    ],
+    featured: false,
+  },
+];
+
+type Category = "web" | "smm";
 
 function Toggle({ value, onChange }: { value: Category; onChange: (v: Category) => void }) {
   return (
     <div
-      className="relative mx-auto mt-10 flex w-fit rounded-full border border-transparent bg-white/20 p-1"
+      className="relative mx-auto mt-10 flex w-fit items-center rounded-full border border-white/20 bg-white/10 p-1.5 backdrop-blur-md"
       role="tablist"
     >
-      {/* sliding pill */}
-      <span
-        aria-hidden
-        className="absolute top-1 bottom-1 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric))] transition-all duration-400 ease-in-out"
-        style={{
-          width: "calc(50% - 4px)",
-          left: value === "dm" ? "4px" : "calc(50%)",
-        }}
-      />
-      <button
-        role="tab"
-        aria-selected={value === "dm"}
-        onClick={() => onChange("dm")}
-        className="relative z-10 min-w-[160px] rounded-full px-6 py-2.5 text-sm font-semibold tracking-wide transition-colors duration-300"
-        style={{ color: value === "dm" ? "#fff" : "#1e293b" }}
-      >
-        Digital Marketing
-      </button>
       <button
         role="tab"
         aria-selected={value === "web"}
         onClick={() => onChange("web")}
-        className="relative z-10 min-w-[160px] rounded-full px-6 py-2.5 text-sm font-semibold tracking-wide transition-colors duration-300"
-        style={{ color: value === "web" ? "#fff" : "#1e293b" }}
+        className={`relative z-10 rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
+          value === "web"
+            ? "bg-[linear-gradient(100deg,var(--primary,#f97316),var(--electric,#ff6b00))] text-white shadow-lg shadow-orange-500/25"
+            : "text-gray-300 hover:text-white"
+        }`}
       >
         Web Development
+      </button>
+      <button
+        role="tab"
+        aria-selected={value === "smm"}
+        onClick={() => onChange("smm")}
+        className={`relative z-10 rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
+          value === "smm"
+            ? "bg-[linear-gradient(100deg,var(--primary,#f97316),var(--electric,#ff6b00))] text-white shadow-lg shadow-orange-500/25"
+            : "text-gray-300 hover:text-white"
+        }`}
+      >
+        Social Media Marketing
       </button>
     </div>
   );
 }
 
-/* ── Section ─────────────────────────────────────────────────────────────── */
 export function Pricing() {
   const ref = useReveal<HTMLDivElement>();
-  const [category, setCategory] = useState<Category>("dm");
+  const [category, setCategory] = useState<Category>("web");
 
-  const tiers = category === "dm" ? dmTiers : webTiers;
+  const tiers = category === "web" ? webTiers : smmTiers;
 
   return (
     <section id="pricing" ref={ref} className="relative py-16 lg:py-24">
       <div className="shell">
         <SectionHeading
           eyebrow="PRICING"
-          title={"CHOOSE THE LEVEL OF "}
+          title={"CHOOSE THE LEVEL OF "}
           highlight="GROWTH YOU NEED."
-          copy="Flexible solutions designed around your current stage, marketing goals and growth ambitions."
+          copy="Flexible, transparent pricing tailored to elevate your web presence and social reach."
           align="center"
           className="mx-auto text-center"
         />
 
-        {/* Toggle */}
+        {/* Category Selector Toggle */}
         <Toggle value={category} onChange={setCategory} />
 
-        {/* Cards */}
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+        {/* Pricing Cards Grid */}
+        <div className="mt-12 grid gap-6 lg:grid-cols-3 items-stretch">
           {tiers.map((t, i) => (
             <div
               key={t.name}
-              className={`relative flex flex-col rounded-[1.9rem] p-8 transition-[transform,box-shadow] duration-700 [transition-timing-function:var(--ease-royal)] hover:-translate-y-2 ${
+              className={`relative flex flex-col justify-between rounded-3xl p-8 transition-all duration-500 hover:-translate-y-2 ${
                 t.featured
-                  ? "glass border-electric/35 shadow-[0_50px_90px_-60px_color-mix(in_oklab,var(--electric)_80%,transparent)] lg:-mt-4 lg:mb-4"
-                  : "border border-border bg-card"
+                  ? "bg-[#0b0e14]/90 border-2 border-orange-500/80 shadow-[0_0_50px_-15px_rgba(249,115,22,0.35)]"
+                  : "bg-[#080a0f]/80 border border-white/10 hover:border-white/20"
               }`}
               style={{
                 animationDelay: `${i * 120}ms`,
                 animation: "fadeUp 0.6s both",
               }}
             >
-              {t.featured && (
-                <span className="absolute -top-3 left-8 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--electric))] px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-primary-foreground">
-                  MOST POPULAR
-                </span>
-              )}
-              <p className="font-display text-xs font-bold tracking-[0.26em] text-muted-foreground">
-                {t.name}
-              </p>
-              <h3 className="mt-5 text-2xl font-medium leading-tight">{t.line}</h3>
-              <p className="mt-3 text-sm text-muted-foreground">{t.for}</p>
+              <div>
+                {/* Header Row: Card Number + MOST POPULAR Badge */}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold tracking-widest text-gray-500">
+                    {t.num}
+                  </span>
+                  {t.featured && (
+                    <span className="rounded-sm bg-gradient-to-r from-orange-500 to-amber-500 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-md">
+                      MOST POPULAR
+                    </span>
+                  )}
+                </div>
 
-              <div className="my-7 hairline" />
+                {/* Plan Title & Subtitle */}
+                <h3 className="mt-4 font-serif text-3xl font-bold tracking-tight text-white">
+                  {t.name}
+                </h3>
+                <p className="mt-2 text-xs sm:text-sm text-gray-400 min-h-[40px]">
+                  {t.line}
+                </p>
 
-              <p className="font-display text-3xl font-medium tracking-[0.01em]">Custom Proposal</p>
-              <p className="mt-2 text-xs text-muted-foreground">
-                Scoped to your goals — Discuss Your Goals →
-              </p>
+                {/* Price Display */}
+                <div className="mt-6 flex items-baseline gap-1.5">
+                  <span className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+                    {t.price}
+                  </span>
+                  {t.period && (
+                    <span className="text-sm font-semibold text-orange-400">
+                      {t.period}
+                    </span>
+                  )}
+                </div>
 
-              <ul className="mt-7 flex-1 space-y-3">
-                {t.items.map((it) => (
-                  <li key={it} className="flex items-start gap-3 text-sm">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-electric" />
-                    <span className="text-muted-foreground">{it}</span>
-                  </li>
-                ))}
-              </ul>
+                <div className="my-6 border-t border-white/10" />
 
-              <MagneticButton
-                hoverLabel={t.ctaHover}
-                variant={t.featured ? "primary" : "ghost"}
-                className="mt-9 w-full"
-                href="#contact"
-              >
-                {t.cta}
-              </MagneticButton>
+                {/* Features Header */}
+                <p className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400">
+                  INCLUDES
+                </p>
+
+                {/* Features List */}
+                <ul className="mt-4 space-y-3">
+                  {t.items.map((it) => (
+                    <li key={it} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-300">
+                      <span className="font-bold text-orange-500 select-none">+</span>
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Bottom CTA Button */}
+              <div className="mt-8 pt-4 border-t border-white/5">
+                <a
+                  href="https://wa.me/918617201731"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center justify-between w-full py-3 text-xs font-bold uppercase tracking-widest transition-colors ${
+                    t.featured
+                      ? "text-orange-400 hover:text-orange-300"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  <span>START A CONVERSATION</span>
+                  <span>↗</span>
+                </a>
+              </div>
             </div>
           ))}
         </div>

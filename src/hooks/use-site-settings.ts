@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const DEFAULT_LOGO = "/logo1.png";
+const DEFAULT_LOGO = "/royal300_logo.jpg";
 
 /**
  * Site-wide settings (currently just the logo) shared by the public Navbar,

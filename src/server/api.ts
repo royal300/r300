@@ -243,7 +243,7 @@ export async function handleApiRequest(request: Request): Promise<Response | nul
       const [rows] = (await pool.query(
         'SELECT value_text FROM admin_settings WHERE key_name = "site_logo" LIMIT 1'
       )) as any[];
-      const logoUrl = rows.length > 0 && rows[0].value_text ? rows[0].value_text : '/logo1.png';
+      const logoUrl = rows.length > 0 && rows[0].value_text ? rows[0].value_text : '/royal300_logo.jpg';
       return jsonResponse({ success: true, logoUrl });
     }
 
