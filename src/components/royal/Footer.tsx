@@ -45,7 +45,7 @@ export function Footer() {
                 className="h-12 sm:h-14 w-auto rounded-[9px] object-contain shadow-md"
               />
               <span className="font-display text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-                Grow Your Business
+                Your Digital Partner
               </span>
             </a>
           </div>

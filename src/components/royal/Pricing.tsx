@@ -133,17 +133,17 @@ type Category = "web" | "smm";
 function Toggle({ value, onChange }: { value: Category; onChange: (v: Category) => void }) {
   return (
     <div
-      className="relative mx-auto mt-10 flex w-fit items-center rounded-full border border-white/20 bg-white/10 p-1.5 backdrop-blur-md"
+      className="relative mx-auto mt-10 flex w-fit items-center rounded-full border border-purple-300/40 bg-white p-1.5 shadow-xl"
       role="tablist"
     >
       <button
         role="tab"
         aria-selected={value === "web"}
         onClick={() => onChange("web")}
-        className={`relative z-10 rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
+        className={`relative z-10 rounded-full px-6 py-2.5 text-xs sm:text-sm font-extrabold tracking-wider uppercase transition-all duration-300 ${
           value === "web"
-            ? "bg-[linear-gradient(100deg,var(--primary,#f97316),var(--electric,#ff6b00))] text-white shadow-lg shadow-orange-500/25"
-            : "text-gray-300 hover:text-white"
+            ? "bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white shadow-lg shadow-purple-500/30"
+            : "text-black hover:text-purple-900 bg-transparent"
         }`}
       >
         Web Development
@@ -152,10 +152,10 @@ function Toggle({ value, onChange }: { value: Category; onChange: (v: Category) 
         role="tab"
         aria-selected={value === "smm"}
         onClick={() => onChange("smm")}
-        className={`relative z-10 rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
+        className={`relative z-10 rounded-full px-6 py-2.5 text-xs sm:text-sm font-extrabold tracking-wider uppercase transition-all duration-300 ${
           value === "smm"
-            ? "bg-[linear-gradient(100deg,var(--primary,#f97316),var(--electric,#ff6b00))] text-white shadow-lg shadow-orange-500/25"
-            : "text-gray-300 hover:text-white"
+            ? "bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white shadow-lg shadow-purple-500/30"
+            : "text-black hover:text-purple-900 bg-transparent"
         }`}
       >
         Social Media Marketing
@@ -192,8 +192,8 @@ export function Pricing() {
               key={t.name}
               className={`relative flex flex-col justify-between rounded-3xl p-8 transition-all duration-500 hover:-translate-y-2 ${
                 t.featured
-                  ? "bg-[#0b0e14]/90 border-2 border-orange-500/80 shadow-[0_0_50px_-15px_rgba(249,115,22,0.35)]"
-                  : "bg-[#080a0f]/80 border border-white/10 hover:border-white/20"
+                  ? "bg-[#0e091b]/95 border-2 border-purple-500/80 shadow-[0_0_60px_-15px_rgba(168,85,247,0.35)]"
+                  : "bg-[#0a0714]/85 border border-purple-900/30 hover:border-purple-500/40"
               }`}
               style={{
                 animationDelay: `${i * 120}ms`,
@@ -203,11 +203,11 @@ export function Pricing() {
               <div>
                 {/* Header Row: Card Number + MOST POPULAR Badge */}
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold tracking-widest text-gray-500">
+                  <span className="text-xs font-semibold tracking-widest text-purple-300/60">
                     {t.num}
                   </span>
                   {t.featured && (
-                    <span className="rounded-sm bg-gradient-to-r from-orange-500 to-amber-500 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-md">
+                    <span className="rounded-sm bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-md shadow-purple-500/30">
                       MOST POPULAR
                     </span>
                   )}
@@ -217,7 +217,7 @@ export function Pricing() {
                 <h3 className="mt-4 font-serif text-3xl font-bold tracking-tight text-white">
                   {t.name}
                 </h3>
-                <p className="mt-2 text-xs sm:text-sm text-gray-400 min-h-[40px]">
+                <p className="mt-2 text-xs sm:text-sm text-purple-200/70 min-h-[40px]">
                   {t.line}
                 </p>
 
@@ -227,24 +227,24 @@ export function Pricing() {
                     {t.price}
                   </span>
                   {t.period && (
-                    <span className="text-sm font-semibold text-orange-400">
+                    <span className="text-sm font-semibold text-purple-400">
                       {t.period}
                     </span>
                   )}
                 </div>
 
-                <div className="my-6 border-t border-white/10" />
+                <div className="my-6 border-t border-purple-500/20" />
 
                 {/* Features Header */}
-                <p className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400">
+                <p className="text-[10px] font-extrabold uppercase tracking-widest text-purple-300/60">
                   INCLUDES
                 </p>
 
                 {/* Features List */}
                 <ul className="mt-4 space-y-3">
                   {t.items.map((it) => (
-                    <li key={it} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-300">
-                      <span className="font-bold text-orange-500 select-none">+</span>
+                    <li key={it} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-200">
+                      <span className="font-bold text-purple-400 select-none">+</span>
                       <span>{it}</span>
                     </li>
                   ))}
@@ -252,15 +252,15 @@ export function Pricing() {
               </div>
 
               {/* Bottom CTA Button */}
-              <div className="mt-8 pt-4 border-t border-white/5">
+              <div className="mt-8 pt-4 border-t border-purple-500/20">
                 <a
                   href="https://wa.me/918617201731"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`inline-flex items-center justify-between w-full py-3 text-xs font-bold uppercase tracking-widest transition-colors ${
                     t.featured
-                      ? "text-orange-400 hover:text-orange-300"
-                      : "text-gray-300 hover:text-white"
+                      ? "text-purple-300 hover:text-white"
+                      : "text-gray-300 hover:text-purple-300"
                   }`}
                 >
                   <span>START A CONVERSATION</span>

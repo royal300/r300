@@ -80,12 +80,12 @@ export function Services() {
               />
               <div className="flex items-start justify-between">
                 <span
-                  className="grid h-12 w-12 place-items-center rounded-2xl border border-electric/25 bg-[linear-gradient(140deg,color-mix(in_oklab,var(--electric)_16%,transparent),transparent)] text-electric transition-transform duration-700 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-1 group-hover:rotate-[6deg]"
+                  className="grid h-12 w-12 place-items-center rounded-2xl border border-purple-300/60 bg-[linear-gradient(135deg,#ffffff_0%,#9333ea_100%)] text-purple-950 shadow-md shadow-purple-500/20 transition-transform duration-700 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-1 group-hover:rotate-[6deg]"
                   aria-hidden
                 >
-                  <s.icon size={22} strokeWidth={1.6} />
+                  <s.icon size={22} strokeWidth={1.8} className="text-purple-950" />
                 </span>
-                <span className="text-lg text-muted-foreground transition-transform duration-500 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground">
+                <span className="text-lg text-muted-foreground transition-transform duration-500 [transition-timing-function:var(--ease-royal)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-400">
                   ↗
                 </span>
               </div>
